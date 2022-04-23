@@ -47,6 +47,48 @@
 <h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>1，怎么从网络上获取</p>
 <p>2，怎么在界面上显示</p>
 <p>3，显示在界面上过程中怎么处理</p>
+<h1 id="API接口的保护"><a href="#API接口的保护" class="headerlink" title="API接口的保护"></a>API接口的保护</h1><h2 id="消息摘要算法"><a href="#消息摘要算法" class="headerlink" title="消息摘要算法"></a>消息摘要算法</h2><p>它通过对所有数据提取指纹信息以实现数据签名、数据完整性校验等功能，由于其不可逆性，有时候会被用做敏感信息的加密。数据摘要算法也被称为哈希（Hash）算法或散列算法。</p>
+<p>消息摘要算法的主要特征是加密过程不需要密钥，并且经过加密的数据无法被解密，只有输入相同的明文数据经过相同的消息摘要算法才能得到相同的密文。（摘要可以比方为指纹，消息摘要算法就是要得到文件的唯一职位）</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>无论输入的消息有多长，计算出来的消息摘要的长度总是固定的。</li>
+<li>一般地，只要输入的消息不同，对其进行摘要以后产生的摘要消息也必不相同；但相同的输入必会产生相同的输出</li>
+<li>只能进行正向的信息摘要，而无法从摘要中恢复出任何的消息，甚至根本就找不到任何与原信息相关的信息</li>
+<li>好的摘要算法，没有人能从中找到 “碰撞” 或者说极度难找到，虽然 “碰撞” 是肯定存在的</li>
+</ul>
+<h3 id="常用的消息摘要算法"><a href="#常用的消息摘要算法" class="headerlink" title="常用的消息摘要算法"></a>常用的消息摘要算法</h3><p>CRC32（<code>Cyclic redundancy check</code>：循环冗余检验码）</p>
+<p>MD5（<code>Message Digest algorithm 5</code>：消息摘要算法版本5)</p>
+<p>SHA1,SHA256,SHA512 （<code>Secure Hash Algorithm</code>：安全散列算法)</p>
+<h3 id="摘要目的"><a href="#摘要目的" class="headerlink" title="摘要目的"></a>摘要目的</h3><p>数据完整性，是否在传输过程中被修改。</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>信息从一种形式或格式转换为另一种形式的过程，方便在不同系统之中传输，例如最常见的ASCII字符编码。由于网络上只能传输二进制数据，任何数据如果想要经由网络传输，就必须先转化成二进制，ASCII 提供了一个将A、B、C等字母转化为二进制的规则。信息—&gt;编码—&gt;二进制—&gt;解码—&gt;信息</p>
+<h3 id="常见的编码"><a href="#常见的编码" class="headerlink" title="常见的编码"></a>常见的编码</h3><p>ASCII</p>
+<p>Base64</p>
+<p>URL</p>
+<h3 id="编码目的"><a href="#编码目的" class="headerlink" title="编码目的"></a>编码目的</h3><p>压缩空间，便于传输，减少带宽。</p>
+<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>加密是为了保证数据安全传输，使得其他人不能获取的具体信息内容。加密是可逆的，明文 + 秘钥 &#x3D; 加密信息。加密又分为对称加密和非对称加密，区别在于在加密和解密信息时秘钥是不是同一个。</p>
+<p>1、对称加密：DES, AES，3DES</p>
+<p>对称加密算法的特点是算法公开、计算量小、加密速度快、加密效率高。</p>
+<p>不足之处是，交易双方都使用同样钥匙，安全性得不到保证。</p>
+<p>2、非对称加密： RSA，ESA</p>
+<p>密钥是成对出现。使用一对“私钥-公钥”，用私钥加密的内容只有对应公钥才能解开</p>
+<ul>
+<li>公钥：公开给所有人。不能通过公钥反推出私钥；public key</li>
+<li>自己留存，不公开。有且只有一个对应的私钥；secret key</li>
+<li>通过私钥加密的密文只能通过公钥能解密，通过公钥加密的密文也只能通过私钥能解密。</li>
+</ul>
+<p>但由于算法强度比对称加密复杂，加解密的速度比对称加解密的速度要慢。</p>
+<h3 id="加密目的"><a href="#加密目的" class="headerlink" title="加密目的"></a>加密目的</h3><p>传输过程中既是被截取也无法查看原文，因为没有秘钥。</p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>是对摘要后的数据进行加密</p>
+<h2 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h2><p>自己服务器公钥给权威机构（CA），权威机构对服务器的公钥和其他信息进行hash摘要再用权威机构的公钥进行加密后给客户服务器，客户把这个公钥给浏览器。</p>
+<p>1、数据第一步编码（base64等）</p>
+<p>2、第二步进行摘要（md5，sha256）</p>
+<p>3、第三步对摘要后的数据进行加密（对称和非对称加密）</p>
+<h2 id="MD5算法"><a href="#MD5算法" class="headerlink" title="MD5算法"></a>MD5算法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException &#123;</span><br><span class="line">            <span class="comment">// 待加密字符</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">originalStr</span> <span class="operator">=</span> <span class="string">&quot;111111&quot;</span>;</span><br><span class="line">            String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">            <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">            <span class="type">byte</span>[] digest = md5.digest(originalStr.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">            System.out.println(digest.toString());</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">byte</span> b:digest)&#123;</span><br><span class="line">                sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">                sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(sb.toString());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-20-22-18-55.png" alt="2022-03-20-22-18-55"></p>
+<p>没加sign<br><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-21-21-47-01.png" alt="2022-03-21-21-47-01"><br>加sign和时间戳</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       isLoading = <span class="literal">true</span>;</span><br><span class="line">       Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="type">String</span> <span class="variable">classify</span> <span class="operator">=</span> <span class="string">&quot;yzmn&quot;</span>;</span><br><span class="line">       <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> System.currentTimeMillis()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">       params.put(<span class="string">&quot;classify&quot;</span>,classify);</span><br><span class="line">       params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;timestamp&quot;</span>,timestamp);</span><br><span class="line">       <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> md5(classify+page+timestamp);</span><br><span class="line">       params.put(<span class="string">&quot;sign&quot;</span>,sign);</span><br><span class="line">       OkHttpUtil.post(<span class="string">&quot;http://www.dtasecurity.cn:18080/demo02/getWallpaper&quot;</span>,</span><br><span class="line">               params,</span><br><span class="line">               <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                       <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                       <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                       ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                       wallPaperEntities.addAll(data.getData());</span><br><span class="line">                       <span class="comment">//adapter.notifyDataSetChanged();</span></span><br><span class="line">                       <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                       msg.what = <span class="number">1</span>;</span><br><span class="line">                       handler.sendMessage(msg);</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;);</span><br><span class="line">       page++;</span><br><span class="line">   &#125;</span><br><span class="line">   String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">md5</span><span class="params">(String data)</span> &#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">           <span class="type">byte</span>[] digest = md5.digest(data.getBytes());</span><br><span class="line">           <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">byte</span> b : digest)&#123;</span><br><span class="line">               sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">               sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span>  sb.toString();</span><br><span class="line">       &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-26-14-37-50.png" alt="2022-03-26-14-37-50"></p>
 ]]></content>
       <categories>
         <category>开发</category>
@@ -90,6 +132,73 @@
 <p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161517748.png" alt="image-20220313161517748"></p>
 <h1 id="telnet模拟http协议"><a href="#telnet模拟http协议" class="headerlink" title="telnet模拟http协议"></a>telnet模拟http协议</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161900522.png" alt="image-20220313161900522"></p>
 <h1 id="r0capture的使用"><a href="#r0capture的使用" class="headerlink" title="r0capture的使用"></a>r0capture的使用</h1><p>拉跨</p>
+<h1 id="HTTPS核心原理"><a href="#HTTPS核心原理" class="headerlink" title="HTTPS核心原理"></a>HTTPS核心原理</h1><h2 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h2><p>加解密使用同一个密钥，加解密速度快，相对不安全，拿到私钥就能解密传输的内容，使用的主要算法有：DES、3DES、AES等</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220404212308671.png" alt="image-20220404212308671"></p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220404212604804.png" alt="image-20220404212604804"></p>
+<h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><p>甲方把自己的公钥发放出去，乙方使用公钥进行加密，然后把加密内容发送的甲方，甲方再使用自己的私钥进行解密，然后甲方把要返回的数据使用已方的公钥进行加密，乙方拿到数据后使用自己的私钥进行解密。由于私钥不对外开放，因此安全性大大提高。也因此加解密需要的时间更久，速度相对较慢，适合少量数据使用。常用的加密算法有：RSA、ECC（椭圆曲线）、背包算法</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220404214048678.png" alt="image-20220404214048678"></p>
+<h2 id="什么是HTTPS"><a href="#什么是HTTPS" class="headerlink" title="什么是HTTPS"></a>什么是HTTPS</h2><p>HTTPS使用了非对称加密，然而非对称加密只作用在证书验证阶段，在内容传输的过程中使用的是非对称加密</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220404220002133.png" alt="image-20220404220002133"></p>
+<p>① 证书验证阶段</p>
+<ol>
+<li>浏览器发起 HTTPS 请求</li>
+<li>服务端返回 HTTPS 证书</li>
+<li>客户端验证证书是否合法，如果不合法则提示告警</li>
+</ol>
+<p>② 数据传输阶段</p>
+<p>1.当证书验证合法后，在本地生成随机数</p>
+<p>2.通过公钥加密随机数，并把加密后的随机数传输到服务端</p>
+<p>3.服务端通过私钥对随机数进行解密</p>
+<p>4.服务端通过客户端传入的随机数构造对称加密算法，对返回结果内容进行加密后传输</p>
+<p>为什么内容使用对称加密，因为非对称加解密在效率上非常低，而http的应用场景中通常端与端之间存在大量的交互，非对称加密的效率是无法接受的。</p>
+<p>另外，在HTTPS的场景中只有服务端保存了私钥，一对公私钥只能实现单向的加解密，所以HTTPS中内容传输加密采取的是对称加密，而不是非对称加密。</p>
+<h2 id="用了-HTTPS-会被抓包吗"><a href="#用了-HTTPS-会被抓包吗" class="headerlink" title="用了 HTTPS 会被抓包吗"></a><strong>用了 HTTPS 会被抓包吗</strong></h2><p>HTTPS 的数据是加密的，常规下抓包工具代理请求后抓到的包内容是加密状态，无法直接查看。关注微信公众号：Java技术栈，在后台回复：工具，可以获取我整理的 N 篇最新开发工具教程，都是干货。</p>
+<p>但是，正如前文所说，浏览器只会提示安全风险，如果用户授权仍然可以继续访问网站，完成请求。因此，只要客户端是我们自己的终端，我们授权的情况下，便可以组建中间人网络，而抓包工具便是作为中间人的代理。</p>
+<p>通常 HTTPS 抓包工具的使用方法是会生成一个证书，用户需要手动把证书安装到客户端中，然后终端发起的所有请求通过该证书完成与抓包工具的交互，然后抓包工具再转发请求到服务器，最后把服务器返回的结果在控制台输出后再返回给终端，从而完成整个请求的闭环。</p>
+<h2 id="CA"><a href="#CA" class="headerlink" title="CA"></a>CA</h2><h3 id="什么是CA"><a href="#什么是CA" class="headerlink" title="什么是CA"></a>什么是CA</h3><p>CA（数字证书颁发机构）是值得信赖的第三方实体颁发数字证书机构并管理为最终用户数据加密的公共密钥和证书。CA的责任是确保公司或用户收到有效的身份认证是唯一证书。</p>
+<p>  数字证书采用公钥体制，即利用一对互相匹配的密钥进行加密、解密。每个用户自己设定一把特定的仅为本人所知的私有密钥(私钥)，用它进行解密和 签名;同时设定一把公共密钥(公钥)并由本人公开，为一组用户所共享，用于加密和验证签名。当发送一份保密文件时，发送方使用接收方的公钥对数据加密，而 接收方则使用自己的私钥解密，这样信息就可以安全无误地到达目的地了。通过数字的手段保证加密过程是一个不可逆过程，即只有用私有密钥才能解密。在公开密 钥密码体制中，常用的一种是RSA体制。其数学原理是将一个大数分解成两个质数的乘积，加密和解密用的是两个不同的密钥。即使已知明文、密文和加密密钥 (公开密钥)，想要推导出解密密钥(私密密钥)，在计算上是不可能的。按现在的计算机技术水平，要破解目前采用的1024位RSA密钥，需要上千年的计算 时间。公开密钥技术解决了密钥发布的管理问题，商户可以公开其公开密钥，而保留其私有密钥。购物者可以用人人皆知的公开密钥对发送的信息进行加密，安全地 传送给商户，然后由商户用自己的私有密钥进行解密。</p>
+<p>用户也可以采用自己的私钥对信息加以处理，由于密钥仅为本人所有，这样就产生了别人无法生成的文件，也就形成了数字签名。采用数字签名，能够确认以下两点：</p>
+<p>(1)保证信息是由签名者自己签名发送的，签名者不能否认或难以否认。</p>
+<p>(2)保证信息自签发后到收到为止未曾作过任何修改，签发的文件是真实文件。</p>
+<p>数字签名具体做法是:</p>
+<p>(1)将报文按双方约定的HASH算法计算得到一个固定位数的报文摘要。在数学上保证:只要改动报文中任何一位，重新计算出的报文摘要值就会与原先的值不相符。这样就保证了报文的不可更改性。</p>
+<p>(2)将该报文摘要值用发送者的私人密钥加密，然后连同原报文一起发送给接收者，而产生的报文即称数字签名。</p>
+<p>(3)接收方收到数字签名后，用同样的HASH算法对报文计算摘要值，然后与用发送者的公开密钥进行解密解开的报文摘要值相比较。如相等则说明报文确实来自所称的发送者。</p>
+<p>是一个经证书授权中心(如光网CA)数字签名的包含公开密钥拥有者信息以及公开密钥的文件。最简单的证书包含一个公开密钥、名称以及证书授权中心的数字签名。一般情况下证书中还包括密钥的有效时间，发证机关(证书授权中心)的名称，该证书的序列号等信息，证书的格式遵循 ITUT X.509国际标准。</p>
+<h3 id="为什么用CA"><a href="#为什么用CA" class="headerlink" title="为什么用CA"></a>为什么用CA</h3><p> 基于Internet网的电子商务系统技术使在网上购物的顾客能够极其方便轻松地获得商家和企业的信息，但同时也增加了对某些敏感或有价值的数 据被滥用的风险。买方和卖方都必须对于在因特网上进行的一切金融交易运作都是真实可靠的，并且要使顾客、商家和企业等交易各方都具有绝对的信心，因而因特 网(Internet)电子商务系统必须保证具有十分可靠的安全保密技术，也就是说必须保证网络安全的四大要素，即信息传输的保密性、数据交换的完整性、 发送信息的不可否认性、交易者身份的确定性。</p>
+<p>1、信息的保密性</p>
+<p>交易中的商务信息均有保密的要求。如信用卡的帐号和用户名被人知悉，就可能被盗用，订货和付款的信息被竞争对手获悉，就可能丧失商机。因此在电子商务的信息传播中一般均有加密的要求。</p>
+<p>2、交易者身份的确定性</p>
+<p>​    网上交易的双方很可能素昧平生，相隔千里。要使交易成功首先要能确认对方的身份，对商家要考虑客户端不能是骗子，而客户也会担心网上的商店不是 一个玩弄欺诈的黑店。因此能方便而可靠地确认对方身份是交易的前提。对于为顾客或用户开展服务的银行、信用卡公司和销售商店，为了做到安全、保密、可靠地 开展服务活动，都要进行身份认证的工作。对有关的销售商店来说，他们对顾客所用的信用卡的号码是不知道的，商店只能把信用卡的确认工作完全交给银行来完 成。银行和信用卡公司可以采用各种保密与识别方法，确认顾客的身份是否合法，同时还要防止发生拒付款问题以及确认订货和订货收据信息等。</p>
+<p>3、不可否认性</p>
+<p>​    由于商情的千变万化，交易一旦达成是不能被否认的。否则必然会损害一方的利益。例如订购黄金，订货时金价较低，但收到订单后，金价上涨了，如收 单方能否认受到订单的实际时间，甚至否认收到订单的事实，则订货方就会蒙受损失。因此电子交易通信过程的各个环节都必须是不可否认的。</p>
+<p>4、不可修改性</p>
+<p>​    交易的文件是不可被修改的，如上例所举的订购黄金。供货单位在收到订单后，发现金价大幅上涨了，如其能改动文件内容，将订购数1吨改为1克，则可大幅受益，那么订货单位可能就会因此而蒙受损失。因此电子交易文件也要能做到不可修改，以保障交易的严肃和公正。</p>
+<p>​    人们在感叹电子商务的巨大潜力的同时，不得不冷静地思考，在人与人互不见面的计算机互联网上进行交易和作业时，怎么才能保证交易的公正性和安全 性，保证交易双方身份的真实性。国际上已经有比较成熟的安全解决方案，那就是建立安全证书体系结构。数字安全证书提供了一种在网上验证身份的方式。安全证 书体制主要采用了公开密钥体制，其它还包括对称密钥加密、数字签名、数字信封等技术。</p>
+<p>​    我们可以使用数字证书，通过运用对称和非对称密码体制等密码技术建立起一套严密的身份认证系统，从而保证：信息除发送方和接收方外不被其它人窃取;信息在传输过程中不被篡改;发送方能够通过数字证书来确认接收方的身份;发送方对于自己的信息不能抵赖。</p>
+<p> <strong>防止”中间人“攻击，同时可以为网站提供身份证明。</strong></p>
+<h1 id="中间人攻击原理"><a href="#中间人攻击原理" class="headerlink" title="中间人攻击原理"></a>中间人攻击原理</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/34fwbli4dv.jpeg" alt="img"></p>
+<p>1.本地请求被劫持（如DNS劫持等），所有请求均发送到中间人的服务器</p>
+<p>2.中间人服务器返回中间人自己的证书</p>
+<p>3.客户端创建随机数，通过中间人证书的公钥对随机数加密后传送给中间人，然后凭随机数构造对称加密对传输内容进行加密传输</p>
+<p>4.中间人因为拥有客户端的随机数，可以通过对称加密算法进行内容解密</p>
+<p>5.中间人以客户端的请求内容再向正规网站发起请求</p>
+<p>6.因为中间人与服务器的通信过程是合法的，正规网站通过建立的安全通道返回加密后的数据</p>
+<p>7.中间人凭借与正规网站建立的对称加密算法对内容进行解密</p>
+<p>8.中间人通过与客户端建立的对称加密算法对正规内容返回的数据进行加密传输</p>
+<p>9.客户端通过与中间人建立的对称加密算法对返回结果数据进行解密</p>
+<p>由于缺少对证书的验证，所以客户端虽然发起的是 HTTPS 请求，但客户端完全不知道自己的网络已被拦截，传输内容被中间人全部窃取。</p>
+<h1 id="应用添加证书"><a href="#应用添加证书" class="headerlink" title="应用添加证书"></a>应用添加证书</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220405115711745.png" alt="image-20220405115711745"></p>
+<p>设置证书</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OkHttpUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="type">OkHttpClient</span> <span class="variable">client</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">InputStream</span> <span class="variable">in_cer</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> OkHttpClient <span class="title function_">getClient</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (client == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">CertificateFactory</span> <span class="variable">certificateFactory</span> <span class="operator">=</span> CertificateFactory.getInstance(<span class="string">&quot;X509&quot;</span>);</span><br><span class="line">                <span class="type">Certificate</span> <span class="variable">certificate</span> <span class="operator">=</span> certificateFactory.generateCertificate(in_cer);</span><br><span class="line">                <span class="type">KeyStore</span> <span class="variable">ks</span> <span class="operator">=</span> KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">                ks.load(<span class="literal">null</span>,<span class="literal">null</span>);</span><br><span class="line">                ks.setCertificateEntry(<span class="string">&quot;wallpaper&quot;</span>,certificate);</span><br><span class="line">                <span class="type">TrustManagerFactory</span> <span class="variable">trustManagerFactory</span> <span class="operator">=</span> TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());</span><br><span class="line">                trustManagerFactory.init(ks);</span><br><span class="line">                TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();</span><br><span class="line">                <span class="type">SSLContext</span> <span class="variable">context</span> <span class="operator">=</span> SSLContext.getInstance(<span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">                context.init(<span class="literal">null</span>,trustManagers,<span class="keyword">new</span> <span class="title class_">SecureRandom</span>());</span><br><span class="line">                <span class="type">SSLSocketFactory</span> <span class="variable">factory</span> <span class="operator">=</span> context.getSocketFactory();</span><br><span class="line">                OkHttpClient.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpClient</span>.Builder();</span><br><span class="line">                builder.sslSocketFactory(factory, (X509TrustManager) trustManagers[<span class="number">0</span>]);</span><br><span class="line">                builder.hostnameVerifier(<span class="keyword">new</span> <span class="title class_">HostnameVerifier</span>() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">verify</span><span class="params">(String hostname, SSLSession session)</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (hostname.equals(<span class="string">&quot;www.dtasecurity.cn&quot;</span>))&#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> builder.build();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> client;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">post</span><span class="params">(String url, Map&lt;String, String&gt; params, Callback callback)</span> &#123;</span><br><span class="line">        FormBody.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FormBody</span>.Builder();</span><br><span class="line">        <span class="keyword">for</span> (String key : params.keySet())&#123;</span><br><span class="line">            builder.add(key,params.get(key));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">FormBody</span> <span class="variable">body</span> <span class="operator">=</span> builder.build();</span><br><span class="line"></span><br><span class="line">        <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Request</span>.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .post(body)</span><br><span class="line">                .build();</span><br><span class="line">        getClient().newCall(request).enqueue(callback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>加载本地证书</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        isLoading = <span class="literal">true</span>;</span><br><span class="line">        Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="type">String</span> <span class="variable">classify</span> <span class="operator">=</span> <span class="string">&quot;yzmn&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> System.currentTimeMillis()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">        params.put(<span class="string">&quot;classify&quot;</span>,classify);</span><br><span class="line">        params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;timestamp&quot;</span>,timestamp);</span><br><span class="line">        <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> md5(classify+page+timestamp);</span><br><span class="line">        params.put(<span class="string">&quot;sign&quot;</span>,sign);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">             in_cer = getAssets().open(<span class="string">&quot;wallpaper.cer&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        OkHttpUtil.post(<span class="string">&quot;https://www.baidu.com&quot;</span>,</span><br><span class="line">                params,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                        <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                        ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                        wallPaperEntityList.addAll(data.getData());</span><br><span class="line">                        <span class="comment">//adapter.notifyDataSetChanged();</span></span><br><span class="line">                        <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                        msg.what = <span class="number">1</span>;</span><br><span class="line">                        handler.sendMessage(msg);</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        page++;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220405121345297.png" alt="image-20220405121345297"></p>
+<p>抓包</p>
+<img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220405121748804.png" alt="image-20220405121748804" style="zoom:150%;">
+
 ]]></content>
       <categories>
         <category>Android</category>
@@ -618,97 +727,6 @@
       </categories>
       <tags>
         <tag>开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C</title>
-    <url>/2022/03/15/C%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<img src="/2022/03/15/C%EF%BC%88%E4%B8%80%EF%BC%89/images1.jpg" alt="images1" style="zoom:200%;">
-
-<span id="more"></span>
-
-<h1 id="计算机中的数据"><a href="#计算机中的数据" class="headerlink" title="计算机中的数据"></a>计算机中的数据</h1><h2 id="十六进制"><a href="#十六进制" class="headerlink" title="十六进制"></a>十六进制</h2><p>逢16进1，每一位都是16的整数次幂（基数16），符号：“H”</p>
-<h2 id="十进制"><a href="#十进制" class="headerlink" title="十进制"></a>十进制</h2><p>逢10进1</p>
-<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>逢2进1，每一位都是2的整数次幂(基数2) ，符号：“B” </p>
-<h2 id="八进制"><a href="#八进制" class="headerlink" title="八进制"></a>八进制</h2><p>逢8进1，每一位都是8的整数次幂(基数是8) ，符号：”O” </p>
-<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>逆序取余</p>
-<p>二进制数得到每一位就是十进制数每次除以2得到余数，最后把所有的余数倒着排列，就得到二进制数 </p>
-<p>10的二进制</p>
-<p>10除以2得5余0</p>
-<p>5除以2得2余1</p>
-<p>2除以2得1余0</p>
-<p>1除以2得0余1</p>
-<p>整数10的二进制就是1010</p>
-<h3 id="八进制转十六进制"><a href="#八进制转十六进制" class="headerlink" title="八进制转十六进制"></a>八进制转十六进制</h3><p>方法：</p>
-<p>以二进制位中介，即先将八进制数按照一位拆三位的方法转换为二进制，在对这个二进制数使用四位合一位的方法转换为十六进制</p>
-<p>规则：</p>
-<p>整数部分从低位向高位每3位用一个等值的八进制来替换，不足3位时在高位补0凑满3位<br>小数部分从高位向低位每3位用一个等值八进制数来替换，不足3位时在低位补0凑满3位 </p>
-<p>十进制：16</p>
-<p>八进制：20</p>
-<p>二进制：010 000</p>
-<p>十六进制：10</p>
-<h2 id="计算机中存储单位"><a href="#计算机中存储单位" class="headerlink" title="计算机中存储单位"></a>计算机中存储单位</h2><p>位是计算机中数据最小单位，它表示一个二进制数，0或者1，英文是Bit </p>
-<p>字长是CPU的主要技术指标之一，指的是一次最大能并行处理的二进制位数</p>
-<p>Byte 表示字节，一个字节是8位<br>word是两个字节，也就是16位<br>dword是四个字节，也就是32位</p>
-<h2 id="源码反码补码关系"><a href="#源码反码补码关系" class="headerlink" title="源码反码补码关系"></a>源码反码补码关系</h2><p><strong>正数：</strong></p>
-<p>​	三码合一 </p>
-<p><strong>负数：</strong><br>    原码：最高位不变，后面数据和其绝对值相同<br>    反码：将源码除最高位，其余安位取反<br>    补码：将反码+1 </p>
-<p><strong>例如：</strong><br>1 010 1010 （原）<br>1 101 0101 （反码：符号位不变，其他位按位取反）<br>1 101 0110 （补码:反码+1）<br>在计算机中保存的都是补码，使用补码的目的是将减法运算转换为加法运算</p>
-<h1 id="C基础"><a href="#C基础" class="headerlink" title="C基础"></a>C基础</h1><p>一个程序包含哪些东西</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include //编译预处理命令 </span><br><span class="line">#include //编译预处理命令 </span><br><span class="line">int main(void) //程序启动函数 </span><br><span class="line">&#123; //函数开始标志 </span><br><span class="line">	printf(&quot;Hello world&quot;); //库函数输出信息 </span><br><span class="line">	system(&quot;pause&quot;); //让程序暂停一下 </span><br><span class="line">	return 0； //函数退出返回0 </span><br><span class="line">&#125; //程序结束标志</span><br></pre></td></tr></table></figure>
-
-<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>1，编写好源代码<br>2，编译前，进行预处理<br>3，进行编译，生成obj文件<br>4，进行连接，生成可执行文件<br>5，生成目标程序，即可以运行<br>其中，预处理，编译，连接可以使用VS一键完成，也就是只要你写好了源代码，直接可以生成能够执行的程了。</p>
-<p>（main 函数 ，预处理 ，库函数 ，关键字，注释）</p>
-<p><strong>VS中的默认main函数</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int  _tmain(int argc, _TCHAR*  argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>预处理</strong></p>
-<p>以#号开头的命令(通常称为指令)，他是在程序编译之前进行的处理，通常会对文件做一些复制，替换等操作</p>
-<p><strong>为什么要使用#includ</strong> </p>
-<p>对于本程序而言#include的作用是包含stdio函数库，包含了函数库头文件之后，就可以使用其中的函数。<br><code>#include</code>有两种形式<br>1)#include “文件名” 在当前工程目录中会找到该头文件<br>2)#include &lt;文件名&gt; 在vs自带的头文件夹中去找该头文件</p>
-<p><strong>库函数</strong></p>
-<p>C语言已经写好的代码，直接提供给开发者使用，提供的代码就叫做库函数，使用相应的库函数，必须要先包含相应的头文件</p>
-<p><strong>关键字</strong></p>
-<p>被赋予了某些特殊含义的单词，不能用于其他任何目的，所有的关键字小写，C语言中的关键字32个</p>
-<p><img src="/2022/03/15/C%EF%BC%88%E4%B8%80%EF%BC%89/image-20220315163741780.png" alt="image-20220315163741780"></p>
-<h2 id="数据类型及变量"><a href="#数据类型及变量" class="headerlink" title="数据类型及变量"></a>数据类型及变量</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>整型，就是整数</li>
-<li>浮点型，就是小数 </li>
-<li>字符型，就是文本符号</li>
-</ul>
-<h3 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h3><p><strong>常量</strong><br>常量就是固定不变的数据，根据类型有以下四种:<br>1、整形常量<br>所有整数（正整数，负整数，零）<br>2、浮点型常量<br>所有小数。<br>3、字符常量<br>普通字符，用单引号括起来的一个字符(不包括单引号本身)如：’A’，’1‘.<br>4、字符串常量<br>用双引号括起来的若干个字符串（不包括双引号本身）如：“hello world”</p>
-<p><strong>变量</strong> </p>
-<p>变量就是一块有名字的内存空间，我们可以通过变量的名字来为其背后的内存空间填充数据，或者使用内存空间中的数据</p>
-<p>定义变量<br>变量类型 变量名 &#x3D; 初始值</p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int num =10;</span><br><span class="line">  num=200;</span><br><span class="line">  printf(&quot;%d&quot;,num+100);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>int 是整数型，num就是变量名，10就是变量的初始值，变量可以被修改，也可以参与运算。当变量被定义之后，自动就开辟出了空间，变量名就代表这片空间了 ，可以通过VS的自动窗口，局部变量窗口，监视窗口动态的查看变量的值</p>
-<p><strong>变量类型</strong></p>
-<p>整数：int short long<br>小数：float double<br>字符：char wchar_t<br>另外还有一个关键字：unsigned可以修饰整数和字符，可以表示无符号数（就是正数）</p>
-<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a><strong>字符类型</strong></h2><p>字符类型本质上说，也是数字。有一个美国国家标准协会指定了一个标准，用0<del>127之间的数字代表不同的字符。所以每一个字符都和一个数字一一对应。美国人制定的这个标准称之为ASCII ，一个字节能表示0</del>255，所以存储一个普通的英文符只需要一个字节，故而char也就是1个字节大小， wchar就是用来存储复杂字符的，而且他是两个字节，共有65536个状态。 </p>
-<p>定义char型字符变量，直接使用char即可，赋值的但字符需要用’ ‘括起来</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char  ch  = &#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>定义wchar_t型字符变量，直接使用wchar_t，需要注意的是字符要用这种格式L’ ‘。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wchar_t   ch  = L&#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="标识符的命名规则"><a href="#标识符的命名规则" class="headerlink" title="标识符的命名规则"></a>标识符的命名规则</h2><p>1，只能由字母（A<del>Z，a</del>z)，数字(0~9),下划线(_)组成<br>2，数字不能开头<br>3，不可以使用关键字<br>4，C语言中的标识符区分大小写 </p>
-<p><strong>字符型与数字</strong></p>
-<p>字符型与整数类型没有本质的区别，都表示数字，只是，字符类型所能表示的数字被人为设计与不同的字符一一对应，所以字符类型的变量也可以用于数学计算，只是它表示的数据范围有限。有符号的情况下<br>(char -128<del>127,wchar_t -32768</del>32767) </p>
-<p><strong>字符串</strong></p>
-<p>C语言中还有一种类型叫做字符串常量，但是没有一个变量能够存储字符串常量，需要借助于字符数组或指针<br>字符串的表示方式：使用双引号扩起来<br>列如:char szCh[]&#x3D;”adsfgh23435” </p>
-<p><strong>标识符</strong></p>
-<p>编程的时候，有许多需要命名的对象，比如函数名，变量名等，这些名称叫做标识符 </p>
-<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p>匈牙利命名法的变量名由一个或多个小写字母开始，这些字母由助于记忆变量的类型和用途，紧跟着的就是程序员 选择的任何名称，而在最前面加入前缀m_,s_,g_表示变量的作用域类型<br>匈牙利命名法的目标是便于记忆，而且使变量名清晰易懂，（一看变量名就知道他是什么类型，知道是干什么用的），增强了代码的可读性，方便程序员之间相互交流代码</p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>开发</tag>
-        <tag>Windows</tag>
-        <tag>语言</tag>
       </tags>
   </entry>
   <entry>
@@ -1638,6 +1656,1314 @@
       <tags>
         <tag>Android</tag>
         <tag>抓包实战</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python使用问题</title>
+    <url>/2022/04/23/Python%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="python第三方库安装"><a href="#python第三方库安装" class="headerlink" title="python第三方库安装"></a>python第三方库安装</h1><h2 id="PIP中安装"><a href="#PIP中安装" class="headerlink" title="PIP中安装"></a>PIP中安装</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install packagename</span><br></pre></td></tr></table></figure>
+
+<h2 id="whl文件安装"><a href="#whl文件安装" class="headerlink" title="whl文件安装"></a>whl文件安装</h2><ol>
+<li>下载<a href="http://www.lfd.uci.edu/-gohlke/pythonlibs">whl</a>文件到本地</li>
+<li>输入命令<code>pip3 install wheel</code></li>
+<li>执行命令<code>pip3 install whl文件完整路径</code></li>
+</ol>
+<p>这样就可以下载库到本地了，通过whl文件，可以自动安装依赖的包</p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>开发</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Adb命令使用</title>
+    <url>/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><h2 id="命令语法"><a href="#命令语法" class="headerlink" title="命令语法"></a>命令语法</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb [-d|-e|-s &lt;serialNumber&gt;] &lt;command&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果只有一个设备&#x2F;模拟器连接时，可以省略掉 <code>[-d|-e|-s &lt;serialNumber&gt;]</code> 这一部分，直接使用 adb <code>command</code></p>
+<h2 id="指定目标设备"><a href="#指定目标设备" class="headerlink" title="指定目标设备"></a>指定目标设备</h2><p>如果有多个设备&#x2F;模拟器连接，则需要为命令指定目标设备。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>指定当前唯一通过usb连接的Android设备为命令目标</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>指定当前唯一通过usb连接的Android设备为命令目标</td>
+</tr>
+<tr>
+<td>-s<serialNumber></serialNumber></td>
+<td>指定相应seriaNumber号的设备&#x2F;模拟器为命令目标</td>
+</tr>
+</tbody></table>
+<p>在多个设备&#x2F;模拟器连接的情况下较常用的是 -s <serialNumber> 参数，serialNumber 可以通过 adb devices 命令获取。</serialNumber></p>
+<h2 id="启动-x2F-停止"><a href="#启动-x2F-停止" class="headerlink" title="启动&#x2F;停止"></a>启动&#x2F;停止</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb start-server</span><br><span class="line">adb kill-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="adb版本信息"><a href="#adb版本信息" class="headerlink" title="adb版本信息"></a>adb版本信息</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb version</span><br></pre></td></tr></table></figure>
+
+<h2 id="以root权限运行adbd"><a href="#以root权限运行adbd" class="headerlink" title="以root权限运行adbd"></a>以root权限运行adbd</h2><p>adb 的运行原理是 PC 端的 adb server 与手机端的守护进程 adbd 建立连接，然后 PC 端的 adb client 通过 adb server 转发命令，adbd 接收命令后解析运行。</p>
+<p>所以如果 adbd 以普通权限执行，有些需要 root 权限才能执行的命令无法直接用 adb xxx 执行。这时可以 adb shell 然后 su 后执行命令，也可以让 adbd 以 root 权限执行，这个就能随意执行高权限命令了。</p>
+<p><strong>命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br></pre></td></tr></table></figure>
+
+<p>正常输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">restarting adbd as root</span><br></pre></td></tr></table></figure>
+
+<p>有些手机 root 后也无法通过 adb root 命令让 adbd 以 root 权限执行,此时可以先安装 adbd Insecure，然后 adb root 试试.</p>
+<p>相应地，如果要恢复 adbd 为非 root 权限的话，可以使用 adb unroot 命令。</p>
+<h2 id="指定-adb-server-的网络端口"><a href="#指定-adb-server-的网络端口" class="headerlink" title="指定 adb server 的网络端口"></a>指定 adb server 的网络端口</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb -P &lt;port&gt; start-server</span><br></pre></td></tr></table></figure>
+
+<p>默认端口为5037</p>
+<h1 id="设备连接管理"><a href="#设备连接管理" class="headerlink" title="设备连接管理"></a>设备连接管理</h1><h2 id="查询已连接设备-x2F-模拟器"><a href="#查询已连接设备-x2F-模拟器" class="headerlink" title="查询已连接设备&#x2F;模拟器"></a>查询已连接设备&#x2F;模拟器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">List of devices attached</span><br><span class="line">cf264b8f	device</span><br><span class="line">emulator-5554	device</span><br><span class="line">10.129.164.6:5555	device</span><br></pre></td></tr></table></figure>
+
+<p>输出格式为 [serialNumber] [state]，serialNumber 即我们常说的 SN，state 有如下几种：</p>
+<ul>
+<li>offline —— 表示设备未连接成功或无响应。</li>
+<li>device —— 设备已连接。注意这个状态并不能标识 Android 系统已经完全启动和可操作，在设备启动过程中设备实例就可连接到 adb，但启动完毕后系统才处于可操作状态。</li>
+<li>no device —— 没有设备&#x2F;模拟器连接。</li>
+</ul>
+<p>常见异常输出：</p>
+<ol>
+<li>没有设备&#x2F;模拟器连接成功。List of devices attached </li>
+<li>设备&#x2F;模拟器未连接到 adb 或无响应。List of devices attached cf264b8f offline</li>
+</ol>
+<h2 id="USB连接"><a href="#USB连接" class="headerlink" title="USB连接"></a>USB连接</h2><p>通过 USB 连接来正常使用 adb 需要保证几点：</p>
+<ol>
+<li>硬件状态正常。包括 Android 设备处于正常开机状态，USB 连接线和各种接口完好。</li>
+<li>Android 设备的开发者选项和 USB 调试模式已开启。可以到「设置」-「开发者选项」-「Android 调试」查看。如果在设置里找不到开发者选项，那需要通过一个彩蛋来让它显示出来：在「设置」-「关于手机」连续点击「版本号」7 次。</li>
+<li>设备驱动状态正常。这一点貌似在 Linux 和 Mac OS X 下不用操心，在 Windows 下有可能遇到需要安装驱动的情况，确认这一点可以右键「计算机」-「属性」，到「设备管理器」里查看相关设备上是否有黄色感叹号或问号，如果没有就说明驱动状态已经好了。否则可以下载一个手机助手类程序来安装驱动先。</li>
+<li>通过 USB 线连接好电脑和设备后确认状态。adb devices 如果能看到xxxxxx device 说明连接成功。</li>
+</ol>
+<h2 id="无线连接"><a href="#无线连接" class="headerlink" title="无线连接"></a>无线连接</h2><p>工具：wifi adb</p>
+<p><strong>Android11 及以上</strong></p>
+<p><a href="https://developer.android.com/studio/command-line/adb?hl=zh_cn#connect-to-a-device-over-wi-fi-android-11+">官方文档</a></p>
+<p><strong>操作步骤：</strong></p>
+<ol>
+<li>更新到最新版本的 <a href="https://developer.android.com/studio/releases/platform-tools?hl=zh_cn">SDK 平台工具</a>(至少30.0.0)。</li>
+<li>将 Android 设备与要运行 adb 的电脑连接到同一个局域网，比如连到同一个 WiFi。</li>
+<li>在开发者选项中启用无线调试。</li>
+<li>在询问要允许在此网络上进行无线调试吗？的对话框中，点击允许。</li>
+<li>选择使用配对码配对设备，使用弹窗中的 IP 地址和端口号。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb pair ipaddr:port</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>提示Enter pairing code: 时输入弹窗中的配对码，成功后会显示Successfully paired to …。</li>
+<li>使用无线调试下的 IP 地址和端口。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb connect ipaddr:port</span><br></pre></td></tr></table></figure>
+
+<h2 id="无线连接（需要借助-USB-线）"><a href="#无线连接（需要借助-USB-线）" class="headerlink" title="无线连接（需要借助 USB 线）"></a>无线连接（需要借助 USB 线）</h2><p>操作步骤：</p>
+<ol>
+<li>将 Android 设备与要运行 adb 的电脑连接到同一个局域网，比如连到同一个 WiFi。</li>
+<li>将设备与电脑通过 USB 线连接。应确保连接成功（可运行 adb devices 看是否能列出该设备）。</li>
+<li>让设备在 5555 端口监听 TCP&#x2F;IP 连接：adb tcpip 5555</li>
+<li>断开 USB 连接。</li>
+<li>找到设备的 IP 地址。一般能在「设置」-「关于手机」-「状态信息」-「IP地址」找到，也可以使用下文里 <a href="https://mazhuang.org/awesome-adb/#ip-%E5%9C%B0%E5%9D%80">查看设备信息 – IP 地址</a> 一节里的方法用 adb 命令来查看。</li>
+<li>通过 IP 地址连接设备。adb connect <code>device-ip-address</code> 这里的 <code>device-ip-address</code> 就是上一步中找到的设备 IP 地址。</li>
+<li>确认连接状态。adb devices 如果能看到<code>device-ip-address</code>:5555 device 说明连接成功。</li>
+</ol>
+<h2 id="断开无线连接"><a href="#断开无线连接" class="headerlink" title="断开无线连接"></a>断开无线连接</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb disconnect &lt;device-ip-address&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="无线连接（无需借助-USB-线）"><a href="#无线连接（无需借助-USB-线）" class="headerlink" title="无线连接（无需借助 USB 线）"></a>无线连接（无需借助 USB 线）</h2><ol>
+<li>在 Android 设备上安装一个终端模拟器, 下载地址是：<a href="https://jackpal.github.io/Android-Terminal-Emulator/">Terminal Emulator for Android Downloads</a></li>
+<li>将 Android 设备与要运行 adb 的电脑连接到同一个局域网，比如连到同一个 WiFi。</li>
+<li>打开 Android 设备上的终端模拟器，在里面依次运行命令：su setprop service.adb.tcp.port 5555</li>
+<li>找到 Android 设备的 IP 地址</li>
+<li>在电脑上通过 adb 和 IP 地址连接 Android 设备。adb connect <device-ip-address> 这里的 <device-ip-address> 就是上一步中找到的设备 IP 地址。如果能看到 connected to <device-ip-address>:5555 这样的输出则表示连接成功。</device-ip-address></device-ip-address></device-ip-address></li>
+</ol>
+<p>有的设备，可能在第 5 步之前需要重启 adbd 服务，在设备的终端模拟器上运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">restart adbd</span><br></pre></td></tr></table></figure>
+
+<p>如果 restart 无效，尝试以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stop adbd</span><br><span class="line">start adbd</span><br></pre></td></tr></table></figure>
+
+<h1 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h1><h2 id="查看应用列表"><a href="#查看应用列表" class="headerlink" title="查看应用列表"></a>查看应用列表</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages [-f] [-d] [-e] [-s] [-3] [-i] [-u] [--user USER_ID] [FILTER]</span><br></pre></td></tr></table></figure>
+
+<p>即在 adb shell pm list packages 的基础上可以加一些参数进行过滤查看不同的列表，支持的过滤参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>显示列表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无</td>
+<td>所有应用</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>显示应用关联的apk文件</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>只显示disabled的应用</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>只显示enabled的应用</td>
+</tr>
+</tbody></table>
+<p>|-s|只显示系统应用<br>|-3|只显示第三方应用<br>|-i|显示应用的installer<br>|-u|包含已卸载应用<br>|<code>&lt;FILTER&gt;</code>|包名包含<code>FILTER</code>字符串</p>
+<h2 id="所有应用"><a href="#所有应用" class="headerlink" title="所有应用"></a>所有应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/bb94afa39454613438e514045db02fab86275693361396c6eab47e657aa04c85.png" alt="图 1">  </p>
+<h2 id="系统应用"><a href="#系统应用" class="headerlink" title="系统应用"></a>系统应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages -s</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三方应用"><a href="#第三方应用" class="headerlink" title="第三方应用"></a>第三方应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages -3</span><br></pre></td></tr></table></figure>
+
+<h2 id="包含某种字符串的应用"><a href="#包含某种字符串的应用" class="headerlink" title="包含某种字符串的应用"></a>包含某种字符串的应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages zhoushan</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/36f8ad08bd7543a6755e2822edad60cce62c8b46e83c99ef6e1e6b07fd2973aa.png" alt="图 2">  </p>
+<p>使用grep过滤</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm list packages | grep zhoushan</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装apk"><a href="#安装apk" class="headerlink" title="安装apk"></a>安装apk</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb install [-lrtsdg] &lt;path_to_apk&gt;</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-l</td>
+<td>将应用安装到保护目录&#x2F;mnt&#x2F;asec</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>允许覆盖安装</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>允许安装AndroidManifest.xml里application指定android:testOnly&#x3D;”true”的应用</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>将应用安装到sdcard</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>允许降级覆盖安装</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>授予所有运行时权限</td>
+</tr>
+<tr>
+<td>-abi abi-identifier</td>
+<td>为特定ABI强制安装apk,abi-identifier可以是armeabi-v7a,arm64-v8a,v86,x86_64等</td>
+</tr>
+</tbody></table>
+<p>安装成功提示：“Success”</p>
+<p>常见安装失败输出代码、含义</p>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>含义</th>
+<th>解决办法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>INSTALL_FAILED_ALREADY_EXISTS</td>
+<td>应用已经存在，或卸载了但没卸载干净</td>
+<td><code>adb install</code> 时使用 <code>-r</code> 参数，或者先 <code>adb uninstall &lt;packagename&gt;</code> 再安装</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_INVALID_APK</td>
+<td>无效的 APK 文件</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_INVALID_URI</td>
+<td>无效的 APK 文件名</td>
+<td>确保 APK 文件名里无中文</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_INSUFFICIENT_STORAGE</td>
+<td>空间不足</td>
+<td>清理空间</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_DUPLICATE_PACKAGE</td>
+<td>已经存在同名程序</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_NO_SHARED_USER</td>
+<td>请求的共享用户不存在</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_UPDATE_INCOMPATIBLE</td>
+<td>以前安装过同名应用，但卸载时数据没有移除；或者已安装该应用，但签名不一致</td>
+<td>先 <code>adb uninstall &lt;packagename&gt;</code> 再安装</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_SHARED_USER_INCOMPATIBLE</td>
+<td>请求的共享用户存在但签名不一致</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_MISSING_SHARED_LIBRARY</td>
+<td>安装包使用了设备上不可用的共享库</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_REPLACE_COULDNT_DELETE</td>
+<td>替换时无法删除</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_DEXOPT</td>
+<td>dex 优化验证失败或空间不足</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_OLDER_SDK</td>
+<td>设备系统版本低于应用要求</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_CONFLICTING_PROVIDER</td>
+<td>设备里已经存在与应用里同名的 content provider</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_NEWER_SDK</td>
+<td>设备系统版本高于应用要求</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_TEST_ONLY</td>
+<td>应用是 test-only 的，但安装时没有指定 <code>-t</code> 参数</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_CPU_ABI_INCOMPATIBLE</td>
+<td>包含不兼容设备 CPU 应用程序二进制接口的 native code</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_MISSING_FEATURE</td>
+<td>应用使用了设备不可用的功能</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_CONTAINER_ERROR</td>
+<td>1. sdcard 访问失败;<br> 2. 应用签名与 ROM 签名一致，被当作内置应用。</td>
+<td>1. 确认 sdcard 可用，或者安装到内置存储;<br>2. 打包时不与 ROM 使用相同签名。</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_INVALID_INSTALL_LOCATION</td>
+<td>1. 不能安装到指定位置;<br>2. 应用签名与 ROM 签名一致，被当作内置应用。</td>
+<td>1. 切换安装位置，添加或删除 <code>-s</code> 参数;<br>2. 打包时不与 ROM 使用相同签名。</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_MEDIA_UNAVAILABLE</td>
+<td>安装位置不可用</td>
+<td>一般为 sdcard，确认 sdcard 可用或安装到内置存储</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_VERIFICATION_TIMEOUT</td>
+<td>验证安装包超时</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_VERIFICATION_FAILURE</td>
+<td>验证安装包失败</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_PACKAGE_CHANGED</td>
+<td>应用与调用程序期望的不一致</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_UID_CHANGED</td>
+<td>以前安装过该应用，与本次分配的 UID 不一致</td>
+<td>清除以前安装过的残留文件</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_VERSION_DOWNGRADE</td>
+<td>已经安装了该应用更高版本</td>
+<td>使用 <code>-d</code> 参数</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_PERMISSION_MODEL_DOWNGRADE</td>
+<td>已安装 target SDK 支持运行时权限的同名应用，要安装的版本不支持运行时权限</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_NOT_APK</td>
+<td>指定路径不是文件，或不是以 <code>.apk</code> 结尾</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_BAD_MANIFEST</td>
+<td>无法解析的 AndroidManifest.xml 文件</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION</td>
+<td>解析器遇到异常</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_NO_CERTIFICATES</td>
+<td>安装包没有签名</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES</td>
+<td>已安装该应用，且签名与 APK 文件不一致</td>
+<td>先卸载设备上的该应用，再安装</td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_CERTIFICATE_ENCODING</td>
+<td>解析 APK 文件时遇到 <code>CertificateEncodingException</code></td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME</td>
+<td>manifest 文件里没有或者使用了无效的包名</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID</td>
+<td>manifest 文件里指定了无效的共享用户 ID</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_MANIFEST_MALFORMED</td>
+<td>解析 manifest 文件时遇到结构性错误</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_PARSE_FAILED_MANIFEST_EMPTY</td>
+<td>在 manifest 文件里找不到找可操作标签（instrumentation 或 application）</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_INTERNAL_ERROR</td>
+<td>因系统问题安装失败</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_USER_RESTRICTED</td>
+<td>用户被限制安装应用</td>
+<td>在开发者选项里将「USB安装」打开，如果已经打开了，那先关闭再打开。</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_DUPLICATE_PERMISSION</td>
+<td>应用尝试定义一个已经存在的权限名称</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_NO_MATCHING_ABIS</td>
+<td>应用包含设备的应用程序二进制接口不支持的 native code</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_CANCELED_BY_USER</td>
+<td>应用安装需要在设备上确认，但未操作设备或点了取消</td>
+<td>在设备上同意安装</td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_ACWF_INCOMPATIBLE</td>
+<td>应用程序与设备不兼容</td>
+<td></td>
+</tr>
+<tr>
+<td>INSTALL_FAILED_TEST_ONLY</td>
+<td>APK 文件是使用 Android Studio 直接 RUN 编译出来的文件</td>
+<td>通过 Gradle 的 assembleDebug 或 assembleRelease 重新编译，或者 Generate Signed APK</td>
+</tr>
+<tr>
+<td>does not contain AndroidManifest.xml</td>
+<td>无效的 APK 文件</td>
+<td></td>
+</tr>
+<tr>
+<td>is not a valid zip file</td>
+<td>无效的 APK 文件</td>
+<td></td>
+</tr>
+<tr>
+<td>Offline</td>
+<td>设备未连接成功</td>
+<td>先将设备与 adb 连接成功</td>
+</tr>
+<tr>
+<td>unauthorized</td>
+<td>设备未授权允许调试</td>
+<td></td>
+</tr>
+<tr>
+<td>error: device not found</td>
+<td>没有连接成功的设备</td>
+<td>先将设备与 adb 连接成功</td>
+</tr>
+<tr>
+<td>protocol failure</td>
+<td>设备已断开连接</td>
+<td>先将设备与 adb 连接成功</td>
+</tr>
+<tr>
+<td>Unknown option: -s</td>
+<td>Android 2.2 以下不支持安装到 sdcard</td>
+<td>不使用 <code>-s</code> 参数</td>
+</tr>
+<tr>
+<td>No space left on device</td>
+<td>空间不足</td>
+<td>清理空间</td>
+</tr>
+<tr>
+<td>Permission denied … sdcard …</td>
+<td>sdcard 不可用</td>
+<td></td>
+</tr>
+<tr>
+<td>signatures do not match the previously installed version; ignoring!</td>
+<td>已安装该应用且签名不一致</td>
+<td>先卸载设备上的该应用，再安装</td>
+</tr>
+</tbody></table>
+<p>adb install 原理：</p>
+<ol>
+<li>push apk 文件到 &#x2F;data&#x2F;local&#x2F;tmp</li>
+<li>调用pm install 安装</li>
+<li>删除&#x2F;data&#x2F;lcoal&#x2F;tmp下的对应的apk文件</li>
+</ol>
+<p>所以，必要的时候也可以根据这个步骤，手动分步执行安装过程</p>
+<h2 id="卸载应用"><a href="#卸载应用" class="headerlink" title="卸载应用"></a>卸载应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb uninstall [-k] &lt;packagename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>packagename 表示应用的包名，-k 参数可选，表示卸载应用但保留数据和缓存目录。</p>
+<h2 id="清除应用数据与缓存"><a href="#清除应用数据与缓存" class="headerlink" title="清除应用数据与缓存"></a>清除应用数据与缓存</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm clear &lt;packagename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这条命令的效果相当于在设置里的应用信息界面点击了「清除缓存」和「清除数据」。</p>
+<h2 id="查看前台Activity"><a href="#查看前台Activity" class="headerlink" title="查看前台Activity"></a>查看前台Activity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/48062d4dd498432f5d55f30ce6f4ab298b208dfe4c1fd3ece3d2fb34db756f90.png" alt="图 3">  </p>
+<h2 id="查看正在运行的Services"><a href="#查看正在运行的Services" class="headerlink" title="查看正在运行的Services"></a>查看正在运行的Services</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity services [&lt;packagename&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>packagename 参数不是必须的，指定 packagename表示查看与某个包名相关的 Services，不指定表示查看所有 Services。<br>packagename 不一定要给出完整的包名，比如运行 adb shell dumpsys activity services org.mazhuang，那么包名 org.mazhuang.demo1、org.mazhuang.demo2 和 org.mazhuang123 等相关的 Services 都会列出来。</p>
+<h2 id="查看应用详细信息"><a href="#查看应用详细信息" class="headerlink" title="查看应用详细信息"></a>查看应用详细信息</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys package &lt;packagename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>输出中包含很多信息，包括 Activity Resolver Table、Registered ContentProviders、包名、userId、安装后的文件资源代码等路径、版本信息、权限信息和授予状态、签名版本信息等。</p>
+<h2 id="查看应用安装路径"><a href="#查看应用安装路径" class="headerlink" title="查看应用安装路径"></a>查看应用安装路径</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell pm path &lt;packagename&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="应用交互"><a href="#应用交互" class="headerlink" title="应用交互"></a>应用交互</h1><p>主要是使用 am <code>command</code> 命令，常用的 <code>command</code> 如下：</p>
+<table>
+<thead>
+<tr>
+<th>command</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>start [options] <code>INTENT</code></td>
+<td>启动 <code>INTENT</code> 指定的 Activity</td>
+</tr>
+<tr>
+<td>startservice [options] <code>INTENT</code></td>
+<td>启动 <code>INTENT</code> 指定的 Service</td>
+</tr>
+<tr>
+<td>broadcast [options] <code>INTENT</code></td>
+<td>发送 <code>INTENT</code> 指定的广播</td>
+</tr>
+<tr>
+<td>force-stop <code>packagename</code></td>
+<td>停止 <code>packagename</code> 相关的进程</td>
+</tr>
+</tbody></table>
+<p><code>INTENT</code> 参数很灵活，和写 Android 程序时代码里的 Intent 相对应。<br>用于决定 intent 对象的选项如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a <code>ACTION</code></td>
+<td>指定 action，比如 android.intent.action.VIEW</td>
+</tr>
+<tr>
+<td>-c <code>CATEGORY</code></td>
+<td>指定 category，比如 android.intent.category.APP_CONTACTS</td>
+</tr>
+<tr>
+<td>-n <code>COMPONENT</code></td>
+<td>指定完整 component 名，用于明确指定启动哪个 Activity，如 com.example.app&#x2F;.ExampleActivity</td>
+</tr>
+</tbody></table>
+<p><code>INTENT</code> 里还能带数据，就像写代码时的 Bundle 一样：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–esn <code>EXTRA_KEY</code></td>
+<td>null 值（只有 key 名</td>
+</tr>
+<tr>
+<td>-e l –es <code>EXTRA_KEY</code> <code>EXTRA_STRING_VALUE</code></td>
+<td>string 值</td>
+</tr>
+<tr>
+<td>–ez <code>EXTRA_KEY</code> <code>EXTRA_BOOLEAN_VALUE</code></td>
+<td>boolean 值</td>
+</tr>
+<tr>
+<td>–ei <code>EXTRA_KEY</code> <code>EXTRA_INT_VALUE</code></td>
+<td>integer 值</td>
+</tr>
+<tr>
+<td>–el <code>EXTRA_KEY</code> <code>EXTRA_LONG_VALUE</code></td>
+<td>long 值</td>
+</tr>
+<tr>
+<td>–ef <code>EXTRA_KEY</code> <code>EXTRA_FLOAT_VALUE</code></td>
+<td>float 值</td>
+</tr>
+<tr>
+<td>–eu <code>EXTRA_KEY</code> <code>EXTRA_URI_VALUE</code></td>
+<td>URI</td>
+</tr>
+<tr>
+<td>–ecn <code>EXTRA_KEY</code> <code>EXTRA_COMPONENT_NAME_VALUE</code></td>
+<td>component name</td>
+</tr>
+<tr>
+<td>–eia <code>EXTRA_KEY</code> <code>EXTRA_INT_VALUE</code>[,&lt;EXTRA_INT_VALUE…]</td>
+<td>integer 数组</td>
+</tr>
+<tr>
+<td>–ela <code>EXTRA_KEY</code> <code>EXTRA_LONG_VALUE</code>[,&lt;EXTRA_LONG_VALUE…]</td>
+<td>long 数组</td>
+</tr>
+</tbody></table>
+<h2 id="启动应用-x2F-调起Activity"><a href="#启动应用-x2F-调起Activity" class="headerlink" title="启动应用&#x2F;调起Activity"></a>启动应用&#x2F;调起Activity</h2><p>指定Activity名称启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am start [options] &lt;INTENT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Options 说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-D</td>
+<td>开启debug模式</td>
+</tr>
+<tr>
+<td>-W</td>
+<td>等待启动完成</td>
+</tr>
+<tr>
+<td>–start-profile<code>FILE</code></td>
+<td>将profile中的结果输出到指定文件中</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>和上一条一样，区别在于，在app进入idle状态时profiler结束</td>
+</tr>
+<tr>
+<td>-R <code>Count</code></td>
+<td>重复启动Activity，但每次重复启动都会关闭掉最上面的Activity</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>关闭Activity所属的APP进程后再启动Activity</td>
+</tr>
+<tr>
+<td>–opengl-trace</td>
+<td>开启openGL tracing</td>
+</tr>
+<tr>
+<td>–user <code>user_ID</code></td>
+<td>使用指定的用户来启动activity，如果不输入，则使用当前用户执行</td>
+</tr>
+</tbody></table>
+<p>启动Activity的实现原理： 存在-W参数则调用startActivityAndWait()方法来运行，否则startActivityAsUser()。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am start -n com.tencent.mm/.ui.LauncherUI</span><br></pre></td></tr></table></figure>
+
+<p>表示调起微信主界面。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am start -n org.mazhuang.boottimemeasure/.MainActivity --es &quot;toast&quot; &quot;hello, world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>表示调起 org.mazhuang.boottimemeasure&#x2F;.MainActivity 并传给它 string 数据键值对 toast - hello, world。</p>
+<p>不指定Activity名称启动（启动主Activity）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell monkey -p &lt;packagename&gt; -c android.intent.category.LAUNCHER 1</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell monkey -p com.tencent.mm -c android.intent.category.LAUNCHER 1</span><br></pre></td></tr></table></figure>
+
+<p>表示调起微信主界面。</p>
+<h2 id="调起Service"><a href="#调起Service" class="headerlink" title="调起Service"></a>调起Service</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am startservice [options] &lt;INTENT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am startservice -n com.tencent.mm/.plugin.accountsync.model.AccountAuthenticatorService</span><br></pre></td></tr></table></figure>
+
+<p>表示调起微信的某 Service。<br>另外一个典型的用例是如果设备上原本应该显示虚拟按键但是没有显示，可以试试这个：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am startservice -n com.android.systemui/.SystemUIService</span><br></pre></td></tr></table></figure>
+
+<h2 id="停止service"><a href="#停止service" class="headerlink" title="停止service"></a>停止service</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am stopservice [options] &lt;INTENT&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am broadcast [options] &lt;INTENT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以向所有组件广播，也可以只向指定组件广播。<br>例如，向所有组件广播 BOOT_COMPLETED：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am broadcast -a android.intent.action.BOOT_COMPLETED</span><br></pre></td></tr></table></figure>
+
+<p>这类用法在测试的时候很实用，比如某个广播的场景很难制造，可以考虑通过这种方式来发送广播。<br>既能发送系统预定义的广播，也能发送自定义广播。如下是部分系统预定义广播及正常触发时机：</p>
+<table>
+<thead>
+<tr>
+<th>action</th>
+<th>触发时机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>android.net.conn.CONNECTIVITY_CHANGE</td>
+<td>网络连接发生变化</td>
+</tr>
+<tr>
+<td>android.intent.action.SCREEN_ON</td>
+<td>屏幕点亮</td>
+</tr>
+<tr>
+<td>android.intent.action.SCREEN_OFF</td>
+<td>屏幕熄灭</td>
+</tr>
+<tr>
+<td>android.intent.action.BATTERY_LOW</td>
+<td>电量低，会弹出电量低提示框</td>
+</tr>
+<tr>
+<td>android.intent.action.BATTERY_OKAY</td>
+<td>电量恢复了</td>
+</tr>
+<tr>
+<td>android.intent.action.BOOT_COMPLETED</td>
+<td>设备启动完毕</td>
+</tr>
+<tr>
+<td>android.intent.action.DEVICE_STORAGE_LOW</td>
+<td>存储空间过低</td>
+</tr>
+<tr>
+<td>android.intent.action.DEVICE_STORAGE_OK</td>
+<td>存储空间恢复</td>
+</tr>
+<tr>
+<td>android.intent.action.PACKAGE_ADDED</td>
+<td>安装了新的应用</td>
+</tr>
+<tr>
+<td>android.net.wifi.STATE_CHANGE</td>
+<td>WiFi 连接状态发生变化</td>
+</tr>
+<tr>
+<td>android.net.wifi.WIFI_STATE_CHANGED</td>
+<td>WiFi 状态变为启用&#x2F;关闭&#x2F;正在启动&#x2F;正在关闭&#x2F;未知</td>
+</tr>
+<tr>
+<td>android.intent.action.BATTERY_CHANGED</td>
+<td>电池电量发生变化</td>
+</tr>
+<tr>
+<td>android.intent.action.INPUT_METHOD_CHANGED</td>
+<td>系统输入法发生变化</td>
+</tr>
+<tr>
+<td>android.intent.action.ACTION_POWER_CONNECTED</td>
+<td>外部电源连接</td>
+</tr>
+<tr>
+<td>android.intent.action.ACTION_POWER_DISCONNECTED</td>
+<td>外部电源断开连接</td>
+</tr>
+<tr>
+<td>android.intent.action.DREAMING_STARTED</td>
+<td>系统开始休眠</td>
+</tr>
+<tr>
+<td>android.intent.action.DREAMING_STOPPED</td>
+<td>系统停止休眠</td>
+</tr>
+<tr>
+<td>android.intent.action.WALLPAPER_CHANGED</td>
+<td>壁纸发生变化</td>
+</tr>
+<tr>
+<td>android.intent.action.HEADSET_PLUG</td>
+<td>插入耳机</td>
+</tr>
+<tr>
+<td>android.intent.action.MEDIA_UNMOUNTED</td>
+<td>卸载外部介质</td>
+</tr>
+<tr>
+<td>android.intent.action.MEDIA_MOUNTED</td>
+<td>挂载外部介质</td>
+</tr>
+<tr>
+<td>android.os.action.POWER_SAVE_MODE_CHANGED</td>
+<td>省电模式开启</td>
+</tr>
+</tbody></table>
+<p>（以上广播均可使用 adb 触发）</p>
+<h2 id="强制停止应用"><a href="#强制停止应用" class="headerlink" title="强制停止应用"></a>强制停止应用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell am force-stop &lt;packagename&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="复制设备里的文件到电脑"><a href="#复制设备里的文件到电脑" class="headerlink" title="复制设备里的文件到电脑"></a>复制设备里的文件到电脑</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb pull &lt;设备里的文件路径&gt; [电脑上的目录]</span><br></pre></td></tr></table></figure>
+
+<p>其中 电脑上的目录 参数可以省略，默认复制到当前目录。</p>
+<h2 id="复制电脑里的文件到设备"><a href="#复制电脑里的文件到设备" class="headerlink" title="复制电脑里的文件到设备"></a>复制电脑里的文件到设备</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb push &lt;电脑上的文件路径&gt; &lt;设备里的目录&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="模拟按键-x2F-输入"><a href="#模拟按键-x2F-输入" class="headerlink" title="模拟按键&#x2F;输入"></a>模拟按键&#x2F;输入</h1><p>在 adb shell 里有个很实用的命令叫 input，通过它可以做一些有趣的事情。</p>
+<p>input 命令的完整 help 信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sailfish:/ $ input</span><br><span class="line">Usage: input [&lt;source&gt;] [-d DISPLAY_ID] &lt;command&gt; [&lt;arg&gt;...]</span><br><span class="line"></span><br><span class="line">The sources are: </span><br><span class="line">      dpad</span><br><span class="line">      keyboard</span><br><span class="line">      mouse</span><br><span class="line">      touchpad</span><br><span class="line">      gamepad</span><br><span class="line">      touchnavigation</span><br><span class="line">      joystick</span><br><span class="line">      touchscreen</span><br><span class="line">      stylus</span><br><span class="line">      trackball</span><br><span class="line"></span><br><span class="line">-d: specify the display ID.</span><br><span class="line">      (Default: -1 for key event, 0 for motion event if not specified.)</span><br><span class="line">The commands and default sources are:</span><br><span class="line">      text &lt;string&gt; (Default: touchscreen)</span><br><span class="line">      keyevent [--longpress] &lt;key code number or name&gt; ... (Default: keyboard)</span><br><span class="line">      tap &lt;x&gt; &lt;y&gt; (Default: touchscreen)</span><br><span class="line">      swipe &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; [duration(ms)] (Default: touchscreen)</span><br><span class="line">      draganddrop &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; [duration(ms)] (Default: touchscreen)</span><br><span class="line">      press (Default: trackball)</span><br><span class="line">      roll &lt;dx&gt; &lt;dy&gt; (Default: trackball)</span><br><span class="line">      event &lt;DOWN|UP|MOVE&gt; &lt;x&gt; &lt;y&gt; (Default: touchscreen)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>比如使用 adb shell input keyevent keycode命令，不同的 keycode 能实现不同的功能，完整的 keycode 列表详见 <a href="https://developer.android.com/reference/android/view/KeyEvent.html">KeyEvent</a>，摘引部分我觉得有意思的如下：</p>
+<table>
+<thead>
+<tr>
+<th>keycode</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>26</td>
+<td>电源键</td>
+</tr>
+<tr>
+<td>176</td>
+<td>打开系统设置</td>
+</tr>
+<tr>
+<td>210</td>
+<td>打开计算器</td>
+</tr>
+<tr>
+<td>223</td>
+<td>系统休眠</td>
+</tr>
+<tr>
+<td>224</td>
+<td>点亮屏幕</td>
+</tr>
+</tbody></table>
+<p>用列：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell input keyevent 26</span><br></pre></td></tr></table></figure>
+
+<p>执行效果相当于按电源键。</p>
+<h2 id="滑动解锁"><a href="#滑动解锁" class="headerlink" title="滑动解锁"></a>滑动解锁</h2><p>如果锁屏没有密码，是通过滑动手势解锁，那么可以通过 input swipe 来解锁。</p>
+<p>命令（参数以机型 Nexus 5，向上滑动手势解锁举例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell input swipe 300 1000 300 500</span><br></pre></td></tr></table></figure>
+
+<p>参数 300 1000 300 500 分别表示起始点x坐标 起始点y坐标 结束点x坐标 结束点y坐标。</p>
+<h2 id="输入文本"><a href="#输入文本" class="headerlink" title="输入文本"></a>输入文本</h2><p>在焦点处于某文本框时，可以通过 input 命令来输入文本。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell input text hello</span><br></pre></td></tr></table></figure>
+
+<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><p>Android 系统的日志分为两部分，底层的 Linux 内核日志输出到 &#x2F;proc&#x2F;kmsg，Android 的日志输出到 &#x2F;dev&#x2F;log。</p>
+<h2 id="Android日志"><a href="#Android日志" class="headerlink" title="Android日志"></a>Android日志</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[adb] logcat [&lt;option&gt;] ... [&lt;filter-spec&gt;] ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="按级别过滤日志"><a href="#按级别过滤日志" class="headerlink" title="按级别过滤日志"></a>按级别过滤日志</h2><p>Android 的日志分为如下几个优先级（priority）：</p>
+<ul>
+<li>V —— Verbose（最低，输出得最多）</li>
+<li>D —— Debug</li>
+<li>I —— Info</li>
+<li>W —— Warning</li>
+<li>E —— Error</li>
+<li>F —— Fatal</li>
+<li>S —— Silent（最高，啥也不输出）</li>
+</ul>
+<p>按某级别过滤日志则会将该级别及以上的日志输出。</p>
+<p>比如，命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat *:W</span><br></pre></td></tr></table></figure>
+
+<p>会将 Warning、Error、Fatal 和 Silent 日志输出。</p>
+<h2 id="按tag和级别过滤日志"><a href="#按tag和级别过滤日志" class="headerlink" title="按tag和级别过滤日志"></a>按tag和级别过滤日志</h2><p><code>filter-spec</code> 可以由多个 <code>tag</code>[:priority] 组成。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat ActivityManager:I MyApp:D *:S</span><br></pre></td></tr></table></figure>
+
+<p>表示输出 tag ActivityManager 的 Info 以上级别日志，输出 tag MyApp 的 Debug 以上级别日志，及其它 tag 的 Silent 级别日志（即屏蔽其它 tag 日志）。</p>
+<h2 id="日志格式"><a href="#日志格式" class="headerlink" title="日志格式"></a>日志格式</h2><p>可以用 adb logcat -v <code>format</code> 选项指定日志输出格式。</p>
+<p>日志支持按以下几种 <code>format</code>：</p>
+<ul>
+<li>brief默认格式。格式为：<code>priority</code>&#x2F;<code>tag</code>(<code>pid</code>): <code>message</code> 示例：D&#x2F;HeadsetStateMachine( 1785): Disconnected process message: 10, size: 0</li>
+<li>process格式为：<code>priority</code>(<code>pid</code>) <code>message</code> 示例：D( 1785) Disconnected process message: 10, size: 0 (HeadsetStateMachine)</li>
+<li>tag格式为：<code>priority</code>&#x2F;<code>tag</code>: <code>message</code> 示例：D&#x2F;HeadsetStateMachine: Disconnected process message: 10, size: 0</li>
+<li>raw格式为：<code>message</code> 示例：Disconnected process message: 10, size: 0</li>
+<li>time格式为：<code>datetime</code> <code>priority</code>&#x2F;<code>tag</code>(<code>pid</code>): <code>message</code> 示例：08-28 22:39:39.974 D&#x2F;HeadsetStateMachine( 1785): Disconnected process message: 10, size: 0</li>
+<li>threadtime格式为：<code>datetime</code> <code>pid</code> <code>tid</code> <code>priority</code> <code>tag</code>: <code>message</code> 示例：08-28 22:39:39.974 1785 1832 D HeadsetStateMachine: Disconnected process message: 10, size: 0</li>
+<li>long格式为：[ <code>datetime</code> <code>pid</code>:<code>tid</code> <code>priority</code>&#x2F;<code>tag</code> ] <code>message</code> 示例：[ 08-28 22:39:39.974 1785: 1832 D&#x2F;HeadsetStateMachine ] Disconnected process message: 10, size: 0</li>
+</ul>
+<p>指定格式可与上面的过滤同时使用。比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat -v long ActivityManager:I *:S</span><br></pre></td></tr></table></figure>
+
+<h2 id="清空日志"><a href="#清空日志" class="headerlink" title="清空日志"></a>清空日志</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat -c</span><br></pre></td></tr></table></figure>
+
+<h2 id="内核日志"><a href="#内核日志" class="headerlink" title="内核日志"></a>内核日志</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell dmesg</span><br></pre></td></tr></table></figure>
+
+<h1 id="查看设备信息"><a href="#查看设备信息" class="headerlink" title="查看设备信息"></a>查看设备信息</h1><h2 id="型号"><a href="#型号" class="headerlink" title="型号"></a>型号</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell getprop ro.product.model</span><br></pre></td></tr></table></figure>
+
+<h2 id="电池状况"><a href="#电池状况" class="headerlink" title="电池状况"></a>电池状况</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys battery</span><br></pre></td></tr></table></figure>
+
+<h2 id="android-id"><a href="#android-id" class="headerlink" title="android_id"></a>android_id</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings get secure android_id</span><br></pre></td></tr></table></figure>
+
+<h2 id="IMEI"><a href="#IMEI" class="headerlink" title="IMEI"></a>IMEI</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">service call iphonesubinfo 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Android-系统版本"><a href="#Android-系统版本" class="headerlink" title="Android 系统版本"></a>Android 系统版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell getprop ro.build.version.release</span><br></pre></td></tr></table></figure>
+
+<h2 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell ifconfig | grep Mask</span><br></pre></td></tr></table></figure>
+
+<h2 id="Mac-地址"><a href="#Mac-地址" class="headerlink" title="Mac 地址"></a>Mac 地址</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell cat /sys/class/net/wlan0/address</span><br></pre></td></tr></table></figure>
+
+<h2 id="CPU-信息"><a href="#CPU-信息" class="headerlink" title="CPU 信息"></a>CPU 信息</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+
+<h2 id="内存信息"><a href="#内存信息" class="headerlink" title="内存信息"></a>内存信息</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell cat /proc/meminfo</span><br></pre></td></tr></table></figure>
+
+<h2 id="更多硬件与系统属性"><a href="#更多硬件与系统属性" class="headerlink" title="更多硬件与系统属性"></a>更多硬件与系统属性</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell cat /system/build.prop</span><br></pre></td></tr></table></figure>
+
+<p>这会输出很多信息,它们也可通过 adb shell getprop &lt;属性名&gt; 命令单独查看，列举一部分属性如下：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ro.build.version.sdk</td>
+<td>SDK 版本</td>
+</tr>
+<tr>
+<td>ro.build.version.release</td>
+<td>Android 系统版本</td>
+</tr>
+<tr>
+<td>ro.build.version.security_patch</td>
+<td>Android 安全补丁程序级别</td>
+</tr>
+<tr>
+<td>ro.product.model</td>
+<td>型号</td>
+</tr>
+<tr>
+<td>ro.product.brand</td>
+<td>品牌</td>
+</tr>
+<tr>
+<td>ro.product.name</td>
+<td>设备名</td>
+</tr>
+<tr>
+<td>ro.product.board</td>
+<td>处理器型号</td>
+</tr>
+<tr>
+<td>ro.product.cpu.abilist</td>
+<td>CPU 支持的 abi 列表</td>
+</tr>
+<tr>
+<td>persist.sys.isUsbOtgEnabled</td>
+<td>是否支持 OTG</td>
+</tr>
+<tr>
+<td>dalvik.vm.heapsize</td>
+<td>每个应用程序的内存上限</td>
+</tr>
+<tr>
+<td>ro.sf.lcd_density</td>
+<td>屏幕密度</td>
+</tr>
+</tbody></table>
+<p>一些小厂定制的 ROM 可能修改过 CPU 支持的 abi 列表的属性名，如果用 ro.product.cpu.abilist 属性名查找不到，可以这样试试：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell cat /system/build.prop | grep ro.product.cpu.abi</span><br></pre></td></tr></table></figure>
+
+<h1 id="修改设置"><a href="#修改设置" class="headerlink" title="修改设置"></a>修改设置</h1><p>修改设置的原理主要是通过 settings 命令修改 &#x2F;data&#x2F;data&#x2F;com.android.providers.settings&#x2F;databases&#x2F;settings.db 里存放的设置值。</p>
+<h2 id="关闭-USB-调试模式"><a href="#关闭-USB-调试模式" class="headerlink" title="关闭 USB 调试模式"></a>关闭 USB 调试模式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings put global adb_enabled 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="允许-x2F-禁止访问非-SDK-API"><a href="#允许-x2F-禁止访问非-SDK-API" class="headerlink" title="允许&#x2F;禁止访问非 SDK API"></a>允许&#x2F;禁止访问非 SDK API</h2><p><strong>允许访问非 SDK API：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings put global hidden_api_policy_pre_p_apps 1</span><br><span class="line">adb shell settings put global hidden_api_policy_p_apps 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>禁止访问非 SDK API：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings delete global hidden_api_policy_pre_p_apps</span><br><span class="line">adb shell settings delete global hidden_api_policy_p_apps</span><br></pre></td></tr></table></figure>
+
+<p>不需要设备获得 Root 权限。</p>
+<p>命令最后的数字的含义：</p>
+<table>
+<thead>
+<tr>
+<th>指</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>禁止检测非 SDK 接口的调用。该情况下，日志记录功能被禁用，并且令 strict mode API，即 detectNonSdkApiUsage() 无效。不推荐。</td>
+</tr>
+<tr>
+<td>1</td>
+<td>仅警告——允许访问所有非 SDK 接口，但保留日志中的警告信息，可继续使用 strick mode API。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>禁止调用深灰名单和黑名单中的接口。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>禁止调用黑名单中的接口，但允许调用深灰名单中的接口。</td>
+</tr>
+</tbody></table>
+<h2 id="状态栏和导航栏的显示隐藏"><a href="#状态栏和导航栏的显示隐藏" class="headerlink" title="状态栏和导航栏的显示隐藏"></a>状态栏和导航栏的显示隐藏</h2><p>本节所说的相关设置对应 Cyanogenmod 里的「扩展桌面」。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings put global policy_control &lt;key-values&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>key-values</code> 可由如下几种键及其对应的值组成，格式为 <code>key1</code>&#x3D;<code>value1</code>:<code>key2</code>&#x3D;<code>value2</code>。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>immersive.full</td>
+<td>同时隐藏</td>
+</tr>
+<tr>
+<td>immersive.status</td>
+<td>隐藏状态栏</td>
+</tr>
+<tr>
+<td>immersive.navigation</td>
+<td>隐藏导航栏</td>
+</tr>
+<tr>
+<td>immersive.preconfirms</td>
+<td>?</td>
+</tr>
+</tbody></table>
+<p>这些键对应的值可则如下值用逗号组合：</p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>apps</td>
+<td>所有应用</td>
+</tr>
+<tr>
+<td>*</td>
+<td>所有界面</td>
+</tr>
+<tr>
+<td>packagename</td>
+<td>指定应用</td>
+</tr>
+<tr>
+<td>-packagename</td>
+<td>排除指定应用</td>
+</tr>
+</tbody></table>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings put global policy_control immersive.full=*</span><br></pre></td></tr></table></figure>
+
+<p>表示设置在所有界面下都同时隐藏状态栏和导航栏。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell settings put global policy_control immersive.status=com.package1,com.package2:immersive.navigation=apps,-com.package3</span><br></pre></td></tr></table></figure>
+
+<p>表示设置在包名为 com.package1 和 com.package2 的应用里隐藏状态栏，在除了包名为 com.package3 的所有应用里隐藏导航栏。</p>
+<h1 id="实用功能"><a href="#实用功能" class="headerlink" title="实用功能"></a>实用功能</h1><h2 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h2><p>截图保存到电脑当前位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb exec-out screencap -p &gt; sc.png</span><br></pre></td></tr></table></figure>
+
+<p>先截图保存到设备里：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p /sdcard/sc.png</span><br></pre></td></tr></table></figure>
+
+<p>然后将 png 文件导出到电脑：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb pull /sdcard/sc.png</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 adb shell screencap -h 查看 screencap 命令的帮助信息，下面是两个有意义的参数及含义：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>指定保存文件为 png 格式</td>
+</tr>
+<tr>
+<td>-d display-id</td>
+<td>指定截图的显示屏编号（有多显示屏的情况下）</td>
+</tr>
+</tbody></table>
+<p>实测如果指定文件名以 .png 结尾时可以省略 -p 参数；否则需要使用 -p 参数。如果不指定文件名，截图文件的内容将直接输出到 stdout。</p>
+<p>另外一种一行命令截图并保存到电脑的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p | sed &quot;s/\r$//&quot; &gt; sc.png</span><br></pre></td></tr></table></figure>
+
+<h2 id="录制屏幕"><a href="#录制屏幕" class="headerlink" title="录制屏幕"></a>录制屏幕</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/filename.mp4</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 adb shell screenrecord –help 查看 screenrecord 命令的帮助信息，下面是常见参数及含义：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–size WIDTHxHEIGHT</td>
+<td>视频的尺寸，比如 1280x720，默认是屏幕分辨率。</td>
+</tr>
+<tr>
+<td>–bit-rate RATE</td>
+<td>视频的比特率，默认是 4Mbps。</td>
+</tr>
+<tr>
+<td>–time-limit TIME</td>
+<td>录制时长，单位秒。</td>
+</tr>
+<tr>
+<td>–verbose</td>
+<td>输出更多信息。</td>
+</tr>
+</tbody></table>
+<h2 id="查看连接过的-WiFi-密码"><a href="#查看连接过的-WiFi-密码" class="headerlink" title="查看连接过的 WiFi 密码"></a>查看连接过的 WiFi 密码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cat /data/misc/wifi/*.conf</span><br></pre></td></tr></table></figure>
+
+<p>如果 Android O 或以后，WiFi 密码保存的地址有变化，是在 WifiConfigStore.xml 里面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cat /data/misc/wifi/WifiConfigStore.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Monkey-进行压力测试"><a href="#使用-Monkey-进行压力测试" class="headerlink" title="使用 Monkey 进行压力测试"></a>使用 Monkey 进行压力测试</h2><p>Monkey 可以生成伪随机用户事件来模拟单击、触摸、手势等操作，可以对正在开发中的程序进行随机压力测试。</p>
+<p>简单用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell monkey -p &lt;packagename&gt; -v 500</span><br></pre></td></tr></table></figure>
+
+<p>表示向 <code>packagename</code> 指定的应用程序发送 500 个伪随机事件。</p>
+<p>Monkey 的详细用法参考 <a href="https://developer.android.com/studio/test/monkey.html">官方文档</a>。</p>
+<h2 id="开启-x2F-关闭-WiFi"><a href="#开启-x2F-关闭-WiFi" class="headerlink" title="开启&#x2F;关闭 WiFi"></a>开启&#x2F;关闭 WiFi</h2><p>开启 WiFi：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb shell svc wifi enable</span><br></pre></td></tr></table></figure>
+
+<p>关闭 WiFi：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb shell svc wifi disable</span><br></pre></td></tr></table></figure>
+
+<p>若执行成功，输出为空；若未取得 root 权限执行此命令，将执行失败，输出 Killed。</p>
+<h1 id="刷机相关"><a href="#刷机相关" class="headerlink" title="刷机相关"></a>刷机相关</h1><h2 id="重启到-Recovery-模式"><a href="#重启到-Recovery-模式" class="headerlink" title="重启到 Recovery 模式"></a>重启到 Recovery 模式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb reboot recovery</span><br></pre></td></tr></table></figure>
+
+<h2 id="从-Recovery-重启到-Android"><a href="#从-Recovery-重启到-Android" class="headerlink" title="从 Recovery 重启到 Android"></a>从 Recovery 重启到 Android</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启到-Fastboot-模式"><a href="#重启到-Fastboot-模式" class="headerlink" title="重启到 Fastboot 模式"></a>重启到 Fastboot 模式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb reboot bootloader</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="安全相关"><a href="#安全相关" class="headerlink" title="安全相关"></a>安全相关</h1><h2 id="启用-x2F-禁用-SELinux"><a href="#启用-x2F-禁用-SELinux" class="headerlink" title="启用&#x2F;禁用 SELinux"></a>启用&#x2F;禁用 SELinux</h2><p>启用 SELinux</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb shell setenforce 1</span><br></pre></td></tr></table></figure>
+
+<p>禁用 SELinux</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb shell setenforce 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="启用-x2F-禁用-dm-verity"><a href="#启用-x2F-禁用-dm-verity" class="headerlink" title="启用&#x2F;禁用 dm_verity"></a>启用&#x2F;禁用 dm_verity</h2><p>启用 dm_verity</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb enable-verity</span><br></pre></td></tr></table></figure>
+
+<p>禁用 dm_verity</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb root</span><br><span class="line">adb disable-verity</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell ps</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看实时资源占用情况"><a href="#查看实时资源占用情况" class="headerlink" title="查看实时资源占用情况"></a>查看实时资源占用情况</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb shell top</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/8d150b494d9f1132f7a47c58689aec70d74e4156f60ccbb8e37c8554a3ea574d.png" alt="图 1"><br>各列含义：</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PID</td>
+<td>进程ID</td>
+</tr>
+<tr>
+<td>PR</td>
+<td>优先级</td>
+</tr>
+<tr>
+<td>CPU%</td>
+<td>当前瞬间占用 CPU 百分比</td>
+</tr>
+<tr>
+<td>S</td>
+<td>进程状态（R&#x3D;运行，S&#x3D;睡眠，T&#x3D;跟踪&#x2F;停止，Z&#x3D;僵尸进程）</td>
+</tr>
+<tr>
+<td>#THR</td>
+<td>线程数</td>
+</tr>
+<tr>
+<td>VSS</td>
+<td>Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）</td>
+</tr>
+<tr>
+<td>RSS</td>
+<td>Resident Set Size 实际使用物理内存（包含共享库占用的内存）</td>
+</tr>
+<tr>
+<td>PCY</td>
+<td>调度策略优先级，SP_BACKGROUND&#x2F;SPFOREGROUND</td>
+</tr>
+<tr>
+<td>UID</td>
+<td>进程所有者的用户 ID</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>进程名</td>
+</tr>
+</tbody></table>
+<p>top 命令还支持一些命令行参数，详细用法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [ -t ] [ -h ]</span><br><span class="line">    -m num  最多显示多少个进程</span><br><span class="line">    -n num  刷新多少次后退出</span><br><span class="line">    -d num  刷新时间间隔（单位秒，默认值 5）</span><br><span class="line">    -s col  按某列排序（可用 col 值：cpu, vss, rss, thr）</span><br><span class="line">    -t      显示线程信息</span><br><span class="line">    -h      显示帮助文档</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cat</td>
+<td>显示文件内容</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>切换目录</td>
+</tr>
+<tr>
+<td>chmod</td>
+<td>改变文件的存取模式&#x2F;访问权限</td>
+</tr>
+<tr>
+<td>df</td>
+<td>查看磁盘空间使用情况</td>
+</tr>
+<tr>
+<td>grep</td>
+<td>过滤输出</td>
+</tr>
+<tr>
+<td>kill</td>
+<td>杀死指定 PID 的进程</td>
+</tr>
+<tr>
+<td>ls</td>
+<td>列举目录内容</td>
+</tr>
+<tr>
+<td>mount</td>
+<td>挂载目录的查看和管理</td>
+</tr>
+<tr>
+<td>mv</td>
+<td>移动或重命名文件</td>
+</tr>
+<tr>
+<td>ps</td>
+<td>查看正在运行的进程</td>
+</tr>
+<tr>
+<td>rm</td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td>top</td>
+<td>查看进程的资源占用情况</td>
+</tr>
+</tbody></table>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h1 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h1><p><a href="https://www.ddosi.org/awesome-adb/">雨苁</a></p>
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件结构</title>
+    <url>/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="APK打包流程"><a href="#APK打包流程" class="headerlink" title="APK打包流程"></a>APK打包流程</h1><p><img src="/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/image-20220410124155850.png" alt="image-20220410124155850"></p>
+<p><strong>1，打包资源文件，生成R.java文件</strong></p>
+<p>打包工具是aapt，在这个过程中，项目中的AndroidManifest.xml文件和布局文件xml都会编译，然后生成相应的R.java，另外AndroidManifest.xml会被aapt编译成二进制</p>
+<p><strong>2，处理aidl文件，生成相应的JAVA文件</strong></p>
+<p>这一过程中使用的工具是aidl，即Android接口描述语言。</p>
+<p>aidl工具解析接口定义文件然后生成相应的java代码接口供程序调用。如果在项目没有使用aidl文件，则可以跳过这一步。</p>
+<p><strong>3，编译项目源代码，生成class文件</strong></p>
+<p>使用javac工具把项目中所有的Java代码编译为class文件</p>
+<p><strong>4，转换所有的class文件，生成classes.dex文件</strong></p>
+<p>dx工具生成可供Android系统Dalvik虚拟机执行的classes.dex文件，任何第三方的libraries和.class文件都会被转换成.dex文件。dx工具的主要工作是将java字节码转成Dalvik字节码，压缩常量池，消除冗余信息等。</p>
+<p><strong>5，打包生成apk文件</strong></p>
+<p>所有没有被编译过的资源，如images，assets目录下资源（该类文件是一些原始文件，APP打包时并不会对其进行编译，而是直接打包到APP中，对于这一类资源文件的访问，应用层代码需要通过文件名对其进行访问）；编译过的资源和.dex文件都会被apkbuilder工具打包到最终的.apk文件中</p>
+<p><strong>6，对apk文件进行签名</strong></p>
+<p>在开发过程中，主要用到的就是两种签名的keystore。一种是用于调试的debug.keystore，它主要用于调试，在Android studio中直接run以后跑在手机上的就是使用的debug.keystore。</p>
+<p>另一种就是用于发布正式版本的keystore。</p>
+<p><strong>7，对签名后的apk文件进行对齐处理</strong></p>
+<p>工具是zipalign，对齐的主要过程是将APK包中所有的资源文件距离文件起始偏移为4字节整数倍，这样通过内存映射访问apk文件时的速度会更快。对齐的作用就是减少运行时内存的使用</p>
+<p><strong>七个步骤七个工具</strong></p>
+<h1 id="APK文件结构"><a href="#APK文件结构" class="headerlink" title="APK文件结构"></a>APK文件结构</h1><p><img src="/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/20200919181701974.png" alt="20200919181701974"></p>
+<p><strong>assets 目录</strong>：assets 文件用来存放需要打包到 Android 应用程序的静态资源文件， 例如图片资源文件、JSON 配置文件、渠道配置文件、二进制数据文件、HTML5 离线资源 文件等。与 res&#x2F;raw 目录不同的是，assets 目录支持任意深度的子目录，同时该目录下 面的文件不会生成资源 ID。</p>
+<p><strong>lib 目录</strong>：这里存放应用程序依赖的 native 库文件，一般是用 C&#x2F;C++编写，这里的 lib 库可能包含 4 中不同类型，根据 CPU 型号的不同，大体可以分为 ARM，ARMv7a，MIPS，X86，分别对应着 ARM 架构，ARM-V7 架构，MIPS 架构和 X86 架构。</p>
+<p><strong>META-INF 目录</strong>：存放着应用程序的的签名信息，该信息可以验证 APK 的完整性。 META-INF 目录中包含的文件有 CERT.RSA(公钥、加密算法等信息)，CERT.SF(对摘要文 件的签名文件)和 MANIFEST.MF(摘要文件)。</p>
+<p><strong>res 目录</strong>：存放应用的资源文件，如图片资源，xml 配置资源。存放这个文件夹下的 所有文件都会和上文所说的，映射到 Android 工程中的.R 文件中，生成对应的资源 ID， 访问的时候直接使用资源 ID，即 R.ID.FILENAME，res 文件夹下可以包含多个文件夹； anim 是存放动画文件的；drawable 目录存放图形资源；layout 目录存放布局文件； values 目录存放一些特征值；colors.xml 存放 color 的颜色值等</p>
+<p><strong>AndroidManifest.xml 文件</strong>：Android 应用程序的配置文件，Android 应用的四 大组件 （Activity、Service、BroadcastReceiver 和 ContentProvider ）都在此配置和声明。</p>
+<p><strong>classes.dex 文件</strong>：应用程序的可执行文件，Android 的所有 java 代码都在这，通 过反编译工具可以查看其代码。当文件中的方法数超过 65535 就会进行分包处理，若未 超过则只有一个 dex</p>
+<p><strong>resources.arsc 文件</strong>:资源索引表，用来记录资源文件和资源 ID 之间的映射关系， 用来根据资源 ID 寻找资源</p>
+<h1 id="APK-安装流程"><a href="#APK-安装流程" class="headerlink" title="APK 安装流程"></a>APK 安装流程</h1><ol>
+<li><p>复制 apk 到 data&#x2F;app 、</p>
+</li>
+<li><p>解压扫描安装包 </p>
+</li>
+<li><p>把 apk 的 dex 文件复制到 data&#x2F;dalvik-cache 加快运行速度，缓存起来</p>
+</li>
+</ol>
+<p>4）在 data&#x2F;data 目录中以包名生成文件夹，该文件夹作为应用程序的数据存 放目录，在安装 apk 的过程中，会解析 apk 的 AndroidManifest.xml 文件， 将 apk 的权限、应用包名、apk 的安装位置、版本、userID 等重要信息保存 在&#x2F;data&#x2F;system&#x2F;packages.xml 文件中。这些操作都是在 PackageManagerService 中完成的。</p>
+<p>5）显示 icon 图标</p>
+<p>APK 安装的预备知识点 </p>
+<p>（1）PackageManagerService 是由 SystemServer 启动，PMS 负责应用 的安装、卸载、权限检查等工作 </p>
+<p>（2）在&#x2F;system&#x2F;app 和&#x2F;data&#x2F;app 目录下的 apk 文件，PMS 在启动过程中， 都会扫描安装 （3）每次开机时，PMS 都会在构造函数中对指定目录下的 apk 进行扫描，没 有安装的 apk 就会触发安装。</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
       </tags>
   </entry>
 </search>
