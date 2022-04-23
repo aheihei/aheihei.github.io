@@ -1,49 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>APP抓包</title>
-    <url>/2022/03/14/APP%E6%8A%93%E5%8C%85/</url>
-    <content><![CDATA[<img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg" alt="ecd76310d9e45803ce329fb61db870eb" style="zoom:200%;">
-
-<span id="more"></span>
-
-<p>代理的原理：</p>
-<p>它是网络信息的中转站。在我们正常请求一个网站时，是发送了请求给Web服务器，Web服务器把响应传回给我们。如果设置了代理服务器，实际上就是在本机和服务器之间搭建了一个桥，此时本机不是直接向Web服务器发起请求，而是向代理服务器发出请求，请求会发送给代理服务器，然后由代理服务器再发送给Web服务器，接着由代理服务器再把Web服务器返回的响应转发给本机。这样我们同样可以正常访问网页，但这个过程中Web服务器识别出的真实IP就不再是我们本机的IP了，就成功实现了IP伪装，这就是代理的基本原理。</p>
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/web_proxy-1647220738454.jpg" alt="web_proxy"></p>
-<p><strong>mac地址</strong>：发送端和接收端的地址便是指网卡的地址</p>
-<p>每块网卡出厂时都被烧制上一个世界唯一的mac地址，长度为48位2进制，通常由12位16进制数表示（前六位是厂商编号，后六位是流水线号）</p>
-<p><strong>IP地址</strong>：由于mac地址很难记忆，所以又出现了IP地址</p>
-<p>身份证（mac地址）和名字（IP地址）</p>
-<p><strong>arp协议功能</strong>：广播的方式发送数据包，获取目标主机的mac地址</p>
-<p>网络通信流程图：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909111944359-1323196399.png</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909111944359-1323196399.png" alt="988061-20180909111944359-1323196399"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909112504683-1737949469.png</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909112504683-1737949469.png" alt="988061-20180909112504683-1737949469"></p>
-<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式</p>
-<h2 id="怎么通信"><a href="#怎么通信" class="headerlink" title="怎么通信"></a>怎么通信</h2><p>HTTP报文由从客户机到服务器的请求和从服务器到客户机的响应构成。请求报文格式如下： </p>
-<p>请求行 － 通用信息头 － 请求头 － 实体头 － 报文主体</p>
-<p>请求行以方法字段开始，后面分别是URL字段和HTTP协议版本字段，并以CRLF结尾。SP是分隔符。除了在最后的CRLF序列中CF和LF是必需的之外，其他都可以不要。有关通用信息头，请求头和实体头方面的具体内容可以参照相关文件。</p>
-<p>应答报文格式如下：</p>
-<p>状态行 － 通用信息头 － 响应头 － 实体头 － 报文主体</p>
-<h1 id="netcat模拟http协议"><a href="#netcat模拟http协议" class="headerlink" title="netcat模拟http协议"></a>netcat模拟http协议</h1><p>Get:</p>
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313155434123.png" alt="image-20220313155434123"></p>
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313160049200.png" alt="image-20220313160049200"></p>
-<p>POST:</p>
-<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161517748.png" alt="image-20220313161517748"></p>
-<h1 id="telnet模拟http协议"><a href="#telnet模拟http协议" class="headerlink" title="telnet模拟http协议"></a>telnet模拟http协议</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161900522.png" alt="image-20220313161900522"></p>
-<h1 id="r0capture的使用"><a href="#r0capture的使用" class="headerlink" title="r0capture的使用"></a>r0capture的使用</h1><p>拉跨</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>抓包原理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>APP使用接口获取网图</title>
     <url>/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/</url>
     <content><![CDATA[<p>怎么从网络接口中获取数据，需要用到哪些框架，传哪些参数</p>
@@ -96,6 +53,49 @@
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>APP抓包</title>
+    <url>/2022/03/14/APP%E6%8A%93%E5%8C%85/</url>
+    <content><![CDATA[<img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg" alt="ecd76310d9e45803ce329fb61db870eb" style="zoom:200%;">
+
+<span id="more"></span>
+
+<p>代理的原理：</p>
+<p>它是网络信息的中转站。在我们正常请求一个网站时，是发送了请求给Web服务器，Web服务器把响应传回给我们。如果设置了代理服务器，实际上就是在本机和服务器之间搭建了一个桥，此时本机不是直接向Web服务器发起请求，而是向代理服务器发出请求，请求会发送给代理服务器，然后由代理服务器再发送给Web服务器，接着由代理服务器再把Web服务器返回的响应转发给本机。这样我们同样可以正常访问网页，但这个过程中Web服务器识别出的真实IP就不再是我们本机的IP了，就成功实现了IP伪装，这就是代理的基本原理。</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/web_proxy-1647220738454.jpg" alt="web_proxy"></p>
+<p><strong>mac地址</strong>：发送端和接收端的地址便是指网卡的地址</p>
+<p>每块网卡出厂时都被烧制上一个世界唯一的mac地址，长度为48位2进制，通常由12位16进制数表示（前六位是厂商编号，后六位是流水线号）</p>
+<p><strong>IP地址</strong>：由于mac地址很难记忆，所以又出现了IP地址</p>
+<p>身份证（mac地址）和名字（IP地址）</p>
+<p><strong>arp协议功能</strong>：广播的方式发送数据包，获取目标主机的mac地址</p>
+<p>网络通信流程图：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909111944359-1323196399.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909111944359-1323196399.png" alt="988061-20180909111944359-1323196399"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909112504683-1737949469.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909112504683-1737949469.png" alt="988061-20180909112504683-1737949469"></p>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式</p>
+<h2 id="怎么通信"><a href="#怎么通信" class="headerlink" title="怎么通信"></a>怎么通信</h2><p>HTTP报文由从客户机到服务器的请求和从服务器到客户机的响应构成。请求报文格式如下： </p>
+<p>请求行 － 通用信息头 － 请求头 － 实体头 － 报文主体</p>
+<p>请求行以方法字段开始，后面分别是URL字段和HTTP协议版本字段，并以CRLF结尾。SP是分隔符。除了在最后的CRLF序列中CF和LF是必需的之外，其他都可以不要。有关通用信息头，请求头和实体头方面的具体内容可以参照相关文件。</p>
+<p>应答报文格式如下：</p>
+<p>状态行 － 通用信息头 － 响应头 － 实体头 － 报文主体</p>
+<h1 id="netcat模拟http协议"><a href="#netcat模拟http协议" class="headerlink" title="netcat模拟http协议"></a>netcat模拟http协议</h1><p>Get:</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313155434123.png" alt="image-20220313155434123"></p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313160049200.png" alt="image-20220313160049200"></p>
+<p>POST:</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161517748.png" alt="image-20220313161517748"></p>
+<h1 id="telnet模拟http协议"><a href="#telnet模拟http协议" class="headerlink" title="telnet模拟http协议"></a>telnet模拟http协议</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161900522.png" alt="image-20220313161900522"></p>
+<h1 id="r0capture的使用"><a href="#r0capture的使用" class="headerlink" title="r0capture的使用"></a>r0capture的使用</h1><p>拉跨</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>抓包原理</tag>
       </tags>
   </entry>
   <entry>
@@ -907,282 +907,6 @@
       </tags>
   </entry>
   <entry>
-    <title>N5X刷Android_10</title>
-    <url>/2022/03/14/N5X%E5%88%B7Android-10/</url>
-    <content><![CDATA[<p>N5X刷入Android10</p>
-<span id="more"></span>
-
-<h2 id="报错："><a href="#报错：" class="headerlink" title="报错："></a>报错：</h2><p>1：offline</p>
-<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313074826944.png" alt="image-20220313074826944"></p>
-<p>拔掉数据线从新插入</p>
-<p>2：failed to read copy response</p>
-<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313074908930.png" alt="image-20220313074908930"></p>
-<p>重启</p>
-<p>3：</p>
-<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313110910328.png" alt="image-20220313110910328"></p>
-<p>fastboot版本问题</p>
-<h2 id="刷机："><a href="#刷机：" class="headerlink" title="刷机："></a>刷机：</h2><p>1，刷入twrp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot flash recovery 下载的twrp版本</span><br></pre></td></tr></table></figure>
-
-<p>2，twrp下刷入install 压缩包</p>
-<h2 id="修改System权限"><a href="#修改System权限" class="headerlink" title="修改System权限"></a>修改System权限</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -o rw,remount /system</span><br><span class="line">mount -o rw,remount /</span><br></pre></td></tr></table></figure>
-
-<p>或者使用MT管理器移动</p>
-<h2 id="证书相关："><a href="#证书相关：" class="headerlink" title="证书相关："></a>证书相关：</h2><p>移动到系统目录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv /sdcard/xxxxxxx.0 /etc/security/cacerts/ 移动文件到系统</span><br><span class="line">chown root:root /etc/security/cacerts/fc365f9d.0 修改用户组</span><br><span class="line">chmod 644 /system/etc/security/cacerts/xxxxxxx.0 修改权限</span><br></pre></td></tr></table></figure>
-
-<p>导出证书转换为pem：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform DER -in cacert.der -out cacert.pem</span><br></pre></td></tr></table></figure>
-
-<p>查看pem证书的hash值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
-
-<p>修改pem证书改名为”hash值.0“</p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>刷机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>抓包（二）</title>
-    <url>/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>工作中发现，有些APP抓不到包，或者打开直接闪退，之前也有抓过包，一段时间没做后，有些方法用起来有些生疏，这里总结一下。</p>
-<p>首先APP一般都会连网，没连网测着也没啥意思，说明功能也不杂多，既然会闪退就会有检测或者双向认证（后面说），抓不到包的情况要么检测代理要么vpn要么双向认证。。。。</p>
-<span id="more"></span>
-
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02.png" alt="02" style="zoom:25%;">
-
-<h1 id="正文："><a href="#正文：" class="headerlink" title="正文："></a>正文：</h1><h1 id="抓包工具："><a href="#抓包工具：" class="headerlink" title="抓包工具："></a>抓包工具：</h1><p>BurpSuite, Charles, Fildder, mitmproxy，R0cmptuter（需要frida）</p>
-<h2 id="添加证书到系统目录"><a href="#添加证书到系统目录" class="headerlink" title="添加证书到系统目录"></a>添加证书到系统目录</h2><p>没装证书时的样子</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315214953630.png" alt="image-20220315214953630"></p>
-<p>首先导出证书</p>
-<p>打开chales找到help选择ssl proxying点击名字最长的那个</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315211235678.png" alt="image-20220315211235678"></p>
-<p>在手机中配置上图所示IP，端口</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01.png" alt="01" style="zoom:25%;">
-
-<p>可以看到“链接”是灰色的，这是因为手机跟电脑没在一个网段，下面就改回来了</p>
-<p>连接好之后在浏览器中输入<code>chls.pro/ssl</code>，然后电脑端会显示是否允许远程链接，选择是，会下载证书。下载后安装就行，这时会把证书安装到用户目录。可以使用Magisk模块<code>move certificates</code>移动到系统目录。（步骤就是首先有模块，安装完用户证书后，手机关机重启就行）</p>
-<h2 id="手动安装证书到系统目录"><a href="#手动安装证书到系统目录" class="headerlink" title="手动安装证书到系统目录"></a>手动安装证书到系统目录</h2><p>首先把证书导来，charles可以导出pem格式，其他工具虽然导不出pem格式，可以使用openssl转换</p>
-<p>命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform DER -in burp.der -out burp.pem</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315215723332.png"></p>
-<p>charles</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315215240068.png" alt="image-20220315215240068"></p>
-<p>查看pem证书的hash值并记录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -subject_hash_old -in charles.pem</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315220058741.png" alt="image-20220315220058741"></p>
-<p>将证书名修改为：红色标记的值.0（因为系统证书目录里的证书是这样命名的<code>证书Hash.数字</code>，数字可以可以设置为别的，防止命名冲突）</p>
-<p>下一步将证书移动到手机里使用如下命令或者其他方式</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb push ec936cb1.0 /sdcard</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221016089.png" alt="image-20220315221016089"></p>
-<p>修改系统目录权限</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -o rw,remount /system</span><br><span class="line">mount -o rw,remount /</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221328562.png" alt="image-20220315221328562"></p>
-<p>移动证书到系统目录</p>
-<p>系统证书目录：<code>/system/etc/security/cacerts/</code>,修改权限</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv sdcard/ec936cb1.0 /system/etc/security/cacerts/ 移动</span><br><span class="line">chmod 644 /system/etc/security/cacerts/ec936cb1.0 修改权限</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221819946.png" alt="image-20220315221819946"></p>
-<p>PS: 如果觉得上面的操作比较复杂，推荐一款软件<code>MT管理器</code>直接移动证书到系统证书目录，记得还是要修改权限</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473543764381.png" alt="01-16473543764381" style="zoom:25%;">
-
-<p>重启手机验证。</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315224800107.png" alt="image-20220315224800107"></p>
-<h1 id="Magisk模块"><a href="#Magisk模块" class="headerlink" title="Magisk模块"></a>Magisk模块</h1><p><code>move certificates</code>：移动用户目录证书到系统证书目录</p>
-<h1 id="xposed模块"><a href="#xposed模块" class="headerlink" title="xposed模块"></a>xposed模块</h1><p><code>SSLUnpinning</code>：在SSL类中创建了几个钩子来绕过特定应用程序的证书验证</p>
-<p>PS: 就是客户端并不会默认信任系统根证书目录中的证书，而是在代码里再加一层校验，这就是证书绑定机制——<code>SSL pinning</code>，如果这段代码的校验过不了，那么客户端还是会报证书错误</p>
-<h1 id="VPN工具："><a href="#VPN工具：" class="headerlink" title="VPN工具："></a>VPN工具：</h1><h2 id="Postern"><a href="#Postern" class="headerlink" title="Postern:"></a>Postern:</h2><p>网络流量可以通过配置的代理服务器重定向。不需要为每个应用程序配置代理，不支持代理的应用程序也将遵循代理配置。需要做的就是将你的代理服务器放在Postern 中，并指定应该通过代理访问哪些主机&#x2F;目的地。Postern 支持所有流行的代理服务器</p>
-<p>第一步: 打开配置代理，配置如下</p>
-<p>名称：随便</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473567161993.png" alt="01-16473567161993" style="zoom:25%;">
-
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473566520102.png" alt="01-16473566520102" style="zoom:25%;">
-
-<p>第二部：配置规则如下</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473568107464.png" alt="01-16473568107464" style="zoom:25%;">
-
-<h2 id="Proxydroid"><a href="#Proxydroid" class="headerlink" title="Proxydroid:"></a><strong>Proxydroid:</strong></h2><p>在安卓设备上设置代理（http&#x2F;https &#x2F; socks4 &#x2F; socks5）的应用程序。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">** 功能 **</span><br><span class="line">1. 支持 HTTP / HTTPS / SOCKS4 / SOCKS5 代理</span><br><span class="line">2. 支持基本 / NTLM / NTLMv2 身份验证方法</span><br><span class="line">3. 仅一个或多个应用程序的单独代理</span><br><span class="line">4. 支持多个配置文件</span><br><span class="line">5. 绑定配置到 WIFI 的 SSID / 移动网络 (2G / 3G)</span><br><span class="line">6. 用于快速打开/关闭代理的小部件</span><br><span class="line">7. 低电池和内存消耗（用 C 编写并编译为本地二进制文件）</span><br><span class="line">8. 绕过自定义 IP 地址</span><br><span class="line">9. 防火墙后面的人的 DNS 代理，不允许解析外部地址</span><br><span class="line">10. PAC 文件支持（仅基本支持）</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647395429928.png" alt="01-1647395429928" style="zoom:25%;">
-
-<p>Proxy Type可以选中代理类型</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647395438752.png" alt="02-1647395438752" style="zoom:25%;">
-
-
-
-<h2 id="Httpcannary："><a href="#Httpcannary：" class="headerlink" title="Httpcannary："></a>Httpcannary：</h2><p>一款功能强大的 HTTP&#x2F;HTTPS&#x2F;HTTP2&#x2F;WebSocket&#x2F;TCP&#x2F;UDP 数据包捕获和分析应用程序，专为 Android 平台设计。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 内容概览</span><br><span class="line">HttpCanary 显示多维会话概览。包括 URL、http 协议、http 方法、响应码、服务器主机、服务器 ip 和端口、内容类型、keep-alive、时序、数据大小等。</span><br><span class="line"></span><br><span class="line">* 数据包过滤和搜索</span><br><span class="line">HttpCanary多维过滤器，可以按app、host、protocol、method、ip、port、关键字过滤数据包。此外，您可以在数据包的内容中搜索关键字。</span><br><span class="line"></span><br><span class="line">* 阻止设置</span><br><span class="line">您可以选择阻止请求和响应，很容易调试您的 REST API。</span><br><span class="line"></span><br><span class="line">* 插件</span><br><span class="line">HttpCanary 支持许多插件，包括实验插件和扩展插件。现在，应用程序中集成了一些实验性插件，例如 HostBlock、Mime-TypeBlock、Downloader 和 OverviewStatistics。未来，我们将为开发者发布扩展插件-sdk，并支持扩展插件。</span><br></pre></td></tr></table></figure>
-
-<p>傻瓜式安装，按照提示安装就行</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647574743715.png" alt="02" style="zoom:25%;">
-
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647574758775.png" alt="01" style="zoom:25%;">
-
-<h2 id="Drony："><a href="#Drony：" class="headerlink" title="Drony："></a>Drony：</h2><p>绕过SSLPinning检测</p>
-<p>繁体版：</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647397020211.png" alt="01-1647397020211" style="zoom:25%;">
-
-
-
-<p>英文版：</p>
-<p>使用步骤：</p>
-<p>1、打开Drony看到LOG页，右滑到SETTING页，选择Networks 下：Wi-Fi，点击当前在用的wifi名，进入Network details设置页</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316105249660.png" alt="image-20220316105249660" style="zoom: 50%;">
-
-<p>2、点击Hostname，输入当前电脑的局域网IP和端口( Proxy type页面会变成 Manual 手动模式)</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647399191677.png" alt="02-1647399191677" style="zoom:25%;">
-
-<p>3、点击Filter default value，选择Direct all<br>（这步如果没加，log页面会看到很多信息）</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/03.png" alt="03" style="zoom:25%;">
-
-
-
-<p>4、点击Rules，进入Rules详情页，点击右上角的加号，进入Add filter rule，action选择Local proxy chain，Application选择需要抓包的应用，然后保存，返回主页</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316105602353.png" alt="image-20220316105602353" style="zoom: 50%;">
-
-<p>5、左滑到LOG标签页，点击底部到OFF按钮，启用Drony</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/06.png" alt="06" style="zoom:25%;">
-
-
-
-<h1 id="双向认证："><a href="#双向认证：" class="headerlink" title="双向认证："></a>双向认证：</h1><p>双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立HTTPS连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验证，然后建立安全通信通道。双向通信流程，客户端除了需要从服务器端下载服务器的公钥证书进行验证外，还需要把客户端的公钥证书上传到服务器端给服务器端进行验证，等双方都认证通过了，才开始建立安全通信通道进行数据传输。</p>
-<p>单一通信已经分裂成两个互相独立的通信，这时候与服务器进行通信的已经不是<code>app</code>、而是<code>中间工具</code>了，所以我们要将<code>app</code>中内置的证书导入到<code>中间工具</code>中去。</p>
-<p>双向认证解决办法就是找证书密码</p>
-<p>手工找：</p>
-<p>找证书文件，</p>
-<p>找证书密码</p>
-<p>步骤：</p>
-<p>解压apk文件，找<code>后缀.p12</code>文件，有的apk会隐藏，得慢慢找，密码在源代码里搜索</p>
-<p>演示：略</p>
-<p>fridaHook：</p>
-<h2 id="HOOK代码："><a href="#HOOK代码：" class="headerlink" title="HOOK代码："></a>HOOK代码：</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Enter!&quot;</span>)</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">storeP12</span>(<span class="params">pri, p7, p12Path, p12Password</span>) &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;X509!&quot;</span>)</span><br><span class="line">            <span class="keyword">var</span> X509Certificate = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>)</span><br><span class="line">            <span class="keyword">var</span> p7X509 = <span class="title class_">Java</span>.<span class="title function_">cast</span>(p7, X509Certificate);</span><br><span class="line">            <span class="keyword">var</span> chain = <span class="title class_">Java</span>.<span class="title function_">array</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>, [p7X509])</span><br><span class="line">            <span class="keyword">var</span> ks = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>).<span class="title function_">getInstance</span>(<span class="string">&quot;PKCS12&quot;</span>, <span class="string">&quot;BC&quot;</span>);</span><br><span class="line">            ks.<span class="title function_">load</span>(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">            ks.<span class="title function_">setKeyEntry</span>(<span class="string">&quot;client&quot;</span>, pri, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>(), chain);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">              <span class="keyword">var</span> out = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.io.FileOutputStream&quot;</span>).$new(p12Path);</span><br><span class="line">              ks.<span class="title function_">store</span>(out, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>())</span><br><span class="line">            &#125; <span class="keyword">catch</span> (exp) &#123;</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(exp)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">//在服务器校验客户端的情形下，帮助dump客户端证书，并保存为p12的格式，证书密码为a1ili</span></span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getPrivateKey</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;a1ili&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: a1ili&#x27;</span>);            </span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getCertificateChain</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getCertificateChain</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;a1ili&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: a1ili&#x27;</span>);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
-
-<p>Android10源代码中获取privateKey函数</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319164234742.png" alt="image-20220319164234742"></p>
-<p>通过hook这个函数，得到密码</p>
-<p><strong>把dump下来的证书，拿到keyStore转换</strong></p>
-<p>输入密码脚本上的密码查看</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319164641522.png" alt="image-20220319164641522"></p>
-<p>导出你需要的格式的证书</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319165521114.png" alt="image-20220319165521114"></p>
-<p>然后在你使用的工具上导入证书</p>
-<p>在<code>Charles</code>中是位于<code>Proxy</code>→<code>SSL Proxy Settings</code>→<code>Client Certificates</code>→<code>Add</code>添加新的证书</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319165808731.png" alt="image-20220319165808731"></p>
-<h1 id="NetHunter"><a href="#NetHunter" class="headerlink" title="NetHunter:"></a>NetHunter:</h1><p>首先手机刷入nethunter</p>
-<p>刷入后手机界面如下所示：</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474425217752.png" alt="01-16474425217752" style="zoom:25%;">
-
-<p>使用：</p>
-<p>1，首先打开<code>netHunter</code>点击<code>kali Chroot Manager</code> 然后点击<code>start kali chroot</code>进行初始化，初始化后如下</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474427115523.png" alt="01-16474427115523" style="zoom:25%;">
-
-<p>2，点击<code>kex Manager</code>打开如下界面</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474428709006.png" alt="01-16474428709006" style="zoom:25%;">
-
-<p>3，把<code>Localhost only</code>的钩去掉，先点击 setup local server点击<code>start server</code>设置密码，设置好后点击<code>Kex Server Status</code>旁边得到刷新按钮由<code>stop</code>变为<code>RUNING</code></p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474430660657.png" alt="01-16474430660657" style="zoom:25%;">
-
-<p>4，打开<code>NetHunter Kex</code> 输入密码，点击<code>Connect</code>进行链接，手机就会出现kali界面</p>
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474432561229.png" alt="01-16474432561229" style="zoom:25%;">
-
-<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474431774788.png" alt="01-16474431774788" style="zoom:25%;">
-
-<p>此时就和电脑上的kali一样</p>
-<p>4，手机上操作毕竟不方便，键盘太小，使用<code>VNC Viewer</code>在电脑端操作，IP:端口，端口默认是5901，然后你输入你设置的密码</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316231051095.png" alt="image-20220316231051095"></p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316232238328.png" alt="image-20220316232238328"></p>
-<p>至此，手机就是移动版的<code>kali</code> ，渗透测试人员推荐使用<code>andrax</code></p>
-<p>wlan0就是你手机的IP</p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316234558516.png" alt="image-20220316234558516"></p>
-<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316234502250.png" alt="image-20220316234502250"></p>
-<h1 id="网卡抓包："><a href="#网卡抓包：" class="headerlink" title="网卡抓包："></a>网卡抓包：</h1><p>需要使用网卡，wifi共享大师等第三方软件（电脑端），发射出来wifi，手机连这个wifi，然后抓这个wifi的包，由于我的网卡只支持windows系统就不演示了，没在kali上演示好看</p>
-<h1 id="证书："><a href="#证书：" class="headerlink" title="证书："></a>证书：</h1><h2 id="证书标准："><a href="#证书标准：" class="headerlink" title="证书标准："></a>证书标准：</h2><ol>
-<li><p>X.509</p>
-<p>这是一种证书标准，主要定义了证书中应该包含哪些内容。其详情可以参考 <code>RFC5280</code>，SSL 使用的就是这种证书标准。</p>
-<p>同样的 <a href="https://link.jianshu.com/?t=https://zh.wikipedia.org/wiki/X.509">X.509</a> 证书，可能有不同的编码格式。最常见的就是 PEM 和 DER 两种格式。但是有个比较误导人的地方，这两种格式的文件，扩展名不一定就是 <code>.pem</code> 或 <code>.der</code>，还有其他一些常见格式。它们除了编码格式可能不同之外，内容也有差别。但是大多数都能相互转换编码格式。</p>
-</li>
-<li><p>作为文件形式存在的证书一般有这几种格式：</p>
-<ul>
-<li>带有私钥的证书（P12）<br>由 Public Key Cryptography Standards #12，PKCS#12 标准定义，包含了公钥和私钥的二进制格式的证书形式，以 pfx 作为证书文件后缀名。</li>
-<li>二进制编码的证书（DER）<br>证书中没有私钥，DER 编码二进制格式的证书文件，以 <code>.cer</code> 作为证书文件后缀名。</li>
-<li>Base64 编码的证书（PEM）<br>证书中没有私钥，Base64 编码格式的证书文件，也是以 <code>.cer</code> 作为证书文件后缀名。</li>
-</ul>
-</li>
-</ol>
-<h2 id="证书特点："><a href="#证书特点：" class="headerlink" title="证书特点："></a>证书特点：</h2><ol>
-<li><p>PEM </p>
-<ul>
-<li>Base64 编码的 ASCII 文件</li>
-<li>具备诸如 <code>.pem, .crt, .cer, .key</code> 这样的扩展名</li>
-<li>Apache 和类似的服务器使用 PEM 格式的证书</li>
-</ul>
-<p>查看 PEM 格式证书的信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -in certificate.pem -text -noout</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>DER</p>
-<ul>
-<li>二进制文件</li>
-<li>扩展名为 <code>.cer</code> 和 <code>.der</code></li>
-<li>DER 被典型地于 Java 平台</li>
-</ul>
-<p>查看 DER 格式证书的信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -in certificate.der -inform der -text -noout</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>P7B&#x2F;PKCS#7</p>
-<ul>
-<li>Base64 编码的 ASCII 文件</li>
-<li>扩展名为 <code>.p7b, .p7c</code></li>
-<li>多平台支持。如：Windows OS、Java Tomcat</li>
-</ul>
-</li>
-<li><p>PFX&#x2F;PKCS#12</p>
-<ul>
-<li>二进制文件</li>
-<li>扩展名为 <code>.pfx, .p12</code></li>
-<li>典型用于 Windows OS 导入导出证书和私钥</li>
-</ul>
-</li>
-</ol>
-<h2 id="证书间的转换："><a href="#证书间的转换：" class="headerlink" title="证书间的转换："></a>证书间的转换：</h2><p>PEM 转为 DER</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -outform der -in certificate.pem -out certificate.der</span><br></pre></td></tr></table></figure>
-
-<p>PEM 转为 P7B</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl crl2pkcs7 -nocrl -certfile certificate.cer -out certificate.p7b -certfile CAcert.cer</span><br></pre></td></tr></table></figure>
-
-<p>DER 转为 PEM</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform der -in certificate.cer -out certificate.pem</span><br></pre></td></tr></table></figure>
-
-<p><code>PKCS#12</code> 与 <code>PEM</code> 的相互转换</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 从 cert.p12 中提取 私钥，不包含证书，私钥不加密，输出为 PEM 格式</span><br><span class="line">$ openssl pkcs12 -nocerts -nodes -in cert.p12 -out privatekey.pem</span><br><span class="line"></span><br><span class="line"># 从 cert.p12 中，只输出 client 证书，不输出私钥，输出为 PEM 格式</span><br><span class="line">$ openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem</span><br><span class="line"></span><br><span class="line"># 将密钥与证书合成为 cert.p12</span><br><span class="line">$ openssl pkcs12 -export -in cert.pem -out cert.p12 -inkey key.pem</span><br></pre></td></tr></table></figure>
-
-<p>从 <code>PFX</code> 格式文件中提取<code>私钥</code>格式文件（<code>.key</code>）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl pkcs12 -in mycert.pfx -nocerts -nodes -out mycert.key</span><br></pre></td></tr></table></figure>
-
-<p>BKS</p>
-<p>Android中，需要 BKS 格式证书。一般做法是将 P12 转为 BKS：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 先使用 openssl 把 crt 和 key 转换为 p12 证书</span><br><span class="line">$ openssl pkcs12 -export -in client.crt -inkey client.key -out client.p12</span><br><span class="line"></span><br><span class="line"># 使用 keytool 把 p12 转换为 bks 证书</span><br><span class="line">$ keytool -importkeystore -srckeystore client.p12 -srcstoretype pkcs12 -destkeystore client.bks -deststoretype bks -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-ext-jdk15on-158.jar</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>抓包实战</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C（三）</title>
     <url>/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/</url>
     <content><![CDATA[<img src="/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/veer-354426716.webp" alt="veer-354426716" style="zoom: 200%;">
@@ -1638,6 +1362,282 @@
       </categories>
       <tags>
         <tag>开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>N5X刷Android_10</title>
+    <url>/2022/03/14/N5X%E5%88%B7Android-10/</url>
+    <content><![CDATA[<p>N5X刷入Android10</p>
+<span id="more"></span>
+
+<h2 id="报错："><a href="#报错：" class="headerlink" title="报错："></a>报错：</h2><p>1：offline</p>
+<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313074826944.png" alt="image-20220313074826944"></p>
+<p>拔掉数据线从新插入</p>
+<p>2：failed to read copy response</p>
+<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313074908930.png" alt="image-20220313074908930"></p>
+<p>重启</p>
+<p>3：</p>
+<p><img src="/2022/03/14/N5X%E5%88%B7Android-10/image-20220313110910328.png" alt="image-20220313110910328"></p>
+<p>fastboot版本问题</p>
+<h2 id="刷机："><a href="#刷机：" class="headerlink" title="刷机："></a>刷机：</h2><p>1，刷入twrp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot flash recovery 下载的twrp版本</span><br></pre></td></tr></table></figure>
+
+<p>2，twrp下刷入install 压缩包</p>
+<h2 id="修改System权限"><a href="#修改System权限" class="headerlink" title="修改System权限"></a>修改System权限</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -o rw,remount /system</span><br><span class="line">mount -o rw,remount /</span><br></pre></td></tr></table></figure>
+
+<p>或者使用MT管理器移动</p>
+<h2 id="证书相关："><a href="#证书相关：" class="headerlink" title="证书相关："></a>证书相关：</h2><p>移动到系统目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv /sdcard/xxxxxxx.0 /etc/security/cacerts/ 移动文件到系统</span><br><span class="line">chown root:root /etc/security/cacerts/fc365f9d.0 修改用户组</span><br><span class="line">chmod 644 /system/etc/security/cacerts/xxxxxxx.0 修改权限</span><br></pre></td></tr></table></figure>
+
+<p>导出证书转换为pem：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform DER -in cacert.der -out cacert.pem</span><br></pre></td></tr></table></figure>
+
+<p>查看pem证书的hash值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform PEM -subject_hash_old -in cacert.pem</span><br></pre></td></tr></table></figure>
+
+<p>修改pem证书改名为”hash值.0“</p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>刷机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>抓包（二）</title>
+    <url>/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>工作中发现，有些APP抓不到包，或者打开直接闪退，之前也有抓过包，一段时间没做后，有些方法用起来有些生疏，这里总结一下。</p>
+<p>首先APP一般都会连网，没连网测着也没啥意思，说明功能也不杂多，既然会闪退就会有检测或者双向认证（后面说），抓不到包的情况要么检测代理要么vpn要么双向认证。。。。</p>
+<span id="more"></span>
+
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02.png" alt="02" style="zoom:25%;">
+
+<h1 id="正文："><a href="#正文：" class="headerlink" title="正文："></a>正文：</h1><h1 id="抓包工具："><a href="#抓包工具：" class="headerlink" title="抓包工具："></a>抓包工具：</h1><p>BurpSuite, Charles, Fildder, mitmproxy，R0cmptuter（需要frida）</p>
+<h2 id="添加证书到系统目录"><a href="#添加证书到系统目录" class="headerlink" title="添加证书到系统目录"></a>添加证书到系统目录</h2><p>没装证书时的样子</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315214953630.png" alt="image-20220315214953630"></p>
+<p>首先导出证书</p>
+<p>打开chales找到help选择ssl proxying点击名字最长的那个</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315211235678.png" alt="image-20220315211235678"></p>
+<p>在手机中配置上图所示IP，端口</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01.png" alt="01" style="zoom:25%;">
+
+<p>可以看到“链接”是灰色的，这是因为手机跟电脑没在一个网段，下面就改回来了</p>
+<p>连接好之后在浏览器中输入<code>chls.pro/ssl</code>，然后电脑端会显示是否允许远程链接，选择是，会下载证书。下载后安装就行，这时会把证书安装到用户目录。可以使用Magisk模块<code>move certificates</code>移动到系统目录。（步骤就是首先有模块，安装完用户证书后，手机关机重启就行）</p>
+<h2 id="手动安装证书到系统目录"><a href="#手动安装证书到系统目录" class="headerlink" title="手动安装证书到系统目录"></a>手动安装证书到系统目录</h2><p>首先把证书导来，charles可以导出pem格式，其他工具虽然导不出pem格式，可以使用openssl转换</p>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform DER -in burp.der -out burp.pem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315215723332.png"></p>
+<p>charles</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315215240068.png" alt="image-20220315215240068"></p>
+<p>查看pem证书的hash值并记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -subject_hash_old -in charles.pem</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315220058741.png" alt="image-20220315220058741"></p>
+<p>将证书名修改为：红色标记的值.0（因为系统证书目录里的证书是这样命名的<code>证书Hash.数字</code>，数字可以可以设置为别的，防止命名冲突）</p>
+<p>下一步将证书移动到手机里使用如下命令或者其他方式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb push ec936cb1.0 /sdcard</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221016089.png" alt="image-20220315221016089"></p>
+<p>修改系统目录权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -o rw,remount /system</span><br><span class="line">mount -o rw,remount /</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221328562.png" alt="image-20220315221328562"></p>
+<p>移动证书到系统目录</p>
+<p>系统证书目录：<code>/system/etc/security/cacerts/</code>,修改权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv sdcard/ec936cb1.0 /system/etc/security/cacerts/ 移动</span><br><span class="line">chmod 644 /system/etc/security/cacerts/ec936cb1.0 修改权限</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315221819946.png" alt="image-20220315221819946"></p>
+<p>PS: 如果觉得上面的操作比较复杂，推荐一款软件<code>MT管理器</code>直接移动证书到系统证书目录，记得还是要修改权限</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473543764381.png" alt="01-16473543764381" style="zoom:25%;">
+
+<p>重启手机验证。</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220315224800107.png" alt="image-20220315224800107"></p>
+<h1 id="Magisk模块"><a href="#Magisk模块" class="headerlink" title="Magisk模块"></a>Magisk模块</h1><p><code>move certificates</code>：移动用户目录证书到系统证书目录</p>
+<h1 id="xposed模块"><a href="#xposed模块" class="headerlink" title="xposed模块"></a>xposed模块</h1><p><code>SSLUnpinning</code>：在SSL类中创建了几个钩子来绕过特定应用程序的证书验证</p>
+<p>PS: 就是客户端并不会默认信任系统根证书目录中的证书，而是在代码里再加一层校验，这就是证书绑定机制——<code>SSL pinning</code>，如果这段代码的校验过不了，那么客户端还是会报证书错误</p>
+<h1 id="VPN工具："><a href="#VPN工具：" class="headerlink" title="VPN工具："></a>VPN工具：</h1><h2 id="Postern"><a href="#Postern" class="headerlink" title="Postern:"></a>Postern:</h2><p>网络流量可以通过配置的代理服务器重定向。不需要为每个应用程序配置代理，不支持代理的应用程序也将遵循代理配置。需要做的就是将你的代理服务器放在Postern 中，并指定应该通过代理访问哪些主机&#x2F;目的地。Postern 支持所有流行的代理服务器</p>
+<p>第一步: 打开配置代理，配置如下</p>
+<p>名称：随便</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473567161993.png" alt="01-16473567161993" style="zoom:25%;">
+
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473566520102.png" alt="01-16473566520102" style="zoom:25%;">
+
+<p>第二部：配置规则如下</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16473568107464.png" alt="01-16473568107464" style="zoom:25%;">
+
+<h2 id="Proxydroid"><a href="#Proxydroid" class="headerlink" title="Proxydroid:"></a><strong>Proxydroid:</strong></h2><p>在安卓设备上设置代理（http&#x2F;https &#x2F; socks4 &#x2F; socks5）的应用程序。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">** 功能 **</span><br><span class="line">1. 支持 HTTP / HTTPS / SOCKS4 / SOCKS5 代理</span><br><span class="line">2. 支持基本 / NTLM / NTLMv2 身份验证方法</span><br><span class="line">3. 仅一个或多个应用程序的单独代理</span><br><span class="line">4. 支持多个配置文件</span><br><span class="line">5. 绑定配置到 WIFI 的 SSID / 移动网络 (2G / 3G)</span><br><span class="line">6. 用于快速打开/关闭代理的小部件</span><br><span class="line">7. 低电池和内存消耗（用 C 编写并编译为本地二进制文件）</span><br><span class="line">8. 绕过自定义 IP 地址</span><br><span class="line">9. 防火墙后面的人的 DNS 代理，不允许解析外部地址</span><br><span class="line">10. PAC 文件支持（仅基本支持）</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647395429928.png" alt="01-1647395429928" style="zoom:25%;">
+
+<p>Proxy Type可以选中代理类型</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647395438752.png" alt="02-1647395438752" style="zoom:25%;">
+
+
+
+<h2 id="Httpcannary："><a href="#Httpcannary：" class="headerlink" title="Httpcannary："></a>Httpcannary：</h2><p>一款功能强大的 HTTP&#x2F;HTTPS&#x2F;HTTP2&#x2F;WebSocket&#x2F;TCP&#x2F;UDP 数据包捕获和分析应用程序，专为 Android 平台设计。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 内容概览</span><br><span class="line">HttpCanary 显示多维会话概览。包括 URL、http 协议、http 方法、响应码、服务器主机、服务器 ip 和端口、内容类型、keep-alive、时序、数据大小等。</span><br><span class="line"></span><br><span class="line">* 数据包过滤和搜索</span><br><span class="line">HttpCanary多维过滤器，可以按app、host、protocol、method、ip、port、关键字过滤数据包。此外，您可以在数据包的内容中搜索关键字。</span><br><span class="line"></span><br><span class="line">* 阻止设置</span><br><span class="line">您可以选择阻止请求和响应，很容易调试您的 REST API。</span><br><span class="line"></span><br><span class="line">* 插件</span><br><span class="line">HttpCanary 支持许多插件，包括实验插件和扩展插件。现在，应用程序中集成了一些实验性插件，例如 HostBlock、Mime-TypeBlock、Downloader 和 OverviewStatistics。未来，我们将为开发者发布扩展插件-sdk，并支持扩展插件。</span><br></pre></td></tr></table></figure>
+
+<p>傻瓜式安装，按照提示安装就行</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647574743715.png" alt="02" style="zoom:25%;">
+
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647574758775.png" alt="01" style="zoom:25%;">
+
+<h2 id="Drony："><a href="#Drony：" class="headerlink" title="Drony："></a>Drony：</h2><p>绕过SSLPinning检测</p>
+<p>繁体版：</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-1647397020211.png" alt="01-1647397020211" style="zoom:25%;">
+
+
+
+<p>英文版：</p>
+<p>使用步骤：</p>
+<p>1、打开Drony看到LOG页，右滑到SETTING页，选择Networks 下：Wi-Fi，点击当前在用的wifi名，进入Network details设置页</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316105249660.png" alt="image-20220316105249660" style="zoom: 50%;">
+
+<p>2、点击Hostname，输入当前电脑的局域网IP和端口( Proxy type页面会变成 Manual 手动模式)</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/02-1647399191677.png" alt="02-1647399191677" style="zoom:25%;">
+
+<p>3、点击Filter default value，选择Direct all<br>（这步如果没加，log页面会看到很多信息）</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/03.png" alt="03" style="zoom:25%;">
+
+
+
+<p>4、点击Rules，进入Rules详情页，点击右上角的加号，进入Add filter rule，action选择Local proxy chain，Application选择需要抓包的应用，然后保存，返回主页</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316105602353.png" alt="image-20220316105602353" style="zoom: 50%;">
+
+<p>5、左滑到LOG标签页，点击底部到OFF按钮，启用Drony</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/06.png" alt="06" style="zoom:25%;">
+
+
+
+<h1 id="双向认证："><a href="#双向认证：" class="headerlink" title="双向认证："></a>双向认证：</h1><p>双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立HTTPS连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验证，然后建立安全通信通道。双向通信流程，客户端除了需要从服务器端下载服务器的公钥证书进行验证外，还需要把客户端的公钥证书上传到服务器端给服务器端进行验证，等双方都认证通过了，才开始建立安全通信通道进行数据传输。</p>
+<p>单一通信已经分裂成两个互相独立的通信，这时候与服务器进行通信的已经不是<code>app</code>、而是<code>中间工具</code>了，所以我们要将<code>app</code>中内置的证书导入到<code>中间工具</code>中去。</p>
+<p>双向认证解决办法就是找证书密码</p>
+<p>手工找：</p>
+<p>找证书文件，</p>
+<p>找证书密码</p>
+<p>步骤：</p>
+<p>解压apk文件，找<code>后缀.p12</code>文件，有的apk会隐藏，得慢慢找，密码在源代码里搜索</p>
+<p>演示：略</p>
+<p>fridaHook：</p>
+<h2 id="HOOK代码："><a href="#HOOK代码：" class="headerlink" title="HOOK代码："></a>HOOK代码：</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Enter!&quot;</span>)</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">storeP12</span>(<span class="params">pri, p7, p12Path, p12Password</span>) &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;X509!&quot;</span>)</span><br><span class="line">            <span class="keyword">var</span> X509Certificate = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>)</span><br><span class="line">            <span class="keyword">var</span> p7X509 = <span class="title class_">Java</span>.<span class="title function_">cast</span>(p7, X509Certificate);</span><br><span class="line">            <span class="keyword">var</span> chain = <span class="title class_">Java</span>.<span class="title function_">array</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>, [p7X509])</span><br><span class="line">            <span class="keyword">var</span> ks = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>).<span class="title function_">getInstance</span>(<span class="string">&quot;PKCS12&quot;</span>, <span class="string">&quot;BC&quot;</span>);</span><br><span class="line">            ks.<span class="title function_">load</span>(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">            ks.<span class="title function_">setKeyEntry</span>(<span class="string">&quot;client&quot;</span>, pri, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>(), chain);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">              <span class="keyword">var</span> out = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.io.FileOutputStream&quot;</span>).$new(p12Path);</span><br><span class="line">              ks.<span class="title function_">store</span>(out, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>())</span><br><span class="line">            &#125; <span class="keyword">catch</span> (exp) &#123;</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(exp)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">//在服务器校验客户端的情形下，帮助dump客户端证书，并保存为p12的格式，证书密码为a1ili</span></span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getPrivateKey</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;a1ili&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: a1ili&#x27;</span>);            </span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getCertificateChain</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getCertificateChain</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;a1ili&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: a1ili&#x27;</span>);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+
+<p>Android10源代码中获取privateKey函数</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319164234742.png" alt="image-20220319164234742"></p>
+<p>通过hook这个函数，得到密码</p>
+<p><strong>把dump下来的证书，拿到keyStore转换</strong></p>
+<p>输入密码脚本上的密码查看</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319164641522.png" alt="image-20220319164641522"></p>
+<p>导出你需要的格式的证书</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319165521114.png" alt="image-20220319165521114"></p>
+<p>然后在你使用的工具上导入证书</p>
+<p>在<code>Charles</code>中是位于<code>Proxy</code>→<code>SSL Proxy Settings</code>→<code>Client Certificates</code>→<code>Add</code>添加新的证书</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220319165808731.png" alt="image-20220319165808731"></p>
+<h1 id="NetHunter"><a href="#NetHunter" class="headerlink" title="NetHunter:"></a>NetHunter:</h1><p>首先手机刷入nethunter</p>
+<p>刷入后手机界面如下所示：</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474425217752.png" alt="01-16474425217752" style="zoom:25%;">
+
+<p>使用：</p>
+<p>1，首先打开<code>netHunter</code>点击<code>kali Chroot Manager</code> 然后点击<code>start kali chroot</code>进行初始化，初始化后如下</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474427115523.png" alt="01-16474427115523" style="zoom:25%;">
+
+<p>2，点击<code>kex Manager</code>打开如下界面</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474428709006.png" alt="01-16474428709006" style="zoom:25%;">
+
+<p>3，把<code>Localhost only</code>的钩去掉，先点击 setup local server点击<code>start server</code>设置密码，设置好后点击<code>Kex Server Status</code>旁边得到刷新按钮由<code>stop</code>变为<code>RUNING</code></p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474430660657.png" alt="01-16474430660657" style="zoom:25%;">
+
+<p>4，打开<code>NetHunter Kex</code> 输入密码，点击<code>Connect</code>进行链接，手机就会出现kali界面</p>
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474432561229.png" alt="01-16474432561229" style="zoom:25%;">
+
+<img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/01-16474431774788.png" alt="01-16474431774788" style="zoom:25%;">
+
+<p>此时就和电脑上的kali一样</p>
+<p>4，手机上操作毕竟不方便，键盘太小，使用<code>VNC Viewer</code>在电脑端操作，IP:端口，端口默认是5901，然后你输入你设置的密码</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316231051095.png" alt="image-20220316231051095"></p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316232238328.png" alt="image-20220316232238328"></p>
+<p>至此，手机就是移动版的<code>kali</code> ，渗透测试人员推荐使用<code>andrax</code></p>
+<p>wlan0就是你手机的IP</p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316234558516.png" alt="image-20220316234558516"></p>
+<p><img src="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220316234502250.png" alt="image-20220316234502250"></p>
+<h1 id="网卡抓包："><a href="#网卡抓包：" class="headerlink" title="网卡抓包："></a>网卡抓包：</h1><p>需要使用网卡，wifi共享大师等第三方软件（电脑端），发射出来wifi，手机连这个wifi，然后抓这个wifi的包，由于我的网卡只支持windows系统就不演示了，没在kali上演示好看</p>
+<h1 id="证书："><a href="#证书：" class="headerlink" title="证书："></a>证书：</h1><h2 id="证书标准："><a href="#证书标准：" class="headerlink" title="证书标准："></a>证书标准：</h2><ol>
+<li><p>X.509</p>
+<p>这是一种证书标准，主要定义了证书中应该包含哪些内容。其详情可以参考 <code>RFC5280</code>，SSL 使用的就是这种证书标准。</p>
+<p>同样的 <a href="https://link.jianshu.com/?t=https://zh.wikipedia.org/wiki/X.509">X.509</a> 证书，可能有不同的编码格式。最常见的就是 PEM 和 DER 两种格式。但是有个比较误导人的地方，这两种格式的文件，扩展名不一定就是 <code>.pem</code> 或 <code>.der</code>，还有其他一些常见格式。它们除了编码格式可能不同之外，内容也有差别。但是大多数都能相互转换编码格式。</p>
+</li>
+<li><p>作为文件形式存在的证书一般有这几种格式：</p>
+<ul>
+<li>带有私钥的证书（P12）<br>由 Public Key Cryptography Standards #12，PKCS#12 标准定义，包含了公钥和私钥的二进制格式的证书形式，以 pfx 作为证书文件后缀名。</li>
+<li>二进制编码的证书（DER）<br>证书中没有私钥，DER 编码二进制格式的证书文件，以 <code>.cer</code> 作为证书文件后缀名。</li>
+<li>Base64 编码的证书（PEM）<br>证书中没有私钥，Base64 编码格式的证书文件，也是以 <code>.cer</code> 作为证书文件后缀名。</li>
+</ul>
+</li>
+</ol>
+<h2 id="证书特点："><a href="#证书特点：" class="headerlink" title="证书特点："></a>证书特点：</h2><ol>
+<li><p>PEM </p>
+<ul>
+<li>Base64 编码的 ASCII 文件</li>
+<li>具备诸如 <code>.pem, .crt, .cer, .key</code> 这样的扩展名</li>
+<li>Apache 和类似的服务器使用 PEM 格式的证书</li>
+</ul>
+<p>查看 PEM 格式证书的信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -in certificate.pem -text -noout</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DER</p>
+<ul>
+<li>二进制文件</li>
+<li>扩展名为 <code>.cer</code> 和 <code>.der</code></li>
+<li>DER 被典型地于 Java 平台</li>
+</ul>
+<p>查看 DER 格式证书的信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -in certificate.der -inform der -text -noout</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>P7B&#x2F;PKCS#7</p>
+<ul>
+<li>Base64 编码的 ASCII 文件</li>
+<li>扩展名为 <code>.p7b, .p7c</code></li>
+<li>多平台支持。如：Windows OS、Java Tomcat</li>
+</ul>
+</li>
+<li><p>PFX&#x2F;PKCS#12</p>
+<ul>
+<li>二进制文件</li>
+<li>扩展名为 <code>.pfx, .p12</code></li>
+<li>典型用于 Windows OS 导入导出证书和私钥</li>
+</ul>
+</li>
+</ol>
+<h2 id="证书间的转换："><a href="#证书间的转换：" class="headerlink" title="证书间的转换："></a>证书间的转换：</h2><p>PEM 转为 DER</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -outform der -in certificate.pem -out certificate.der</span><br></pre></td></tr></table></figure>
+
+<p>PEM 转为 P7B</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl crl2pkcs7 -nocrl -certfile certificate.cer -out certificate.p7b -certfile CAcert.cer</span><br></pre></td></tr></table></figure>
+
+<p>DER 转为 PEM</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl x509 -inform der -in certificate.cer -out certificate.pem</span><br></pre></td></tr></table></figure>
+
+<p><code>PKCS#12</code> 与 <code>PEM</code> 的相互转换</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 从 cert.p12 中提取 私钥，不包含证书，私钥不加密，输出为 PEM 格式</span><br><span class="line">$ openssl pkcs12 -nocerts -nodes -in cert.p12 -out privatekey.pem</span><br><span class="line"></span><br><span class="line"># 从 cert.p12 中，只输出 client 证书，不输出私钥，输出为 PEM 格式</span><br><span class="line">$ openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem</span><br><span class="line"></span><br><span class="line"># 将密钥与证书合成为 cert.p12</span><br><span class="line">$ openssl pkcs12 -export -in cert.pem -out cert.p12 -inkey key.pem</span><br></pre></td></tr></table></figure>
+
+<p>从 <code>PFX</code> 格式文件中提取<code>私钥</code>格式文件（<code>.key</code>）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openssl pkcs12 -in mycert.pfx -nocerts -nodes -out mycert.key</span><br></pre></td></tr></table></figure>
+
+<p>BKS</p>
+<p>Android中，需要 BKS 格式证书。一般做法是将 P12 转为 BKS：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 先使用 openssl 把 crt 和 key 转换为 p12 证书</span><br><span class="line">$ openssl pkcs12 -export -in client.crt -inkey client.key -out client.p12</span><br><span class="line"></span><br><span class="line"># 使用 keytool 把 p12 转换为 bks 证书</span><br><span class="line">$ keytool -importkeystore -srckeystore client.p12 -srcstoretype pkcs12 -destkeystore client.bks -deststoretype bks -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-ext-jdk15on-158.jar</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>抓包实战</tag>
       </tags>
   </entry>
 </search>
