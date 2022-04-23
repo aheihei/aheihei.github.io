@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="APP抓包">
+<meta property="og:url" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/index.html">
+<meta property="og:site_name" content="A1ili&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/web_proxy-1647220738454.jpg">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909111944359-1323196399.png">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909112504683-1737949469.png">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313155434123.png">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313160049200.png">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161517748.png">
+<meta property="og:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161900522.png">
+<meta property="article:published_time" content="2022-03-14T06:59:10.000Z">
+<meta property="article:modified_time" content="2022-03-22T09:31:32.244Z">
+<meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="抓包原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg">
+
+<link rel="canonical" href="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>APP抓包 | A1ili's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">A1ili's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">keep on going</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/APP%E6%8A%93%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          APP抓包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-14 14:59:10" itemprop="dateCreated datePublished" datetime="2022-03-14T14:59:10+08:00">2022-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-22 17:31:32" itemprop="dateModified" datetime="2022-03-22T17:31:32+08:00">2022-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg" alt="ecd76310d9e45803ce329fb61db870eb" style="zoom:200%;">
+
+<span id="more"></span>
+
+<p>代理的原理：</p>
+<p>它是网络信息的中转站。在我们正常请求一个网站时，是发送了请求给Web服务器，Web服务器把响应传回给我们。如果设置了代理服务器，实际上就是在本机和服务器之间搭建了一个桥，此时本机不是直接向Web服务器发起请求，而是向代理服务器发出请求，请求会发送给代理服务器，然后由代理服务器再发送给Web服务器，接着由代理服务器再把Web服务器返回的响应转发给本机。这样我们同样可以正常访问网页，但这个过程中Web服务器识别出的真实IP就不再是我们本机的IP了，就成功实现了IP伪装，这就是代理的基本原理。</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/web_proxy-1647220738454.jpg" alt="web_proxy"></p>
+<p><strong>mac地址</strong>：发送端和接收端的地址便是指网卡的地址</p>
+<p>每块网卡出厂时都被烧制上一个世界唯一的mac地址，长度为48位2进制，通常由12位16进制数表示（前六位是厂商编号，后六位是流水线号）</p>
+<p><strong>IP地址</strong>：由于mac地址很难记忆，所以又出现了IP地址</p>
+<p>身份证（mac地址）和名字（IP地址）</p>
+<p><strong>arp协议功能</strong>：广播的方式发送数据包，获取目标主机的mac地址</p>
+<p>网络通信流程图：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909111944359-1323196399.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909111944359-1323196399.png" alt="988061-20180909111944359-1323196399"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://images2018.cnblogs.com/blog/988061/201809/988061-20180909112504683-1737949469.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/988061-20180909112504683-1737949469.png" alt="988061-20180909112504683-1737949469"></p>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式</p>
+<h2 id="怎么通信"><a href="#怎么通信" class="headerlink" title="怎么通信"></a>怎么通信</h2><p>HTTP报文由从客户机到服务器的请求和从服务器到客户机的响应构成。请求报文格式如下： </p>
+<p>请求行 － 通用信息头 － 请求头 － 实体头 － 报文主体</p>
+<p>请求行以方法字段开始，后面分别是URL字段和HTTP协议版本字段，并以CRLF结尾。SP是分隔符。除了在最后的CRLF序列中CF和LF是必需的之外，其他都可以不要。有关通用信息头，请求头和实体头方面的具体内容可以参照相关文件。</p>
+<p>应答报文格式如下：</p>
+<p>状态行 － 通用信息头 － 响应头 － 实体头 － 报文主体</p>
+<h1 id="netcat模拟http协议"><a href="#netcat模拟http协议" class="headerlink" title="netcat模拟http协议"></a>netcat模拟http协议</h1><p>Get:</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313155434123.png" alt="image-20220313155434123"></p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313160049200.png" alt="image-20220313160049200"></p>
+<p>POST:</p>
+<p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161517748.png" alt="image-20220313161517748"></p>
+<h1 id="telnet模拟http协议"><a href="#telnet模拟http协议" class="headerlink" title="telnet模拟http协议"></a>telnet模拟http协议</h1><p><img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/image-20220313161900522.png" alt="image-20220313161900522"></p>
+<h1 id="r0capture的使用"><a href="#r0capture的使用" class="headerlink" title="r0capture的使用"></a>r0capture的使用</h1><p>拉跨</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%93%E5%8C%85%E5%8E%9F%E7%90%86/" rel="tag"># 抓包原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/" rel="prev" title="APP使用接口获取网图">
+      <i class="fa fa-chevron-left"></i> APP使用接口获取网图
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/15/C%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="C">
+      C <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.</span> <span class="nav-text">怎么通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netcat%E6%A8%A1%E6%8B%9Fhttp%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">netcat模拟http协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#telnet%E6%A8%A1%E6%8B%9Fhttp%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">telnet模拟http协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#r0capture%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">r0capture的使用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Brave Laughter"
+      src="/images/85364458.jfif">
+  <p class="site-author-name" itemprop="name">Brave Laughter</p>
+  <div class="site-description" itemprop="description">埋头苦干的劲头 抬头看路的清醒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brave Laughter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

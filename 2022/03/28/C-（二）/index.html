@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="派生与继承，多态性与虚函数，模板，STL的基本使用，静态成员">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++（二）">
+<meta property="og:url" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="A1ili&#39;s Blog">
+<meta property="og:description" content="派生与继承，多态性与虚函数，模板，STL的基本使用，静态成员">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220328190742096.png">
+<meta property="og:image" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329102929322.png">
+<meta property="og:image" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329110632733.png">
+<meta property="og:image" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329110812151.png">
+<meta property="article:published_time" content="2022-03-28T08:08:44.000Z">
+<meta property="article:modified_time" content="2022-03-29T11:59:53.356Z">
+<meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220328190742096.png">
+
+<link rel="canonical" href="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>C++（二） | A1ili's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">A1ili's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">keep on going</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-28 16:08:44" itemprop="dateCreated datePublished" datetime="2022-03-28T16:08:44+08:00">2022-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-29 19:59:53" itemprop="dateModified" datetime="2022-03-29T19:59:53+08:00">2022-03-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>派生与继承，多态性与虚函数，模板，STL的基本使用，静态成员</p>
+<span id="more"></span>
+
+<h2 id="派生与继承"><a href="#派生与继承" class="headerlink" title="派生与继承"></a>派生与继承</h2><p><strong>继承的优势</strong></p>
+<ol>
+<li>继承是使用已经编写好的类来创建新类，新的类具有原有类的所有属性和操作，也可以在原有类的基础上作一些修改和增补 </li>
+<li>新类称为派生类或子类，原有类称为基类或父类 </li>
+<li>派生类是基类的具体化，一般来说派生类比基类的表示范围小的多</li>
+</ol>
+<p><strong>C++的继承支持单继承和多继承</strong> </p>
+<ul>
+<li>单继承：派生类只有一个直接基类的继承方式 </li>
+<li>多继承：派生类有多个直接基类的继承方式</li>
+</ul>
+<p>单继承的基本格式如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span>  &lt;</span>派生类名&gt;:&lt;继承方式&gt;&lt;基类名&gt;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//&lt;派生类新成员的定义&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，派生类名就是派生类的名字，并且派生类是按指定的继承方式派生的，继承方式有： </p>
+<ul>
+<li>public 公有继承 </li>
+<li>private 私有继承 </li>
+<li>protected 保护继承<br>  多继承的定义方式和单继承差不多</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> &lt;</span>派生类名&gt;:&lt;继承方式&gt;&lt;基类名<span class="number">1</span>&gt;，&lt;继承方式<span class="number">2</span>&gt;&lt;基类名<span class="number">2</span>&gt;，...</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//派生类新成员定义</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多继承派生类有多个基类，基类名之间用逗号分隔，每个基类名前都应有一个该基类的继承方式说明，假如不写继承方式的话，默认的继承方式为私有继承</p>
+<h3 id="派生类的继承方式"><a href="#派生类的继承方式" class="headerlink" title="派生类的继承方式"></a>派生类的继承方式</h3><p>类的继承方式有三种： </p>
+<ul>
+<li>公有继承(public)：基类中的每个成员在派生类中保持同样的访问权限 </li>
+<li>私有继承(private)：基类中的每个成员在派生类中都是private成员，而且他们不能再被派生的子类所访问 </li>
+<li>保护继承(protexted)：基类中的Public成员和protected成员在派生类中都是Protected成员，private成员在派生类中仍为private成员</li>
+</ul>
+<blockquote>
+<p>不管是什么继承方式，派生类的成员函数和友元函数都可以访问基类中的公有成员和保护成员，但不能访问私有成员<br>在公有继承时，派生类的对象只能访问公有成员，在保护继承和私有继承时，派生类的对象不能访问基类中任何成员</p>
+</blockquote>
+<p><img src="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220328190742096.png" alt="image-20220328190742096"></p>
+<h3 id="接口继承与实现继承"><a href="#接口继承与实现继承" class="headerlink" title="接口继承与实现继承"></a>接口继承与实现继承</h3><p><strong>公有继承</strong>，基类的公有成员函数在派生类中仍然是公有的，换句话说是基类的接口称为了派生类的接口，因而将它称为接口继承<br><strong>实现继承</strong>，对于私有，保护继承，派生类不继承基类的接口，派生类将不再支持基类的公有接口，它希望能重用基类的实现而已，因而将它称为实现继承 </p>
+<p><strong>总结</strong></p>
+<p>公有继承使得父类的接口继承传承到子类，子类可以继续往孙子类派生，保护继承使得父类的接口全部失效，只能在内部调用，依然可以往孙子类派生，私有继承使得父类所有接口也是只能在内部调用，但是不能往孙子类派生了，私有继承阻断了爷爷类和孙子类间的联系 </p>
+<h3 id="派生类的构造、析构函数"><a href="#派生类的构造、析构函数" class="headerlink" title="派生类的构造、析构函数"></a>派生类的构造、析构函数</h3><p>基类的构造函数不被继承，派生类中需要声明自己的构造函数，声明构造函数时，只需要对本类中新增成员进行初始化，对继承来的基类成员的初始化要调用基类的构造函数完成。假如基类构造函数没有缺省的构造函数，派生类的构造函数需要给基类的构造函数传递参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;派生类名&gt;(&lt;总参数表&gt;)</span><br><span class="line">:&lt;基类构造函数名&gt;(&lt;参数<span class="number">1</span>&gt;),&lt;子对象名&gt;(&lt;参数表<span class="number">2</span>&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//&lt;派生类中数据成员的初始化&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>正常情况下，如果基类构造是无参构造函数，那么会自动去调用，而不用派生类构造显示调用，如果基类没有无参数构造函数，那么派生类必须显示调用基类的构造函数 </p>
+</blockquote>
+<p>假如同时有父类，又有类对象的数据成员的时候，构造函数的调用顺序</p>
+<ol>
+<li>基类构造函数 </li>
+<li>数据成员的构造函数 </li>
+<li>派生类构造函数</li>
+</ol>
+<p>执行派生类的析构函数时，也要调用基类及子类的析构函数，同时析构函数的调用顺序与构造函数是相反的。</p>
+<ol>
+<li>先调用派生类的析构函数 </li>
+<li>数据成员的析构函数 </li>
+<li>基类的析构函数</li>
+</ol>
+<h2 id="类的成员重定义"><a href="#类的成员重定义" class="headerlink" title="类的成员重定义"></a>类的成员重定义</h2><p>重定义是子类需要修改或扩展基类的某个成员的功能时需要利用的机制，可以分为两种 </p>
+<ol>
+<li><p>对基类的数据成员的重定义 </p>
+</li>
+<li><p>对基类成员函数的重定义</p>
+<ul>
+<li>与基类完全相同 </li>
+<li>与基类成员函数名相同，参数不同</li>
+</ul>
+</li>
+<li><p>对于基类与派生类重定义的数据成员。派生类对象调用的时候，应该是派生类的数据成员，也就是说数据成员重定义的时候隐藏了基类的数据成员 </p>
+</li>
+<li><p>对于与基类完全相同的成员函数，会隐藏基类的成员函数，调用的时候，调用的是派生类的成员函数 </p>
+</li>
+<li><p>对于与基类成员函数函数名相同，参数不同的成员函数，还是会隐藏基类的成员函数，这一点要注意 </p>
+</li>
+<li><p>注意在不同的作用域中定义的成员函数名相同，参数不同，这不叫重载，这叫重定义，重载说的是在相同作用域中的现象，也就是在一个类中定义的函数</p>
+</li>
+</ol>
+<h2 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h2><p><strong>单重继承：</strong>一个派生类最多只能有一个基类<br><strong>多重继承：</strong>一个派生类可以有多个基类，如果派生类有两个或两个以上的直接基类，称为多继承 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span>  &lt;</span>派生类名&gt;:&lt;继承方式<span class="number">1</span>&gt;&lt;基类名<span class="number">1</span>&gt;,&lt;继承方式<span class="number">2</span>&gt;&lt;基类名<span class="number">2</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">//派生类的类体</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">CClassC</span>:</span>publlic  CClassB,privatee  CClassA</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多继承派生类的构造函数格式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;派生类名&gt;(&lt;总参数表&gt;)</span><br><span class="line">:&lt;基类名<span class="number">1</span>&gt;(&lt;参数表<span class="number">1</span>&gt;),&lt;基类名<span class="number">2</span>&gt;(&lt;参数表<span class="number">2</span>&gt;),&lt;子对象名<span class="number">3</span>&gt;(&lt;参数<span class="number">3</span>&gt;),....</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//派生类构造函数</span></span><br><span class="line">&#125;</span><br><span class="line">CClassC(<span class="type">int</span> nNum)</span><br><span class="line">:CClassB(nNum),CClassA(nNum),m_nNum(<span class="number">15</span>)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行顺序：先执行所有基类的构造函数，再执行派生类本身的构造函数，包含子对象在内</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">classA</span><br><span class="line">&#123;&#125;</span><br><span class="line">classB</span><br><span class="line">&#123;&#125;</span><br><span class="line">classC</span><br><span class="line">&#123;&#125;</span><br><span class="line">classD:public A,public B,public C</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先要顺序执行类A，类B和类C的构造函数，再执行派生类D本身的构造函数</p>
+<h3 id="多继承中的二义性问题"><a href="#多继承中的二义性问题" class="headerlink" title="多继承中的二义性问题"></a>多继承中的二义性问题</h3><p>一般的，派生类成员的访问是唯一的，但是在多继承的情况下，可能出现派生类对其类成员访问的不唯一性，即二义性。<br><strong>虚基类</strong></p>
+<p>当派生类从多个基类派生，而这些基类又从同一个基类派生，则在访问此共同基类中的成员时，将产生二义性–采用虚基类来解决</p>
+<p>虚基类的引入：用于有共同基类的场合<br>虚基类(virtual base class)说明格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">virtual  &lt;继承方式&gt;&lt;基类名&gt;</span><br><span class="line">virtual  public  CClassA</span><br></pre></td></tr></table></figure>
+
+<p>作用 </p>
+<p>主要用于解决多继承时可能发生的对同一基类继承多次而产生的二义性问题<br>为最远的派生类提供唯一的基类成员，而不重复产生多个数据<br>如果一个派生类有多个直接基类，而这些直接基类又有一个共同的基类，则在最终的派生类中会保留该间接共同基类数据成员的多份同名成员，C++提供虚基类的方法，使得在继承间接共同基类时只保留一份成员 </p>
+<p>总结</p>
+<p>C++支持类继承机制，继承是面向对想想的重要概念之一，派生类的成员函数和友元函数可以访问基类的所有公有和保护的数据成员和成员函数<br>派生类对象只能访问基类的公有成员和成员函数，多重继承是一个类从多个基类派生而来的机制，派生类实际上获取了所有基类的特性<br>当一个类是两个或多个基类的派生类时，必须在派生类名和冒号之后，列出所有基类的类名，基类间用逗号隔开，派生类的构造函数必须激活所有基类的构造函数，并把相应的参数传递给它们<br>派生类可以是另一个类的基类，这样，相当于形成了一个继承链，当派生类的构造函数被激活时，它的所有基类的构造函数也会被激活，为解决多继承中的二义性问题，引进虚基类的概念，其目的是使公共基类在其派生对象中只产生一个基类子对象</p>
+<h3 id="多态性与虚函数"><a href="#多态性与虚函数" class="headerlink" title="多态性与虚函数"></a>多态性与虚函数</h3><p>多态性是指对不同类的对象发出相同的消息将会有不同的行为，消息主要是指对类的成员函数的调用，不同的行为是指不同的实现 </p>
+<p>**C++中实现多态有以下多种方式： **</p>
+<ul>
+<li>函数重载 </li>
+<li>运算符重载 </li>
+<li>模板 </li>
+<li>虚函数 </li>
+<li>子类型</li>
+</ul>
+<p>在继承关系中，若类B是类A以公有继承形式产生的派生类，则类B包含了父类A的行为，并且它本身还可具有新的行为，可称类B是类A的一个子类型 </p>
+<h3 id="静态连编与动态联编"><a href="#静态连编与动态联编" class="headerlink" title="静态连编与动态联编"></a>静态连编与动态联编</h3><p>联编是指程序自身彼此关联的过程，按照联编所进行的阶段不同，可分为静态联编和动态联编，静态联编是指在程序编译连接阶段进行联编，也称为早期联编。这种联编工作由于在程序运行之前完成，所调用的函数与执行该函数的代码之间的关系已确定</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">CBase</span>&#123;</span></span><br><span class="line">public:</span><br><span class="line">   <span class="type">void</span> <span class="title function_">fun</span><span class="params">()</span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;CBase:fun&quot;</span>&lt;&lt;<span class="built_in">endl</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMyClass</span>:</span>public  CBase&#123;</span><br><span class="line">public:</span><br><span class="line"><span class="type">void</span> <span class="title function_">fun</span><span class="params">()</span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;CMyClass:fun&quot;</span>&lt;&lt;<span class="built_in">endl</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  CBase *p;</span><br><span class="line">  CBase  objA;</span><br><span class="line">  CMyClass  objB;</span><br><span class="line">  p = &amp;objA; p-&gt;fun();</span><br><span class="line">  p = &amp;objB; p-&gt;fun();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指向基类的指针p,在此程序运行前，p-&gt;fun()已确定为访问基类的成员函数fun()，所以不管p指向基类，还是派生类的对象，p-&gt;fun()都是基类绑定的成员函数，结果都相同，这就是静态联编的结果<br>动态联编是指在程序运行时进行的联编，也称晚期联编，动态联编要求在运行时解决程序中的函数调用与执行该函数代码间的关系</p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p>虚函数的概念：在基类中冠以关键字virtual的成员函数 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virtual  &lt;类型说明符&gt;&lt;函数名&gt;(&lt;参数表&gt;)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line">virtual  <span class="type">void</span> <span class="title function_">fun_a</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//&lt;函数体&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明： </p>
+<ol>
+<li>如果一个函数在基类中被声明为虚函数，则他在所有派生类中都是虚函数 </li>
+<li>只有通过基类指针或引用调用虚函数才能引发动态绑定 </li>
+<li>虚函数不能声明为静态，也不能是友元函数 </li>
+<li>基类中的虚函数，在派生类中即使没有指定virtual关键字，它也是虚函数 </li>
+<li>如果某个类中的一个成员函数被说明为虚函数，该成员函数可能在派生类中存在着不同的实现版本 </li>
+<li>由于存在有虚函数，编译器将进行动态联编，使调用虚函数的对象在运行时确定，以实现动态联编的多态性</li>
+</ol>
+<p>特性：</p>
+<p>当一个父类指针指向子类对象的时候，调用一个虚函数，将调用子类的虚函数</p>
+<h3 id="纯虚函数与抽象类"><a href="#纯虚函数与抽象类" class="headerlink" title="纯虚函数与抽象类"></a>纯虚函数与抽象类</h3><p>纯需函数提供了基类指针指向派生类对象，调用的是派生类的虚函数这一特性，这就使得我们以一致的观点来看待不同的派生类对象，在运行时刻才确定函数的入口。 </p>
+<p>但是思考一个问题，如果基类的接口使无法实现的怎么办？比如：<br>形状有一个求面积的函数，原型与矩形继承自形状类，那么圆形与矩形知道怎么算出面积。但是下形状是无法求得面积的，因为形状是一个抽象的概念，这个情况就用到了纯虚函数<br>包含纯虚函数的类就是抽象类，这样的类也不能实例化，纯虚函数是一种特殊的虚函数，是一种没有具体实现的虚函数，其定义格式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> &lt;类名&gt;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">virtual</span> &lt;函数名&gt; &lt;函数名&gt;(&lt;参数表&gt;)=<span class="number">0</span>；</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> CClassA</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">virtual</span>  &lt;函数名&gt; &lt;函数名&gt;(&lt;参数表&gt;)=<span class="number">0</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在许多情况下，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数，它的实现留给该基类的派生类去做，这就是纯虚函数的作用 </p>
+<p>一个类中如果定义了纯虚函数，则这个类就会变成抽象类，C++规定抽象类类型将不能再定义对象 </p>
+<p>注意： </p>
+<ul>
+<li>抽象类只能作为基类来使用 </li>
+<li>不能声明抽象类的对象 </li>
+<li>构造函数不能是虚函数，析构函数可以是虚函数 </li>
+<li>抽象类不能用于直接创建对象实例，可以声明抽象类的指针和引用 </li>
+<li>可使用指向抽象类的指针支持运行时多态性 </li>
+<li>派生类中必须实现基类中的纯虚函数，否则它仍将被看作一个抽象类</li>
+</ul>
+<h3 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h3><p>构造函数不能说明为虚函数，而析构函数可以说明为虚函数，其方法是在析构函数前加上关键字virtual说明符，如果一个基类的析构函数被说明为虚函数，则其派生类中的析构函数，可省略virtual说明符</p>
+<p><strong>为什么要将析构函数声明为虚函数</strong></p>
+<p>基类指针指向子类对象，是多态中常见的做法，那么delete基类指针去释放空间，也会经常出现，但是delete基类指针只会调用父类的析构函数，子类的析构函数不会被调用，这样就有可能会出现内存泄漏<br>基类的析构函数为虚函数，且派生类有自定义析构函数实现时，delete基类指针时会同时调用派生类的析构函数，派生类析构的时候，会自动调用基类的析构函数</p>
+<h3 id="重载、重定义与重写"><a href="#重载、重定义与重写" class="headerlink" title="重载、重定义与重写"></a>重载、重定义与重写</h3><p><img src="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329102929322.png" alt="image-20220329102929322"></p>
+<p>成员函数被重载的特征： </p>
+<ol>
+<li>相同的范围(在同一个类中) </li>
+<li>函数名字相同 </li>
+<li>参数不同 </li>
+<li>virtual关键字可有可无</li>
+</ol>
+<p>重写是指派生类函数覆盖基类函数，特征是： </p>
+<ol>
+<li>不同的范围（分别位于派生类与基类） </li>
+<li>函数名字相同 </li>
+<li>参数相同 </li>
+<li>基类函数必须有virtual关键字</li>
+</ol>
+<p>重定义（派生类与基类） </p>
+<ol>
+<li>不同的范围（分别位于派生类与基类） </li>
+<li>函数名与参数都相同，无virtual关键字 </li>
+<li>函数名相同，参数不同，virtual可有可无</li>
+</ol>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>模板是一种工具模板可以使程序员能建立具有通用类型的函数库和类库模板也是C++语言支持参数多态性的工具<br>C++语言的程序结构主要是由函数和类构成的，模板具有两种不同的形势<br>A:函数模板<br>B:类模板</p>
+<h3 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h3><p>考察两个swap()函数，一个交换整形数，一个交换浮点数，尽管函数的功能一样，仅处理数据类型不同，但对有强数据类型校验的C++语言，必须使用函数重载，分别编写代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span>                                   <span class="type">void</span>  <span class="title function_">swap</span><span class="params">(<span class="type">float</span>  &amp;a,<span class="type">float</span> &amp;b)</span></span><br><span class="line">&#123;                                                                         &#123;</span><br><span class="line">  <span class="type">int</span>  temp=a;                                                                <span class="type">float</span>  temp=a;</span><br><span class="line">  a=b;                                                                            a=b;</span><br><span class="line">  b=temp;                                                                      b=temp;</span><br><span class="line">&#125;                                                                          &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两个函数的参数个数，实现代码是相同的，只有形参的类型不同，如果将两个函数中的int 和float进行参数化，使用参数T替代，则交换任何一对数据类型的变量(包括类对象)可以定义为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Template&lt;T&gt;</span><br><span class="line"><span class="type">void</span>  <span class="title function_">swap</span><span class="params">(T &amp;a, T &amp;b)</span></span><br><span class="line">&#123;</span><br><span class="line">   T  temp=a;</span><br><span class="line">    a=b;</span><br><span class="line">    b=temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了上述定义，对任一类型T的两个变量或类对象(x1,x2)，函数调用swap(x1,x2)编译器都能理解并执行函数模板所确定的功能<br>函数模板提供了具有处理相同功能的一类函数的抽象，它以任意类型T为参数，其定义形式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;参数化类型名表&gt;</span><br><span class="line">&lt;返回类型&gt;&lt;函数名&gt;(&lt;参数表&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//&lt;函数体&gt;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>  &lt;<span class="keyword">typename</span>  T_TYPE&gt;</span><br><span class="line"><span class="function"><span class="type">int</span>  <span class="title">fun</span><span class="params">(T_TYPE  NumA,T_TYPE  NumB)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，template是定义函数模板啊的关键字，&lt;参数化类型名表&gt;可以包括基本数据类型，也可以包含类类型<br>如果是类类型，则需加关键字class，例如： template </p>
+<p>函数模板是对一组函数的描述，它不是一个实实在在的函数，表示每次它能单独处理在类型形式参数中说明的数据类型，编译器不会为其产生任何执行代码<br>当编译器发现有函数调用：函数名（实参数)，当实参数与函数模板形参数相匹配时，则产生一个重载函数。该重载函数与函数模板实现功能相同（函数体定义相同），该重载函数称为模板函数<br>函数模板是模板的定义，不是一个函数，定义中使用通用的类型参数<br>模板函数是用函数模板实例化的函数，它是一个实实在在的函数定义，它由编译器遇到模板函数调用时所生成，具有可执行的程序代码</p>
+<h3 id="模板特化"><a href="#模板特化" class="headerlink" title="模板特化"></a>模板特化</h3><p>模板的特化也可以理解为实例化，模板的特化分为隐式实例化与显示实例化 </p>
+<p>特化的目的是为了适应模板在实例化时会产生的一些特殊情况，模板的特化分为普通特化与偏特化，他们的特点分别如下： </p>
+<p>普通特化：将此模板的所有替换类型的某一种类型进行特别处理<br>偏特化：将此模板的所有替身类型的某一种类型的某几项进行特别处理</p>
+<h3 id="函数重载模板"><a href="#函数重载模板" class="headerlink" title="函数重载模板"></a>函数重载模板</h3><p>重载方法约定： </p>
+<ol>
+<li>查找参数完全匹配的函数； </li>
+<li>查找函数模板，实例化产生一个匹配的模板函数 </li>
+<li>通过类型转化可产生参数匹配的函数</li>
+</ol>
+<h3 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h3><p>考虑定义一个一维数组的情况，不管数组元素是什么类型数据的类。数组类在所有类型数据上进行的基本操作都是相同的(如插入，删除，检索等)，链表情况也是如此。可以定义节点为不同类型数据的类，但链表类在所有类型数据上进行的基本操作也是i相同的。<br>如果要对功能相同，类的实现没有变化，仅类的数据类型不同的各种情况，都要重新定义一种新的类型，将带来较大的重复。为解决这一问题，可以引进类模板的概念。即将数组种的元素和链表中的节点的数据类型用一个通用参数T来替代 </p>
+<p>类模板的定义格式为： </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">templete &lt;模板参数表&gt; </span><br><span class="line"><span class="keyword">class</span> &lt;类名&gt; </span><br><span class="line">&#123; </span><br><span class="line"><span class="comment">//类体说明 </span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>其中templete是关键字，&lt;模板参数表&gt;中可以有多个参数，其间用逗号分隔<br>类模板是为具有相同特性的一组类，定义的一种模式，它说明单个类怎样建立，这与类型声明说明单个对象是怎样建立类似，用模板是参数数生成的类称为模板类，模板类可以生成对象 </p>
+<p>总结</p>
+<p>模板是一种安全的，搞笑的重用代码方式，它使用通用的参数化类型，在创建对象或函数时所传递的实参类型可以改变其行为，函数模板和类模板经实例化后，可生成具有不同类型的模板函数和模板类，尽管处理数据的类型不同，但其功能和实现是相同的 </p>
+<p>每个模板类的实例是一个实际的对象，可以像其他类的对象一样使用<br>在C++中的一个发展趋势是使用标准模板类库(STL)，将其作为编译器的一部分，STL是一个基于模板的包容类库，包括向量，链表和队列，还包括一些通用的排序和查找算法等。STL为用户提供了那些需要重复编码的程序代码，提高了变成的效率。</p>
+<h2 id="STL的基本使用"><a href="#STL的基本使用" class="headerlink" title="STL的基本使用"></a>STL的基本使用</h2><p>STL &#x3D; Staandard Template Library，标准模板库，它是由惠普实验室开发的一系列标准化的组件，目前是C++的一部i分。<br>STL是C++的一部分，因此不用额外安装什么，它被内建在你的编译器之内</p>
+<h3 id="string类型"><a href="#string类型" class="headerlink" title="string类型"></a>string类型</h3><p>string类型支持长度可变的字符串，C++标准模板库将负责管理与存储字符相关的内存，以及提供各种有用的操作，<br>使用string需要包含它的头文件，并且using它 </p>
+<p>string的构造</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">string s1:   <span class="comment">//默认构造函数，s1为空串</span></span><br><span class="line"><span class="function">string <span class="title">s2</span><span class="params">(s1)</span>:   //将s2初始化为s1的一个副本</span></span><br><span class="line"><span class="function">string s3(<span class="string">&quot;value&quot;</span>):   //将s3初始化为一个字符串字面值副本</span></span><br><span class="line"><span class="function">string s4(n,<span class="string">&#x27;c&#x27;</span>);</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span>  <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  string  s1;</span><br><span class="line">  <span class="function">string  <span class="title">s2</span><span class="params">(<span class="string">&quot;asdfgg&quot;</span>)</span></span>;</span><br><span class="line">  cout&lt;&lt;s2&lt;&lt;endl;</span><br><span class="line">  <span class="function">string  <span class="title">s4</span><span class="params">(<span class="string">&quot;abcdefg&quot;</span>,<span class="number">4</span>)</span></span>;</span><br><span class="line">  cout&lt;&lt;s4&lt;&lt;endl;</span><br><span class="line">  <span class="function">string  <span class="title">s5</span><span class="params">(s2,<span class="number">2</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line">  cout&lt;&lt;s5&lt;&lt;endl;</span><br><span class="line">  string::iterator first = s2.<span class="built_in">begin</span>() +<span class="number">1</span>; <span class="comment">//迭代器</span></span><br><span class="line">  string::iterator last = s2.<span class="built_in">begin</span>()+<span class="number">5</span>;  <span class="comment">//迭代器</span></span><br><span class="line">  <span class="function">string <span class="title">s6</span><span class="params">(first,last)</span></span>;</span><br><span class="line">  cout&lt;&lt;s6&lt;&lt;endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在以上代码中出现了迭代器，迭代器是一种类似于指针的东西，目前暂可这么理解，他是用来指代容器中的某一个元素的，最常见的用法是遍历容器中的每一个元素 </p>
+<p>常用的成员函数</p>
+<p><img src="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329110632733.png" alt="image-20220329110632733"></p>
+<h3 id="vector类"><a href="#vector类" class="headerlink" title="vector类"></a>vector类</h3><p>vector是动态数组，并且由于它是模板技术实现的，它支持任意类型 </p>
+<p>vector的常用函数</p>
+<p><img src="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220329110812151.png" alt="image-20220329110812151"></p>
+<p>vector的强大在于它支持很多的运算符，在数组中想要整体赋值愿望就这么被它实现了，并且它还是一个会无限扩张的数组。（前提是你的元素都是push_back添加进去的）<br>vector也是支持迭代器的，可以用于遍历vector中的每一个元素</p>
+<h3 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h3><p>全局对象是实现数据共享的一种方法，由于它处处可见，因此不够安全，应尽量在程序中少用全局对象，实现类的多个对象之间的数据共享，可使用静态成员<br>静态成员包括静态数据和静态成员函数，友元函数也是一种普通的C++函数，但是它可以访问类的保护或私有成员，方便编程，提高了效率，同时也破坏了类的封装性<br>在一个类中，若将一个数据说明为static，则该数据称为静态数据，它告诉编译器无论建立多个该类的对象，都只有一个静态数据的拷贝，这个拷贝被所有类对象共享，静态数据属于类而共享，不属于对象独有，它的值对每个对象都是一样的，对静态数据成员的值的更新，即是对所有对象的该静态数据成员值的更新，静态数据使用关键字static，静态数据成员在类体中说明，在类体外定义，以分配存储空间并初始化</p>
+<h3 id="静态数据成员"><a href="#静态数据成员" class="headerlink" title="静态数据成员"></a>静态数据成员</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">CCounter</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  public:</span><br><span class="line">      <span class="type">void</span>  <span class="title function_">sercount</span><span class="params">(<span class="type">int</span> i)</span> &#123; m_nCount=i&#125;</span><br><span class="line">      <span class="type">void</span>   showcount()  &#123;<span class="built_in">cout</span>&lt;&lt;m_nCount&lt;&lt;<span class="built_in">endl</span>;&#125;</span><br><span class="line">   private:</span><br><span class="line">      <span class="type">static</span>  <span class="type">int</span>  m_nCount;   <span class="comment">//在类体内说明静态数据</span></span><br><span class="line">&#125;；</span><br><span class="line"><span class="type">int</span>  CCounter::m_nCount = <span class="number">0</span>; <span class="comment">//在类体外定义静态数据</span></span><br><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  CCounter  objA,objB;</span><br><span class="line">  objA.showcount();</span><br><span class="line">  objB.showcount();</span><br><span class="line">  objA.setcount(<span class="number">15</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态数据成员可应用在以下几个方面：</p>
+<ul>
+<li>用来保存流动变化的对象个数(如学生人数) </li>
+<li>作为一个标志，指示一个特定的动作是否发生 </li>
+<li>指向一个链表第一成员或最后一个成员的指针</li>
+</ul>
+<p>对静态成员函数的访问，在程序中可使用如下方式： </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;类名&gt;::&lt;静态成员函数名&gt;(&lt;参数表&gt;)； </span><br><span class="line">classA::<span class="built_in">Fun</span>(<span class="number">123</span>,<span class="number">456</span>); </span><br></pre></td></tr></table></figure>
+
+<p>或 </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;对象名&gt;.&lt;静态成员函数名&gt;(&lt;参数表&gt;)； </span><br><span class="line">objA.<span class="built_in">Fun</span>(<span class="number">123</span>,<span class="number">456</span>) </span><br></pre></td></tr></table></figure>
+
+<p>静态成员函数只属于一个类，而不属于类中的任何对象<br>静态成员函数的说明和定义与静态数据成员一样，函数实现可在类体内，也可在类体外，与一般成员函数相同<br>在静态成员函数的实现中，可以直接使用静态成员，可以通过对象来使用非静态成员</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E5%8F%91/" rel="tag"># 开发</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/25/C-%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="C++（一）">
+      <i class="fa fa-chevron-left"></i> C++（一）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B4%BE%E7%94%9F%E4%B8%8E%E7%BB%A7%E6%89%BF"><span class="nav-number">1.</span> <span class="nav-text">派生与继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B4%BE%E7%94%9F%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">派生类的继承方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF"><span class="nav-number">1.2.</span> <span class="nav-text">接口继承与实现继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B4%BE%E7%94%9F%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E3%80%81%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">派生类的构造、析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E9%87%8D%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">类的成员重定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="nav-number">3.</span> <span class="nav-text">多重继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E4%BA%8C%E4%B9%89%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">多继承中的二义性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E6%80%A7%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">多态性与虚函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%BF%9E%E7%BC%96%E4%B8%8E%E5%8A%A8%E6%80%81%E8%81%94%E7%BC%96"><span class="nav-number">3.3.</span> <span class="nav-text">静态连编与动态联编</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">虚函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">4.1.</span> <span class="nav-text">纯虚函数与抽象类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">虚析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E3%80%81%E9%87%8D%E5%AE%9A%E4%B9%89%E4%B8%8E%E9%87%8D%E5%86%99"><span class="nav-number">4.3.</span> <span class="nav-text">重载、重定义与重写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-number">5.</span> <span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">5.1.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%89%B9%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">模板特化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD%E6%A8%A1%E6%9D%BF"><span class="nav-number">5.3.</span> <span class="nav-text">函数重载模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">5.4.</span> <span class="nav-text">类模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">STL的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.1.</span> <span class="nav-text">string类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector%E7%B1%BB"><span class="nav-number">6.2.</span> <span class="nav-text">vector类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">6.3.</span> <span class="nav-text">静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="nav-number">6.4.</span> <span class="nav-text">静态数据成员</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Brave Laughter"
+      src="/images/85364458.jfif">
+  <p class="site-author-name" itemprop="name">Brave Laughter</p>
+  <div class="site-description" itemprop="description">埋头苦干的劲头 抬头看路的清醒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brave Laughter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
