@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息  常用Python语法字符串的切片和索引字符串的切片和索引就是通过string[x]，获取字符串的一部分信息 字符串方法split()方法 123a &#x3D; &amp;#x27;www.baidu.com&amp;#x27;print(a.split(&amp;#x27;.&amp;#x27;))#result[&amp;#x27;w">
+  <meta name="description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫基础-从零开始">
 <meta property="og:url" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/index.html">
 <meta property="og:site_name" content="A1ili&#39;s Blog">
-<meta property="og:description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息  常用Python语法字符串的切片和索引字符串的切片和索引就是通过string[x]，获取字符串的一部分信息 字符串方法split()方法 123a &#x3D; &amp;#x27;www.baidu.com&amp;#x27;print(a.split(&amp;#x27;.&amp;#x27;))#result[&amp;#x27;w">
+<meta property="og:description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/8afbde6f337b785ddbe1e3c89cb1605aa0b0b0f53098ecf6cb99fc8fbc494567.png">
 <meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/cd5e7b38fe329e81b4cdfe20540f2653826e80ee7dcb7566667e896aeffbf701.png">
@@ -43,7 +43,7 @@
 <meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/74b51a3caf99edb6561cfc1147d08365c77ff3babbb4c3dc70373eda0d3bbb0e.png">
 <meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/3b5dbe9beef8e4dc98e0e94be6d3f4b953f5dac1c6b10b92f71f40f0d95f6306.png">
 <meta property="article:published_time" content="2022-04-25T15:34:05.000Z">
-<meta property="article:modified_time" content="2022-04-25T15:36:54.527Z">
+<meta property="article:modified_time" content="2022-04-25T15:51:19.612Z">
 <meta property="article:author" content="Brave Laughter">
 <meta property="article:tag" content="爬虫">
 <meta property="article:tag" content="python">
@@ -236,7 +236,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-25 23:34:05 / 修改时间：23:36:54" itemprop="dateCreated datePublished" datetime="2022-04-25T23:34:05+08:00">2022-04-25</time>
+              <time title="创建时间：2022-04-25 23:34:05 / 修改时间：23:51:19" itemprop="dateCreated datePublished" datetime="2022-04-25T23:34:05+08:00">2022-04-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,6 +263,8 @@
 <li>模拟计算机对服务器发起的Request请求</li>
 <li>接受服务器端的Response内容并解析，提取所需的信息</li>
 </ul>
+<span id="more"></span>
+
 <h1 id="常用Python语法"><a href="#常用Python语法" class="headerlink" title="常用Python语法"></a>常用Python语法</h1><h2 id="字符串的切片和索引"><a href="#字符串的切片和索引" class="headerlink" title="字符串的切片和索引"></a>字符串的切片和索引</h2><p>字符串的切片和索引就是通过<code>string[x]</code>，获取字符串的一部分信息</p>
 <h2 id="字符串方法"><a href="#字符串方法" class="headerlink" title="字符串方法"></a>字符串方法</h2><p><strong>split()方法</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">&#x27;www.baidu.com&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(a.split(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line"><span class="comment">#result[&#x27;www&#x27;,&#x27;baidu&#x27;,&#x27;com&#x27;]</span></span><br></pre></td></tr></table></figure>

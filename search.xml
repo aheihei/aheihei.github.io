@@ -2982,6 +2982,8 @@
 <li>模拟计算机对服务器发起的Request请求</li>
 <li>接受服务器端的Response内容并解析，提取所需的信息</li>
 </ul>
+<span id="more"></span>
+
 <h1 id="常用Python语法"><a href="#常用Python语法" class="headerlink" title="常用Python语法"></a>常用Python语法</h1><h2 id="字符串的切片和索引"><a href="#字符串的切片和索引" class="headerlink" title="字符串的切片和索引"></a>字符串的切片和索引</h2><p>字符串的切片和索引就是通过<code>string[x]</code>，获取字符串的一部分信息</p>
 <h2 id="字符串方法"><a href="#字符串方法" class="headerlink" title="字符串方法"></a>字符串方法</h2><p><strong>split()方法</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27;www.baidu.com&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(a.split(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line"><span class="comment">#result[&#x27;www&#x27;,&#x27;baidu&#x27;,&#x27;com&#x27;]</span></span><br></pre></td></tr></table></figure>
