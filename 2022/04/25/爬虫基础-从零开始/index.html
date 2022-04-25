@@ -20,30 +20,50 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="埋头苦干的劲头 抬头看路的清醒">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A1ili&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息  常用Python语法字符串的切片和索引字符串的切片和索引就是通过string[x]，获取字符串的一部分信息 字符串方法split()方法 123a &#x3D; &amp;#x27;www.baidu.com&amp;#x27;print(a.split(&amp;#x27;.&amp;#x27;))#result[&amp;#x27;w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫基础-从零开始">
+<meta property="og:url" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/index.html">
 <meta property="og:site_name" content="A1ili&#39;s Blog">
-<meta property="og:description" content="埋头苦干的劲头 抬头看路的清醒">
+<meta property="og:description" content="原理 模拟计算机对服务器发起的Request请求 接受服务器端的Response内容并解析，提取所需的信息  常用Python语法字符串的切片和索引字符串的切片和索引就是通过string[x]，获取字符串的一部分信息 字符串方法split()方法 123a &#x3D; &amp;#x27;www.baidu.com&amp;#x27;print(a.split(&amp;#x27;.&amp;#x27;))#result[&amp;#x27;w">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/8afbde6f337b785ddbe1e3c89cb1605aa0b0b0f53098ecf6cb99fc8fbc494567.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/cd5e7b38fe329e81b4cdfe20540f2653826e80ee7dcb7566667e896aeffbf701.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/aabc0daff737955f57121884ceb93631578010ab39f9121b790f75c9e575d989.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/4179604d4357269cd0803c45a3114da6bcc6bcd5a65fd933c6af17279aefe1c5.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e02eb1df0bb076c304c84e8343b3d4b5a257f41de908c4c79bd8536604fbc355.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e54945d1278c258fd0de4af76832a3e493943485a5c4aeeb6d67f6fa67a55d75.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/6e37d345e26c874d67c98383ea661cda972ed0151e9439bc7a52f23ff2fcbebf.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e2d15bbe0adef3531865a6d4fae414c018aac727657896deb762b7cfc0104af7.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/0a7ebde500e1077798346af020b5733b2d0c244fbc50dedc415fcc1b963b4329.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/1edb085d880b0f18d7a503c2e437446001797c769e08b9fa41ef950965f74a6a.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/98cdeb8165b2b10f16bf3395f8e8e8947c9264d3de8d4e36d69dc56c86381cc2.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/96d7eb1f96d9cb2947a2ecfb50ae8fee040538860db4ee0ce317d97cf7979626.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/0b1e53f6758ae790a333a394d56f4d9ca54d69bde372c9dafb5549e17af92075.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/74b51a3caf99edb6561cfc1147d08365c77ff3babbb4c3dc70373eda0d3bbb0e.png">
+<meta property="og:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/3b5dbe9beef8e4dc98e0e94be6d3f4b953f5dac1c6b10b92f71f40f0d95f6306.png">
+<meta property="article:published_time" content="2022-04-25T15:34:05.000Z">
+<meta property="article:modified_time" content="2022-04-25T15:36:54.527Z">
 <meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/8afbde6f337b785ddbe1e3c89cb1605aa0b0b0f53098ecf6cb99fc8fbc494567.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>A1ili's Blog</title>
+  <title>爬虫基础-从零开始 | A1ili's Blog</title>
   
 
 
@@ -185,9 +205,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -203,10 +224,9 @@
       <meta itemprop="name" content="A1ili's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/" class="post-title-link" itemprop="url">爬虫基础-从零开始</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          爬虫基础-从零开始
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -239,7 +259,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+        <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
 <li>模拟计算机对服务器发起的Request请求</li>
 <li>接受服务器端的Response内容并解析，提取所需的信息</li>
 </ul>
@@ -692,331 +712,35 @@
 
 <p>书名：《从零开始学爬虫》</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/85364458.jfif">
-      <meta itemprop="name" content="Brave Laughter">
-      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A1ili's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">文件结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-23 14:32:51 / 修改时间：14:58:15" itemprop="dateCreated datePublished" datetime="2022-04-23T14:32:51+08:00">2022-04-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>APK结构</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/85364458.jfif">
-      <meta itemprop="name" content="Brave Laughter">
-      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A1ili's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Adb命令使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-23 13:17:38 / 修改时间：14:58:36" itemprop="dateCreated datePublished" datetime="2022-04-23T13:17:38+08:00">2022-04-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>adb常用命令总结</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/23/Adb%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/23/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" rel="prev" title="文件结构">
+      <i class="fa fa-chevron-left"></i> 文件结构
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/23/Python%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/85364458.jfif">
-      <meta itemprop="name" content="Brave Laughter">
-      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A1ili's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/23/Python%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Python使用问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-23 13:14:46 / 修改时间：14:42:54" itemprop="dateCreated datePublished" datetime="2022-04-23T13:14:46+08:00">2022-04-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python使用中的问题总结</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/23/Python%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/85364458.jfif">
-      <meta itemprop="name" content="Brave Laughter">
-      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A1ili's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">C++（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-28 16:08:44" itemprop="dateCreated datePublished" datetime="2022-03-28T16:08:44+08:00">2022-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-29 19:59:53" itemprop="dateModified" datetime="2022-03-29T19:59:53+08:00">2022-03-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>派生与继承，多态性与虚函数，模板，STL的基本使用，静态成员</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/28/C-%EF%BC%88%E4%BA%8C%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1068,6 +792,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8Python%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">常用Python语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%87%E7%89%87%E5%92%8C%E7%B4%A2%E5%BC%95"><span class="nav-number">2.1.</span> <span class="nav-text">字符串的切片和索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">字符串方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.3.</span> <span class="nav-text">Python数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">2.3.2.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%BB%84%E5%92%8C%E9%9B%86%E5%90%88"><span class="nav-number">2.3.3.</span> <span class="nav-text">元组和集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">2.4.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">打开文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">读写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.3.</span> <span class="nav-text">关闭文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.5.</span> <span class="nav-text">Python面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-number">2.5.1.</span> <span class="nav-text">定义类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.2.</span> <span class="nav-text">实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-number">2.5.3.</span> <span class="nav-text">实例方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">2.6.</span> <span class="nav-text">类的继承</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B5%E9%9D%A2%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">多页面爬虫流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%A8%E9%A1%B5%E9%9D%A2%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">跨页面爬虫流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E6%9E%84%E9%80%A0"><span class="nav-number">5.</span> <span class="nav-text">网页构造</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%88%AC%E8%99%AB%E4%B8%89%E5%A4%A7%E5%BA%93"><span class="nav-number">6.</span> <span class="nav-text">爬虫三大库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Requests%E5%BA%93"><span class="nav-number">6.1.</span> <span class="nav-text">Requests库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Requests%E5%BA%93%E7%9A%84%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="nav-number">6.2.</span> <span class="nav-text">Requests库的错误和异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeautifulSoup%E5%BA%93"><span class="nav-number">6.3.</span> <span class="nav-text">BeautifulSoup库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">6.3.1.</span> <span class="nav-text">常用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%AD%97%E7%AC%A6"><span class="nav-number">7.1.</span> <span class="nav-text">一般字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%AE%9A%E4%BB%A5%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">7.2.</span> <span class="nav-text">预定以字符集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E9%87%8F%E8%AF%8D"><span class="nav-number">7.3.</span> <span class="nav-text">数量词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E5%8C%B9%E9%85%8D"><span class="nav-number">7.4.</span> <span class="nav-text">边界匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re%E6%A8%A1%E5%9D%97%E5%8F%8A%E5%85%B6%E6%96%B9%E6%B3%95"><span class="nav-number">7.5.</span> <span class="nav-text">re模块及其方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#search-%E5%87%BD%E6%95%B0"><span class="nav-number">7.5.1.</span> <span class="nav-text">search()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sub-%E5%87%BD%E6%95%B0"><span class="nav-number">7.5.2.</span> <span class="nav-text">sub()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findall-%E5%87%BD%E6%95%B0"><span class="nav-number">7.5.3.</span> <span class="nav-text">findall()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re%E6%A8%A1%E5%9D%97%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">7.5.4.</span> <span class="nav-text">re模块修饰符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LXML%E5%BA%93%E4%B8%8EXpath%E8%AF%AD%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">LXML库与Xpath语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LXML%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">8.1.</span> <span class="nav-text">LXML库的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96html%E6%96%87%E4%BB%B6"><span class="nav-number">8.2.</span> <span class="nav-text">读取html文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90html%E6%96%87%E4%BB%B6"><span class="nav-number">8.3.</span> <span class="nav-text">解析html文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Xpath%E8%AF%AD%E6%B3%95"><span class="nav-number">8.4.</span> <span class="nav-text">Xpath语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E9%80%89%E6%8B%A9"><span class="nav-number">8.4.1.</span> <span class="nav-text">节点选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">8.5.</span> <span class="nav-text">使用技巧</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>APP使用接口获取网图</title>
+    <url>/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/</url>
+    <content><![CDATA[<p>怎么从网络接口中获取数据，需要用到哪些框架，传哪些参数</p>
+<span id="more"></span>
+
+<h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1><h2 id="okhttp"><a href="#okhttp" class="headerlink" title="okhttp"></a>okhttp</h2><p>网络请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OkHttpUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="type">OkHttpClient</span> <span class="variable">client</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpClient</span>();</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * param1：请求地址</span></span><br><span class="line"><span class="comment">    * param2: 传输数据类型（此请求是键值对）</span></span><br><span class="line"><span class="comment">    * &#123;&quot;id&quot;:11,&quot;name&quot;:&quot;5bc01a39e7bce75ea7b2fb40&quot;,&quot;classify&quot;:&quot;yzmn&quot;,&quot;smallPic&quot;:</span></span><br><span class="line"><span class="comment">    * param3: 异步请求参数，回调</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">post</span><span class="params">(String url, Map&lt;String, String&gt; params, Callback callback)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//form表单形式传数据（其他有json）</span></span><br><span class="line">        FormBody.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FormBody</span>.Builder();</span><br><span class="line">        <span class="comment">//遍历数据</span></span><br><span class="line">        <span class="keyword">for</span> (String key : params.keySet())&#123;</span><br><span class="line">            builder.add(key,params.get(key));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">FormBody</span> <span class="variable">body</span> <span class="operator">=</span> builder.build();</span><br><span class="line"></span><br><span class="line">        <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Request</span>.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .post(body)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">//enqueue异步请求</span></span><br><span class="line">        <span class="comment">//需要callback回调</span></span><br><span class="line">        client.newCall(request).enqueue(callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">/*请求数据*/</span></span><br><span class="line">        <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        isLoading = <span class="literal">true</span>;</span><br><span class="line">        Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        params.put(<span class="string">&quot;classify&quot;</span>,<span class="string">&quot;dmdh&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">        OkHttpUtil.post(<span class="string">&quot;http://www.dtasecurity.cn:18080/demo01/getWallpaper&quot;</span>,</span><br><span class="line">                params,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                        <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                        <span class="comment">//匿名内部类</span></span><br><span class="line">                        ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                        wallPaperEntityList.addAll(data.getData());</span><br><span class="line">                        <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                        msg.what = <span class="number">1</span>;</span><br><span class="line">                        handler.sendMessage(msg);</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        page++;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Gson"><a href="#Gson" class="headerlink" title="Gson"></a>Gson</h2><p>解析Json</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                        <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                        ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                        wallPaperEntityList.addAll(data.getData());</span><br><span class="line">                        <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                        msg.what = <span class="number">1</span>;</span><br><span class="line">                        handler.sendMessage(msg);</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Gson解析返回的对象类型</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wallpaper.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResponseEntity</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">//请求数据参数</span></span><br><span class="line">    Integer pageNum;</span><br><span class="line">    Boolean hasNext;</span><br><span class="line">    Integer limit;</span><br><span class="line">    String classify;</span><br><span class="line">    String message;</span><br><span class="line">    List&lt;T&gt; data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getPageNum</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pageNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setPageNum</span><span class="params">(Integer pageNum)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.pageNum = pageNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Boolean <span class="title function_">getHasNext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> hasNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setHasNext</span><span class="params">(Boolean hasNext)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.hasNext = hasNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getLimit</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> limit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setLimit</span><span class="params">(Integer limit)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.limit = limit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getClassify</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> classify;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setClassify</span><span class="params">(String classify)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.classify = classify;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMessage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;T&gt; <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setData</span><span class="params">(List&lt;T&gt; data)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Glide"><a href="#Glide" class="headerlink" title="Glide"></a>Glide</h2><p>图像加载框架</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//把从网络上获取的图片放到img_wallpaper</span></span><br><span class="line">       Glide.with(img_wallpaper).load(smallPicUrl).into(img_wallpaper);</span><br></pre></td></tr></table></figure>
+
+<h1 id="项目："><a href="#项目：" class="headerlink" title="项目："></a>项目：</h1><h2 id="GridView"><a href="#GridView" class="headerlink" title="GridView"></a>GridView</h2><p>网格试图</p>
+<p>属性：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">android:columnWidth：设置列的宽度</span><br><span class="line">android:gravity：组件对其方式</span><br><span class="line">android:horizontalSpacing：水平方向每个单元格的间距</span><br><span class="line">android:verticalSpacing：垂直方向每个单元格的间距</span><br><span class="line">android:numColumns：设置列数</span><br><span class="line">android:stretchMode：设置拉伸模式，可选值如下： none：不拉伸；spacingWidth：拉伸元素间的间隔空隙 columnWidth：仅仅拉伸表格元素自身 spacingWidthUniform：既拉元素间距又拉伸他们之间的间隔空袭</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<p>1, 创建Item的布局：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=<span class="string">&quot;@+id/img_item_wallpaper&quot;</span></span><br><span class="line">        android:scaleType=<span class="string">&quot;fitXY&quot;</span></span><br><span class="line">        android:padding=<span class="string">&quot;5dp&quot;</span></span><br><span class="line">        android:layout_width=<span class="string">&quot;120dp&quot;</span></span><br><span class="line">        android:layout_height=<span class="string">&quot;200dp&quot;</span>/&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2, 写entity实体类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wallpaper.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WallPaperEntity</span> &#123;</span><br><span class="line">    <span class="comment">//要获取的资源的各种属性</span></span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">    String smallPic;</span><br><span class="line">    String bigPic;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(String id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getSmallPic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> smallPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSmallPic</span><span class="params">(String smallPic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.smallPic = smallPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getBigPic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> bigPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBigPic</span><span class="params">(String bigPic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.bigPic = bigPic;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3，MainActivity的布局和Java代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="line">    xmlns:app=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span><br><span class="line">    xmlns:tools=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    tools:context=<span class="string">&quot;.MainActivity&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;GridView</span><br><span class="line">        android:id=<span class="string">&quot;@+id/gv_main&quot;</span></span><br><span class="line">        android:numColumns=<span class="string">&quot;3&quot;</span></span><br><span class="line">        android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">        android:layout_height=<span class="string">&quot;match_parent&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">initViews</span><span class="params">()</span> &#123;</span><br><span class="line">        gv_main = findViewById(R.id.gv_main);</span><br><span class="line">        <span class="comment">//初始化adapater</span></span><br><span class="line">        adapter = <span class="keyword">new</span> <span class="title class_">WallpaperAdapter</span>(<span class="built_in">this</span>,wallPaperEntityList);</span><br><span class="line">        <span class="comment">//使用适配器展示图片</span></span><br><span class="line">        gv_main.setAdapter(adapter);</span><br><span class="line">        <span class="comment">//监听是否到底部</span></span><br><span class="line">        gv_main.setOnScrollChangeListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnScrollChangeListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onScrollChange</span><span class="params">(View v, <span class="type">int</span> scrollX, <span class="type">int</span> scrollY, <span class="type">int</span> oldScrollX, <span class="type">int</span> oldScrollY)</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (((GridView)v).getLastVisiblePosition() &gt; wallPaperEntityList.size() - <span class="number">6</span>)&#123;</span><br><span class="line">                    getData();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        getData();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>adapater数据适配器，数据想要怎样展示到屏幕上时用，拿到数据后怎么去展示</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WallpaperAdapter</span> <span class="keyword">extends</span> <span class="title class_">BaseAdapter</span> &#123;</span><br><span class="line">    <span class="comment">//UI传递消息使用</span></span><br><span class="line">    Context context;</span><br><span class="line">    <span class="comment">//存储数据,解析时可以使用</span></span><br><span class="line">    List&lt;WallPaperEntity&gt;wallPaperEntityList;</span><br><span class="line">    <span class="comment">//添加构造</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">WallpaperAdapter</span><span class="params">(Context context, List&lt;WallPaperEntity&gt; wallPaperEntityList)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.context = context;</span><br><span class="line">        <span class="built_in">this</span>.wallPaperEntityList = wallPaperEntityList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getCount</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//数量</span></span><br><span class="line">        <span class="keyword">return</span> wallPaperEntityList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getItem</span><span class="params">(<span class="type">int</span> position)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> wallPaperEntityList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getItemId</span><span class="params">(<span class="type">int</span> position)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> position;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> View <span class="title function_">getView</span><span class="params">(<span class="type">int</span> position, View convertView, ViewGroup parent)</span> &#123;</span><br><span class="line">        <span class="comment">// 每拿到一个图片初始化一个</span></span><br><span class="line">        <span class="comment">//初始化xml的view</span></span><br><span class="line">        <span class="type">View</span> <span class="variable">inflate</span> <span class="operator">=</span> View.inflate(context, R.layout.item_wallpaper,<span class="literal">null</span>);</span><br><span class="line">        <span class="comment">//设置图片的view</span></span><br><span class="line">        <span class="type">ImageView</span> <span class="variable">img_wallpaper</span> <span class="operator">=</span> inflate.findViewById(R.id.img_item_wallpaper);</span><br><span class="line">        <span class="comment">//设置数据，最后返回就行</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">smallPicUrl</span> <span class="operator">=</span> wallPaperEntityList.get(position).getSmallPic();</span><br><span class="line">        <span class="comment">//把从网络上获取的图片放到img_wallpaper</span></span><br><span class="line">        Glide.with(img_wallpaper).load(smallPicUrl).into(img_wallpaper);</span><br><span class="line">        <span class="keyword">return</span> inflate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/bTzp1e.md-1647221046750.png" alt="bTzp1e.md"></p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>1，怎么从网络上获取</p>
+<p>2，怎么在界面上显示</p>
+<p>3，显示在界面上过程中怎么处理</p>
+<h1 id="API接口的保护"><a href="#API接口的保护" class="headerlink" title="API接口的保护"></a>API接口的保护</h1><h2 id="消息摘要算法"><a href="#消息摘要算法" class="headerlink" title="消息摘要算法"></a>消息摘要算法</h2><p>它通过对所有数据提取指纹信息以实现数据签名、数据完整性校验等功能，由于其不可逆性，有时候会被用做敏感信息的加密。数据摘要算法也被称为哈希（Hash）算法或散列算法。</p>
+<p>消息摘要算法的主要特征是加密过程不需要密钥，并且经过加密的数据无法被解密，只有输入相同的明文数据经过相同的消息摘要算法才能得到相同的密文。（摘要可以比方为指纹，消息摘要算法就是要得到文件的唯一职位）</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>无论输入的消息有多长，计算出来的消息摘要的长度总是固定的。</li>
+<li>一般地，只要输入的消息不同，对其进行摘要以后产生的摘要消息也必不相同；但相同的输入必会产生相同的输出</li>
+<li>只能进行正向的信息摘要，而无法从摘要中恢复出任何的消息，甚至根本就找不到任何与原信息相关的信息</li>
+<li>好的摘要算法，没有人能从中找到 “碰撞” 或者说极度难找到，虽然 “碰撞” 是肯定存在的</li>
+</ul>
+<h3 id="常用的消息摘要算法"><a href="#常用的消息摘要算法" class="headerlink" title="常用的消息摘要算法"></a>常用的消息摘要算法</h3><p>CRC32（<code>Cyclic redundancy check</code>：循环冗余检验码）</p>
+<p>MD5（<code>Message Digest algorithm 5</code>：消息摘要算法版本5)</p>
+<p>SHA1,SHA256,SHA512 （<code>Secure Hash Algorithm</code>：安全散列算法)</p>
+<h3 id="摘要目的"><a href="#摘要目的" class="headerlink" title="摘要目的"></a>摘要目的</h3><p>数据完整性，是否在传输过程中被修改。</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>信息从一种形式或格式转换为另一种形式的过程，方便在不同系统之中传输，例如最常见的ASCII字符编码。由于网络上只能传输二进制数据，任何数据如果想要经由网络传输，就必须先转化成二进制，ASCII 提供了一个将A、B、C等字母转化为二进制的规则。信息—&gt;编码—&gt;二进制—&gt;解码—&gt;信息</p>
+<h3 id="常见的编码"><a href="#常见的编码" class="headerlink" title="常见的编码"></a>常见的编码</h3><p>ASCII</p>
+<p>Base64</p>
+<p>URL</p>
+<h3 id="编码目的"><a href="#编码目的" class="headerlink" title="编码目的"></a>编码目的</h3><p>压缩空间，便于传输，减少带宽。</p>
+<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>加密是为了保证数据安全传输，使得其他人不能获取的具体信息内容。加密是可逆的，明文 + 秘钥 &#x3D; 加密信息。加密又分为对称加密和非对称加密，区别在于在加密和解密信息时秘钥是不是同一个。</p>
+<p>1、对称加密：DES, AES，3DES</p>
+<p>对称加密算法的特点是算法公开、计算量小、加密速度快、加密效率高。</p>
+<p>不足之处是，交易双方都使用同样钥匙，安全性得不到保证。</p>
+<p>2、非对称加密： RSA，ESA</p>
+<p>密钥是成对出现。使用一对“私钥-公钥”，用私钥加密的内容只有对应公钥才能解开</p>
+<ul>
+<li>公钥：公开给所有人。不能通过公钥反推出私钥；public key</li>
+<li>自己留存，不公开。有且只有一个对应的私钥；secret key</li>
+<li>通过私钥加密的密文只能通过公钥能解密，通过公钥加密的密文也只能通过私钥能解密。</li>
+</ul>
+<p>但由于算法强度比对称加密复杂，加解密的速度比对称加解密的速度要慢。</p>
+<h3 id="加密目的"><a href="#加密目的" class="headerlink" title="加密目的"></a>加密目的</h3><p>传输过程中既是被截取也无法查看原文，因为没有秘钥。</p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>是对摘要后的数据进行加密</p>
+<h2 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h2><p>自己服务器公钥给权威机构（CA），权威机构对服务器的公钥和其他信息进行hash摘要再用权威机构的公钥进行加密后给客户服务器，客户把这个公钥给浏览器。</p>
+<p>1、数据第一步编码（base64等）</p>
+<p>2、第二步进行摘要（md5，sha256）</p>
+<p>3、第三步对摘要后的数据进行加密（对称和非对称加密）</p>
+<h2 id="MD5算法"><a href="#MD5算法" class="headerlink" title="MD5算法"></a>MD5算法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException &#123;</span><br><span class="line">            <span class="comment">// 待加密字符</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">originalStr</span> <span class="operator">=</span> <span class="string">&quot;111111&quot;</span>;</span><br><span class="line">            String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">            <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">            <span class="type">byte</span>[] digest = md5.digest(originalStr.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">            System.out.println(digest.toString());</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">byte</span> b:digest)&#123;</span><br><span class="line">                sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">                sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(sb.toString());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-20-22-18-55.png" alt="2022-03-20-22-18-55"></p>
+<p>没加sign<br><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-21-21-47-01.png" alt="2022-03-21-21-47-01"><br>加sign和时间戳</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       isLoading = <span class="literal">true</span>;</span><br><span class="line">       Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="type">String</span> <span class="variable">classify</span> <span class="operator">=</span> <span class="string">&quot;yzmn&quot;</span>;</span><br><span class="line">       <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> System.currentTimeMillis()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">       params.put(<span class="string">&quot;classify&quot;</span>,classify);</span><br><span class="line">       params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;timestamp&quot;</span>,timestamp);</span><br><span class="line">       <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> md5(classify+page+timestamp);</span><br><span class="line">       params.put(<span class="string">&quot;sign&quot;</span>,sign);</span><br><span class="line">       OkHttpUtil.post(<span class="string">&quot;http://www.dtasecurity.cn:18080/demo02/getWallpaper&quot;</span>,</span><br><span class="line">               params,</span><br><span class="line">               <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                       <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                       <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                       ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                       wallPaperEntities.addAll(data.getData());</span><br><span class="line">                       <span class="comment">//adapter.notifyDataSetChanged();</span></span><br><span class="line">                       <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                       msg.what = <span class="number">1</span>;</span><br><span class="line">                       handler.sendMessage(msg);</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;);</span><br><span class="line">       page++;</span><br><span class="line">   &#125;</span><br><span class="line">   String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">md5</span><span class="params">(String data)</span> &#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">           <span class="type">byte</span>[] digest = md5.digest(data.getBytes());</span><br><span class="line">           <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">byte</span> b : digest)&#123;</span><br><span class="line">               sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">               sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span>  sb.toString();</span><br><span class="line">       &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-26-14-37-50.png" alt="2022-03-26-14-37-50"></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>APP抓包</title>
     <url>/2022/03/14/APP%E6%8A%93%E5%8C%85/</url>
     <content><![CDATA[<img src="/2022/03/14/APP%E6%8A%93%E5%8C%85/ecd76310d9e45803ce329fb61db870eb.jpg" alt="ecd76310d9e45803ce329fb61db870eb" style="zoom:200%;">
@@ -108,103 +205,6 @@
       </categories>
       <tags>
         <tag>抓包原理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>APP使用接口获取网图</title>
-    <url>/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/</url>
-    <content><![CDATA[<p>怎么从网络接口中获取数据，需要用到哪些框架，传哪些参数</p>
-<span id="more"></span>
-
-<h1 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h1><h2 id="okhttp"><a href="#okhttp" class="headerlink" title="okhttp"></a>okhttp</h2><p>网络请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OkHttpUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="type">OkHttpClient</span> <span class="variable">client</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OkHttpClient</span>();</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * param1：请求地址</span></span><br><span class="line"><span class="comment">    * param2: 传输数据类型（此请求是键值对）</span></span><br><span class="line"><span class="comment">    * &#123;&quot;id&quot;:11,&quot;name&quot;:&quot;5bc01a39e7bce75ea7b2fb40&quot;,&quot;classify&quot;:&quot;yzmn&quot;,&quot;smallPic&quot;:</span></span><br><span class="line"><span class="comment">    * param3: 异步请求参数，回调</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">post</span><span class="params">(String url, Map&lt;String, String&gt; params, Callback callback)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//form表单形式传数据（其他有json）</span></span><br><span class="line">        FormBody.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FormBody</span>.Builder();</span><br><span class="line">        <span class="comment">//遍历数据</span></span><br><span class="line">        <span class="keyword">for</span> (String key : params.keySet())&#123;</span><br><span class="line">            builder.add(key,params.get(key));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">FormBody</span> <span class="variable">body</span> <span class="operator">=</span> builder.build();</span><br><span class="line"></span><br><span class="line">        <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Request</span>.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .post(body)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">//enqueue异步请求</span></span><br><span class="line">        <span class="comment">//需要callback回调</span></span><br><span class="line">        client.newCall(request).enqueue(callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">/*请求数据*/</span></span><br><span class="line">        <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        isLoading = <span class="literal">true</span>;</span><br><span class="line">        Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        params.put(<span class="string">&quot;classify&quot;</span>,<span class="string">&quot;dmdh&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">        params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">        OkHttpUtil.post(<span class="string">&quot;http://www.dtasecurity.cn:18080/demo01/getWallpaper&quot;</span>,</span><br><span class="line">                params,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                        <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                        <span class="comment">//匿名内部类</span></span><br><span class="line">                        ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                        wallPaperEntityList.addAll(data.getData());</span><br><span class="line">                        <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                        msg.what = <span class="number">1</span>;</span><br><span class="line">                        handler.sendMessage(msg);</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        page++;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Gson"><a href="#Gson" class="headerlink" title="Gson"></a>Gson</h2><p>解析Json</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                        <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                        ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                        wallPaperEntityList.addAll(data.getData());</span><br><span class="line">                        <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                        msg.what = <span class="number">1</span>;</span><br><span class="line">                        handler.sendMessage(msg);</span><br><span class="line">                        isLoading = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
-
-<p>Gson解析返回的对象类型</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wallpaper.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResponseEntity</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">//请求数据参数</span></span><br><span class="line">    Integer pageNum;</span><br><span class="line">    Boolean hasNext;</span><br><span class="line">    Integer limit;</span><br><span class="line">    String classify;</span><br><span class="line">    String message;</span><br><span class="line">    List&lt;T&gt; data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getPageNum</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pageNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setPageNum</span><span class="params">(Integer pageNum)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.pageNum = pageNum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Boolean <span class="title function_">getHasNext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> hasNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setHasNext</span><span class="params">(Boolean hasNext)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.hasNext = hasNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getLimit</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> limit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setLimit</span><span class="params">(Integer limit)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.limit = limit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getClassify</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> classify;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setClassify</span><span class="params">(String classify)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.classify = classify;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMessage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMessage</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;T&gt; <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setData</span><span class="params">(List&lt;T&gt; data)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Glide"><a href="#Glide" class="headerlink" title="Glide"></a>Glide</h2><p>图像加载框架</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//把从网络上获取的图片放到img_wallpaper</span></span><br><span class="line">       Glide.with(img_wallpaper).load(smallPicUrl).into(img_wallpaper);</span><br></pre></td></tr></table></figure>
-
-<h1 id="项目："><a href="#项目：" class="headerlink" title="项目："></a>项目：</h1><h2 id="GridView"><a href="#GridView" class="headerlink" title="GridView"></a>GridView</h2><p>网格试图</p>
-<p>属性：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">android:columnWidth：设置列的宽度</span><br><span class="line">android:gravity：组件对其方式</span><br><span class="line">android:horizontalSpacing：水平方向每个单元格的间距</span><br><span class="line">android:verticalSpacing：垂直方向每个单元格的间距</span><br><span class="line">android:numColumns：设置列数</span><br><span class="line">android:stretchMode：设置拉伸模式，可选值如下： none：不拉伸；spacingWidth：拉伸元素间的间隔空隙 columnWidth：仅仅拉伸表格元素自身 spacingWidthUniform：既拉元素间距又拉伸他们之间的间隔空袭</span><br></pre></td></tr></table></figure>
-
-<p>使用：</p>
-<p>1, 创建Item的布局：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=<span class="string">&quot;@+id/img_item_wallpaper&quot;</span></span><br><span class="line">        android:scaleType=<span class="string">&quot;fitXY&quot;</span></span><br><span class="line">        android:padding=<span class="string">&quot;5dp&quot;</span></span><br><span class="line">        android:layout_width=<span class="string">&quot;120dp&quot;</span></span><br><span class="line">        android:layout_height=<span class="string">&quot;200dp&quot;</span>/&gt;</span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2, 写entity实体类：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wallpaper.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WallPaperEntity</span> &#123;</span><br><span class="line">    <span class="comment">//要获取的资源的各种属性</span></span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">    String smallPic;</span><br><span class="line">    String bigPic;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(String id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getSmallPic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> smallPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSmallPic</span><span class="params">(String smallPic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.smallPic = smallPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getBigPic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> bigPic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBigPic</span><span class="params">(String bigPic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.bigPic = bigPic;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3，MainActivity的布局和Java代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="line">    xmlns:app=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span><br><span class="line">    xmlns:tools=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    tools:context=<span class="string">&quot;.MainActivity&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;GridView</span><br><span class="line">        android:id=<span class="string">&quot;@+id/gv_main&quot;</span></span><br><span class="line">        android:numColumns=<span class="string">&quot;3&quot;</span></span><br><span class="line">        android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">        android:layout_height=<span class="string">&quot;match_parent&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">initViews</span><span class="params">()</span> &#123;</span><br><span class="line">        gv_main = findViewById(R.id.gv_main);</span><br><span class="line">        <span class="comment">//初始化adapater</span></span><br><span class="line">        adapter = <span class="keyword">new</span> <span class="title class_">WallpaperAdapter</span>(<span class="built_in">this</span>,wallPaperEntityList);</span><br><span class="line">        <span class="comment">//使用适配器展示图片</span></span><br><span class="line">        gv_main.setAdapter(adapter);</span><br><span class="line">        <span class="comment">//监听是否到底部</span></span><br><span class="line">        gv_main.setOnScrollChangeListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnScrollChangeListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onScrollChange</span><span class="params">(View v, <span class="type">int</span> scrollX, <span class="type">int</span> scrollY, <span class="type">int</span> oldScrollX, <span class="type">int</span> oldScrollY)</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (((GridView)v).getLastVisiblePosition() &gt; wallPaperEntityList.size() - <span class="number">6</span>)&#123;</span><br><span class="line">                    getData();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        getData();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>adapater数据适配器，数据想要怎样展示到屏幕上时用，拿到数据后怎么去展示</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WallpaperAdapter</span> <span class="keyword">extends</span> <span class="title class_">BaseAdapter</span> &#123;</span><br><span class="line">    <span class="comment">//UI传递消息使用</span></span><br><span class="line">    Context context;</span><br><span class="line">    <span class="comment">//存储数据,解析时可以使用</span></span><br><span class="line">    List&lt;WallPaperEntity&gt;wallPaperEntityList;</span><br><span class="line">    <span class="comment">//添加构造</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">WallpaperAdapter</span><span class="params">(Context context, List&lt;WallPaperEntity&gt; wallPaperEntityList)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.context = context;</span><br><span class="line">        <span class="built_in">this</span>.wallPaperEntityList = wallPaperEntityList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getCount</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//数量</span></span><br><span class="line">        <span class="keyword">return</span> wallPaperEntityList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getItem</span><span class="params">(<span class="type">int</span> position)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> wallPaperEntityList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getItemId</span><span class="params">(<span class="type">int</span> position)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> position;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> View <span class="title function_">getView</span><span class="params">(<span class="type">int</span> position, View convertView, ViewGroup parent)</span> &#123;</span><br><span class="line">        <span class="comment">// 每拿到一个图片初始化一个</span></span><br><span class="line">        <span class="comment">//初始化xml的view</span></span><br><span class="line">        <span class="type">View</span> <span class="variable">inflate</span> <span class="operator">=</span> View.inflate(context, R.layout.item_wallpaper,<span class="literal">null</span>);</span><br><span class="line">        <span class="comment">//设置图片的view</span></span><br><span class="line">        <span class="type">ImageView</span> <span class="variable">img_wallpaper</span> <span class="operator">=</span> inflate.findViewById(R.id.img_item_wallpaper);</span><br><span class="line">        <span class="comment">//设置数据，最后返回就行</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">smallPicUrl</span> <span class="operator">=</span> wallPaperEntityList.get(position).getSmallPic();</span><br><span class="line">        <span class="comment">//把从网络上获取的图片放到img_wallpaper</span></span><br><span class="line">        Glide.with(img_wallpaper).load(smallPicUrl).into(img_wallpaper);</span><br><span class="line">        <span class="keyword">return</span> inflate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/bTzp1e.md-1647221046750.png" alt="bTzp1e.md"></p>
-<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>1，怎么从网络上获取</p>
-<p>2，怎么在界面上显示</p>
-<p>3，显示在界面上过程中怎么处理</p>
-<h1 id="API接口的保护"><a href="#API接口的保护" class="headerlink" title="API接口的保护"></a>API接口的保护</h1><h2 id="消息摘要算法"><a href="#消息摘要算法" class="headerlink" title="消息摘要算法"></a>消息摘要算法</h2><p>它通过对所有数据提取指纹信息以实现数据签名、数据完整性校验等功能，由于其不可逆性，有时候会被用做敏感信息的加密。数据摘要算法也被称为哈希（Hash）算法或散列算法。</p>
-<p>消息摘要算法的主要特征是加密过程不需要密钥，并且经过加密的数据无法被解密，只有输入相同的明文数据经过相同的消息摘要算法才能得到相同的密文。（摘要可以比方为指纹，消息摘要算法就是要得到文件的唯一职位）</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
-<li>无论输入的消息有多长，计算出来的消息摘要的长度总是固定的。</li>
-<li>一般地，只要输入的消息不同，对其进行摘要以后产生的摘要消息也必不相同；但相同的输入必会产生相同的输出</li>
-<li>只能进行正向的信息摘要，而无法从摘要中恢复出任何的消息，甚至根本就找不到任何与原信息相关的信息</li>
-<li>好的摘要算法，没有人能从中找到 “碰撞” 或者说极度难找到，虽然 “碰撞” 是肯定存在的</li>
-</ul>
-<h3 id="常用的消息摘要算法"><a href="#常用的消息摘要算法" class="headerlink" title="常用的消息摘要算法"></a>常用的消息摘要算法</h3><p>CRC32（<code>Cyclic redundancy check</code>：循环冗余检验码）</p>
-<p>MD5（<code>Message Digest algorithm 5</code>：消息摘要算法版本5)</p>
-<p>SHA1,SHA256,SHA512 （<code>Secure Hash Algorithm</code>：安全散列算法)</p>
-<h3 id="摘要目的"><a href="#摘要目的" class="headerlink" title="摘要目的"></a>摘要目的</h3><p>数据完整性，是否在传输过程中被修改。</p>
-<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>信息从一种形式或格式转换为另一种形式的过程，方便在不同系统之中传输，例如最常见的ASCII字符编码。由于网络上只能传输二进制数据，任何数据如果想要经由网络传输，就必须先转化成二进制，ASCII 提供了一个将A、B、C等字母转化为二进制的规则。信息—&gt;编码—&gt;二进制—&gt;解码—&gt;信息</p>
-<h3 id="常见的编码"><a href="#常见的编码" class="headerlink" title="常见的编码"></a>常见的编码</h3><p>ASCII</p>
-<p>Base64</p>
-<p>URL</p>
-<h3 id="编码目的"><a href="#编码目的" class="headerlink" title="编码目的"></a>编码目的</h3><p>压缩空间，便于传输，减少带宽。</p>
-<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>加密是为了保证数据安全传输，使得其他人不能获取的具体信息内容。加密是可逆的，明文 + 秘钥 &#x3D; 加密信息。加密又分为对称加密和非对称加密，区别在于在加密和解密信息时秘钥是不是同一个。</p>
-<p>1、对称加密：DES, AES，3DES</p>
-<p>对称加密算法的特点是算法公开、计算量小、加密速度快、加密效率高。</p>
-<p>不足之处是，交易双方都使用同样钥匙，安全性得不到保证。</p>
-<p>2、非对称加密： RSA，ESA</p>
-<p>密钥是成对出现。使用一对“私钥-公钥”，用私钥加密的内容只有对应公钥才能解开</p>
-<ul>
-<li>公钥：公开给所有人。不能通过公钥反推出私钥；public key</li>
-<li>自己留存，不公开。有且只有一个对应的私钥；secret key</li>
-<li>通过私钥加密的密文只能通过公钥能解密，通过公钥加密的密文也只能通过私钥能解密。</li>
-</ul>
-<p>但由于算法强度比对称加密复杂，加解密的速度比对称加解密的速度要慢。</p>
-<h3 id="加密目的"><a href="#加密目的" class="headerlink" title="加密目的"></a>加密目的</h3><p>传输过程中既是被截取也无法查看原文，因为没有秘钥。</p>
-<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>是对摘要后的数据进行加密</p>
-<h2 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h2><p>自己服务器公钥给权威机构（CA），权威机构对服务器的公钥和其他信息进行hash摘要再用权威机构的公钥进行加密后给客户服务器，客户把这个公钥给浏览器。</p>
-<p>1、数据第一步编码（base64等）</p>
-<p>2、第二步进行摘要（md5，sha256）</p>
-<p>3、第三步对摘要后的数据进行加密（对称和非对称加密）</p>
-<h2 id="MD5算法"><a href="#MD5算法" class="headerlink" title="MD5算法"></a>MD5算法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException &#123;</span><br><span class="line">            <span class="comment">// 待加密字符</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">originalStr</span> <span class="operator">=</span> <span class="string">&quot;111111&quot;</span>;</span><br><span class="line">            String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">            <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">            <span class="type">byte</span>[] digest = md5.digest(originalStr.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">            System.out.println(digest.toString());</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">byte</span> b:digest)&#123;</span><br><span class="line">                sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">                sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(sb.toString());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-20-22-18-55.png" alt="2022-03-20-22-18-55"></p>
-<p>没加sign<br><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-21-21-47-01.png" alt="2022-03-21-21-47-01"><br>加sign和时间戳</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getData</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (isLoading)&#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       isLoading = <span class="literal">true</span>;</span><br><span class="line">       Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       <span class="type">String</span> <span class="variable">classify</span> <span class="operator">=</span> <span class="string">&quot;yzmn&quot;</span>;</span><br><span class="line">       <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> System.currentTimeMillis()+<span class="string">&quot;&quot;</span>;</span><br><span class="line">       params.put(<span class="string">&quot;classify&quot;</span>,classify);</span><br><span class="line">       params.put(<span class="string">&quot;pageNum&quot;</span>,page+<span class="string">&quot;&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;limit&quot;</span>,<span class="string">&quot;20&quot;</span>);</span><br><span class="line">       params.put(<span class="string">&quot;timestamp&quot;</span>,timestamp);</span><br><span class="line">       <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> md5(classify+page+timestamp);</span><br><span class="line">       params.put(<span class="string">&quot;sign&quot;</span>,sign);</span><br><span class="line">       OkHttpUtil.post(<span class="string">&quot;http://www.dtasecurity.cn:18080/demo02/getWallpaper&quot;</span>,</span><br><span class="line">               params,</span><br><span class="line">               <span class="keyword">new</span> <span class="title class_">Callback</span>() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> IOException e)</span> &#123;</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(<span class="meta">@NotNull</span> Call call, <span class="meta">@NotNull</span> Response response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                       <span class="type">String</span> <span class="variable">responseText</span> <span class="operator">=</span> response.body().string();</span><br><span class="line">                       <span class="type">Type</span> <span class="variable">responseType</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;ResponseEntity&lt;WallPaperEntity&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">                       ResponseEntity&lt;WallPaperEntity&gt; data = <span class="keyword">new</span> <span class="title class_">Gson</span>().fromJson(responseText, responseType);</span><br><span class="line">                       wallPaperEntities.addAll(data.getData());</span><br><span class="line">                       <span class="comment">//adapter.notifyDataSetChanged();</span></span><br><span class="line">                       <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                       msg.what = <span class="number">1</span>;</span><br><span class="line">                       handler.sendMessage(msg);</span><br><span class="line">                       isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;);</span><br><span class="line">       page++;</span><br><span class="line">   &#125;</span><br><span class="line">   String[] hexs = &#123;<span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,&#125;;</span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">md5</span><span class="params">(String data)</span> &#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;md5&quot;</span>);</span><br><span class="line">           <span class="type">byte</span>[] digest = md5.digest(data.getBytes());</span><br><span class="line">           <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">byte</span> b : digest)&#123;</span><br><span class="line">               sb.append(hexs[b &gt;&gt; <span class="number">4</span> &amp; <span class="number">0xF</span>]);</span><br><span class="line">               sb.append(hexs[b &amp; <span class="number">0xF</span>]);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span>  sb.toString();</span><br><span class="line">       &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/14/APP%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E7%BD%91%E5%9B%BE/2022-03-26-14-37-50.png" alt="2022-03-26-14-37-50"></p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1880,292 +1880,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C</title>
-    <url>/2022/03/15/C/</url>
-    <content><![CDATA[<img src="/2022/03/15/C/images1.jpg" alt="images1" style="zoom:200%;">
-
-<span id="more"></span>
-
-<h1 id="计算机中的数据"><a href="#计算机中的数据" class="headerlink" title="计算机中的数据"></a>计算机中的数据</h1><h2 id="十六进制"><a href="#十六进制" class="headerlink" title="十六进制"></a>十六进制</h2><p>逢16进1，每一位都是16的整数次幂（基数16），符号：“H”</p>
-<h2 id="十进制"><a href="#十进制" class="headerlink" title="十进制"></a>十进制</h2><p>逢10进1</p>
-<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>逢2进1，每一位都是2的整数次幂(基数2) ，符号：“B” </p>
-<h2 id="八进制"><a href="#八进制" class="headerlink" title="八进制"></a>八进制</h2><p>逢8进1，每一位都是8的整数次幂(基数是8) ，符号：”O” </p>
-<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>逆序取余</p>
-<p>二进制数得到每一位就是十进制数每次除以2得到余数，最后把所有的余数倒着排列，就得到二进制数 </p>
-<p>10的二进制</p>
-<p>10除以2得5余0</p>
-<p>5除以2得2余1</p>
-<p>2除以2得1余0</p>
-<p>1除以2得0余1</p>
-<p>整数10的二进制就是1010</p>
-<h3 id="八进制转十六进制"><a href="#八进制转十六进制" class="headerlink" title="八进制转十六进制"></a>八进制转十六进制</h3><p>方法：</p>
-<p>以二进制位中介，即先将八进制数按照一位拆三位的方法转换为二进制，在对这个二进制数使用四位合一位的方法转换为十六进制</p>
-<p>规则：</p>
-<p>整数部分从低位向高位每3位用一个等值的八进制来替换，不足3位时在高位补0凑满3位<br>小数部分从高位向低位每3位用一个等值八进制数来替换，不足3位时在低位补0凑满3位 </p>
-<p>十进制：16</p>
-<p>八进制：20</p>
-<p>二进制：010 000</p>
-<p>十六进制：10</p>
-<h2 id="计算机中存储单位"><a href="#计算机中存储单位" class="headerlink" title="计算机中存储单位"></a>计算机中存储单位</h2><p>位是计算机中数据最小单位，它表示一个二进制数，0或者1，英文是Bit </p>
-<p>字长是CPU的主要技术指标之一，指的是一次最大能并行处理的二进制位数</p>
-<p>Byte 表示字节，一个字节是8位<br>word是两个字节，也就是16位<br>dword是四个字节，也就是32位</p>
-<h2 id="源码反码补码关系"><a href="#源码反码补码关系" class="headerlink" title="源码反码补码关系"></a>源码反码补码关系</h2><p><strong>正数：</strong></p>
-<p>​	三码合一 </p>
-<p><strong>负数：</strong><br>    原码：最高位不变，后面数据和其绝对值相同<br>    反码：将源码除最高位，其余安位取反<br>    补码：将反码+1 </p>
-<p><strong>例如：</strong><br>1 010 1010 （原）<br>1 101 0101 （反码：符号位不变，其他位按位取反）<br>1 101 0110 （补码:反码+1）<br>在计算机中保存的都是补码，使用补码的目的是将减法运算转换为加法运算</p>
-<h1 id="C基础"><a href="#C基础" class="headerlink" title="C基础"></a>C基础</h1><p>一个程序包含哪些东西</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include //编译预处理命令 </span><br><span class="line">#include //编译预处理命令 </span><br><span class="line">int main(void) //程序启动函数 </span><br><span class="line">&#123; //函数开始标志 </span><br><span class="line">	printf(&quot;Hello world&quot;); //库函数输出信息 </span><br><span class="line">	system(&quot;pause&quot;); //让程序暂停一下 </span><br><span class="line">	return 0； //函数退出返回0 </span><br><span class="line">&#125; //程序结束标志</span><br></pre></td></tr></table></figure>
-
-<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>1，编写好源代码<br>2，编译前，进行预处理<br>3，进行编译，生成obj文件<br>4，进行连接，生成可执行文件<br>5，生成目标程序，即可以运行<br>其中，预处理，编译，连接可以使用VS一键完成，也就是只要你写好了源代码，直接可以生成能够执行的程了。</p>
-<p>（main 函数 ，预处理 ，库函数 ，关键字，注释）</p>
-<p><strong>VS中的默认main函数</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int  _tmain(int argc, _TCHAR*  argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>预处理</strong></p>
-<p>以#号开头的命令(通常称为指令)，他是在程序编译之前进行的处理，通常会对文件做一些复制，替换等操作</p>
-<p><strong>为什么要使用#includ</strong> </p>
-<p>对于本程序而言#include的作用是包含stdio函数库，包含了函数库头文件之后，就可以使用其中的函数。<br><code>#include</code>有两种形式<br>1)#include “文件名” 在当前工程目录中会找到该头文件<br>2)#include &lt;文件名&gt; 在vs自带的头文件夹中去找该头文件</p>
-<p><strong>库函数</strong></p>
-<p>C语言已经写好的代码，直接提供给开发者使用，提供的代码就叫做库函数，使用相应的库函数，必须要先包含相应的头文件</p>
-<p><strong>关键字</strong></p>
-<p>被赋予了某些特殊含义的单词，不能用于其他任何目的，所有的关键字小写，C语言中的关键字32个</p>
-<p><img src="/2022/03/15/C/image-20220315163741780.png" alt="image-20220315163741780"></p>
-<h2 id="数据类型及变量"><a href="#数据类型及变量" class="headerlink" title="数据类型及变量"></a>数据类型及变量</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>整型，就是整数</li>
-<li>浮点型，就是小数 </li>
-<li>字符型，就是文本符号</li>
-</ul>
-<h3 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h3><p><strong>常量</strong><br>常量就是固定不变的数据，根据类型有以下四种:<br>1、整形常量<br>所有整数（正整数，负整数，零）<br>2、浮点型常量<br>所有小数。<br>3、字符常量<br>普通字符，用单引号括起来的一个字符(不包括单引号本身)如：’A’，’1‘.<br>4、字符串常量<br>用双引号括起来的若干个字符串（不包括双引号本身）如：“hello world”</p>
-<p><strong>变量</strong> </p>
-<p>变量就是一块有名字的内存空间，我们可以通过变量的名字来为其背后的内存空间填充数据，或者使用内存空间中的数据</p>
-<p>定义变量<br>变量类型 变量名 &#x3D; 初始值</p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int num =10;</span><br><span class="line">  num=200;</span><br><span class="line">  printf(&quot;%d&quot;,num+100);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>int 是整数型，num就是变量名，10就是变量的初始值，变量可以被修改，也可以参与运算。当变量被定义之后，自动就开辟出了空间，变量名就代表这片空间了 ，可以通过VS的自动窗口，局部变量窗口，监视窗口动态的查看变量的值</p>
-<p><strong>变量类型</strong></p>
-<p>整数：int short long<br>小数：float double<br>字符：char wchar_t<br>另外还有一个关键字：unsigned可以修饰整数和字符，可以表示无符号数（就是正数）</p>
-<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a><strong>字符类型</strong></h2><p>字符类型本质上说，也是数字。有一个美国国家标准协会指定了一个标准，用0<del>127之间的数字代表不同的字符。所以每一个字符都和一个数字一一对应。美国人制定的这个标准称之为ASCII ，一个字节能表示0</del>255，所以存储一个普通的英文符只需要一个字节，故而char也就是1个字节大小， wchar就是用来存储复杂字符的，而且他是两个字节，共有65536个状态。 </p>
-<p>定义char型字符变量，直接使用char即可，赋值的但字符需要用’ ‘括起来</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char  ch  = &#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>定义wchar_t型字符变量，直接使用wchar_t，需要注意的是字符要用这种格式L’ ‘。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wchar_t   ch  = L&#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="标识符的命名规则"><a href="#标识符的命名规则" class="headerlink" title="标识符的命名规则"></a>标识符的命名规则</h2><p>1，只能由字母（A<del>Z，a</del>z)，数字(0~9),下划线(_)组成<br>2，数字不能开头<br>3，不可以使用关键字<br>4，C语言中的标识符区分大小写 </p>
-<p><strong>字符型与数字</strong></p>
-<p>字符型与整数类型没有本质的区别，都表示数字，只是，字符类型所能表示的数字被人为设计与不同的字符一一对应，所以字符类型的变量也可以用于数学计算，只是它表示的数据范围有限。有符号的情况下<br>(char -128<del>127,wchar_t -32768</del>32767) </p>
-<p><strong>字符串</strong></p>
-<p>C语言中还有一种类型叫做字符串常量，但是没有一个变量能够存储字符串常量，需要借助于字符数组或指针<br>字符串的表示方式：使用双引号扩起来<br>列如:char szCh[]&#x3D;”adsfgh23435” </p>
-<p><strong>标识符</strong></p>
-<p>编程的时候，有许多需要命名的对象，比如函数名，变量名等，这些名称叫做标识符 </p>
-<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p>匈牙利命名法的变量名由一个或多个小写字母开始，这些字母由助于记忆变量的类型和用途，紧跟着的就是程序员 选择的任何名称，而在最前面加入前缀m_,s_,g_表示变量的作用域类型<br>匈牙利命名法的目标是便于记忆，而且使变量名清晰易懂，（一看变量名就知道他是什么类型，知道是干什么用的），增强了代码的可读性，方便程序员之间相互交流代码</p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>开发</tag>
-        <tag>Windows</tag>
-        <tag>语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C（二）</title>
-    <url>/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/images.jpg" alt="images" style="zoom: 200%;">
-
-<span id="more"></span>
-
-<p>输入输出函数，运算符，一维数组，二维数组，三大结构（顺序，选择，循环）</p>
-<h2 id="输入输出函数"><a href="#输入输出函数" class="headerlink" title="输入输出函数"></a>输入输出函数</h2><p>输入输出函数</p>
-<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321100851507.png" alt="image-20220321100851507"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printf(&quot;格式化字符串&quot;，参数列表)</span><br></pre></td></tr></table></figure>
-
-<p><strong>格式化字符串：</strong></p>
-<p>实际上就是一个字符串，然后printf会把字符串原封不动的打印到屏幕上，除非遇到格式控制符</p>
-<p><strong>参数列表：</strong></p>
-<p>参数列表可以传递各种各样的数据，参数和字符串的格式控制符是一一匹配的。参数列表中的参数，可以有任意多个，可以是常量，也可以是变量，但是需要和格式字符串中的控制符匹配上。</p>
-<p><strong>printf作用:</strong></p>
-<p>把格式字符串原样输出，除非遇到格式控制符，遇到格式控制符的时候，会去参数列表中匹配，把匹配到的参数替换到相应的格式控制符的位置输出出来 </p>
-<p>格式控制符：</p>
-<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321101327088.png" alt="image-20220321101327088"></p>
-<p>转义字符：</p>
-<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321101351593.png" alt="image-20220321101351593"></p>
-<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>单目运算符 &#x3D;<br>算术运算符 +，-，*，&#x2F;<br>关系运算符 &lt;,&gt;,&lt;&#x3D;,&gt;&gt;&#x3D;,&#x3D;&#x3D;<br>逻辑运算符 !,!&#x3D;,&amp;&amp;,||<br>位运算符 <del>,&amp;,|,&lt;&lt;,&gt;&gt;&gt;,</del><br>逗号运算符 ，<br>求大小运算符 sizeof<br>sizeof 它能得到某一个数据或者数据类型所占用的内存大小</p>
-<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
-<li><p>自动类型转换<br>（1）当一个算数表达式中为类型不同的变量时，会进行自动类型转换</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char-&gt;short-&gt;int-&gt;long-&gt;float-&gt;double </span><br></pre></td></tr></table></figure>
-
-<p>（2）进行赋值运算的时候，会将右值类型自动转换为左值，有可能会丢失数据 </p>
-</li>
-<li><p>强制类型转换<br>通过使用转换可以将一个表达式强制转换成一种类型<br>括号的优先级最高，逗号的优先级最低</p>
-</li>
-</ul>
-<h2 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h2><p>数据类型： 数组名[数组长度]    int arrTem[11]</p>
-<p><strong>说明</strong><br>1，数组名的命名规则和变量名相同，遵循标识符命名规则<br>2，数组名后接一个或多个方括号，用以指定数组的维数(元素个数)<br>3，数组长度只能时常量和常量表达式(大于0)，不能是变量 </p>
-<p><strong>使用</strong></p>
-<p>数组可以通过下标来访问某一个元素，下标可以使用常量，变量，其他有整数值的表达式。通过下标对每个数组元素的使用和普通变量一样。</p>
-<p><strong>数组的初始化</strong></p>
-<ol>
-<li>整体赋值<br>int ary[5]&#x3D;{1,2,3,4,5}; </li>
-<li>部分赋值<br>int ary[5]&#x3D;{1,2,3} &#x2F;&#x2F;还有最后两个元素为0 </li>
-<li>不给定数组长度，根据实际数组元素个数分配<br>Int arr[]&#x3D;{1,2,3,4,5,6}; &#x2F;&#x2F;共有6个元素，所以实际分配24个字节空间</li>
-</ol>
-<p>使用数组的时候，假如不小心下标超过了最大界限会发生什么？这种情况，编译器是不会检查的，称之为数组的越界问题。这种情况会破坏程序的内存，照成程序间接性的不稳定。（就是程序运行可能会出错，有可能不会出错） </p>
-<p><strong>字符数组</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char ary[]=&#123;&#x27;H&#x27;,&#x27;e&#x27;,&#x27;l&#x27;,&#x27;l&#x27;,&#x27;o&#x27;&#125;；//正确用法 </span><br><span class="line">char ary2[]=&quot;hello&quot;; //字符数组的特殊用法，可以用一个字符串初始化数组 </span><br></pre></td></tr></table></figure>
-
-<p>在C语言中，字符串是以‘\0’为结尾的，所使用字符串的地方，都是检查字符串结尾的’\0’来判断字符串是不是结束了<br>注意：字符串的结尾是一个’\0’，这个字符的ASC||码是0.而字符‘0’的ASC||码是0x30 </p>
-<p><strong>字符数组的输入与输出</strong></p>
-<p>数组名就是数组的起始地址，他是一个常量</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span>  <span class="built_in">string</span>[<span class="number">10</span>];</span><br><span class="line">  scanf_s(<span class="string">&quot;%s&quot;</span>,<span class="built_in">string</span>,<span class="number">10</span>);会检测输入的数据是不是超过了第三个参数</span><br><span class="line">  <span class="comment">//scanf(&quot;%s&quot;,string);//越界是不会检查的</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%x&quot;</span>,<span class="built_in">string</span>);  <span class="comment">//为什么scanf中的string不用取地址？因为数组名就是首地址， </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>关于一些字符串的操作函数</strong></p>
-<table>
-<thead>
-<tr>
-<th>函数名</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>strlen</td>
-<td>求字符串的长度</td>
-</tr>
-<tr>
-<td>strcpy&#x2F;strcpy_s</td>
-<td>字符串拷贝函数</td>
-</tr>
-<tr>
-<td>strcmp</td>
-<td>比较两个字符串是否一样</td>
-</tr>
-<tr>
-<td>strcat&#x2F;strcat_s</td>
-<td>将两个字符串拼接到一起</td>
-</tr>
-</tbody></table>
-<h2 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h2><p><strong>声明方式：</strong><br>类型说明符 数组名【常量表达式1】【常量表达式2】<code>int temp[3][4]</code></p>
-<p>二维数组也可以看成是一个一维数组，它的每一个元素又是一个一维数组 </p>
-<p><strong>初始化</strong></p>
-<p>二维数组和一维数组一样，也可以在声明时对其进行初始化，二维数组的初始化方式比一维数组较为复杂，但都是一维数组初始化方法衍生而来的 </p>
-<p>1, 分行给二维数组赋初值 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;//使用大括号分别把每行标记出来</span><br></pre></td></tr></table></figure>
-
-<p>2，可以将所有数据写在一个花括号内，按数组排列的顺序对各元素赋初始值 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;1,2,3,4,5,6&#125;; </span><br></pre></td></tr></table></figure>
-
-<p>3，可以对部分元素赋初值 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;&#123;1&#125;,&#123;2&#125;,&#123;3&#125;&#125;; //分行方式初始化 </span><br><span class="line">int arr[2][3]=&#123;1,2,3&#125; //整体方式初始化 </span><br></pre></td></tr></table></figure>
-
-<p><strong>区别</strong></p>
-<p>分行方式：至少每行都有值，不足的补0<br>整体方式：将第一行赋值完后，再赋值后面的内容，有可能该部分值只给了第一行，后面的值都默认为0 </p>
-<p>4，如果对全部元素都赋初值（即提供全部初始数据），则定义数组时对第一维的长度可以不指定，但第二维的长度不能省 </p>
-<p><strong>引用</strong></p>
-<p>数组名【下标】【下标】<br>1，下标可以是普通的数值<br>2，下标可以是整形表达式<br><code>arrTem[2-1][2*2-1]</code>;&#x2F;&#x2F;无论什么表达式，只要满足结果大于0 </p>
-<p><strong>使用</strong></p>
-<p>数组元素使用的时候和普通变量一样，可以出现在表达式中，也可以被赋值 </p>
-<p><strong>说明：</strong> </p>
-<ol>
-<li>二维数组可被看作是一种特殊的一维数组，它的元素又是一个一维数组 </li>
-<li>二维数组中元素排列的顺序是按行存放的，即在内存中先顺序存放完第一行的元素后，再存放第二行的元素</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">打印杨辉三角</span><br><span class="line">思路</span><br><span class="line">说明：杨辉三角的边都为<span class="number">1</span></span><br><span class="line">中间的每一个值是它对应的左上角和正上方值之和</span><br><span class="line"><span class="number">1</span>，定义一个<span class="number">10</span>*<span class="number">10</span>的二维数组，将斜面和每一行中第一个元素赋值为<span class="number">1</span>；</span><br><span class="line"><span class="number">2</span>，其他元素根据<span class="number">1</span>中定义的值做加法得到</span><br><span class="line">例：<span class="type">int</span>  arrTem[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">        arrTem[<span class="number">2</span>][<span class="number">1</span>]=arrTem[<span class="number">1</span>][<span class="number">0</span>]+arrTem[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span>  arrTem[<span class="number">10</span>][<span class="number">10</span>]=&#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line"> &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=i;j++)</span><br><span class="line">   &#123;</span><br><span class="line">           <span class="keyword">if</span>((j==<span class="number">0</span>)||(j==i))</span><br><span class="line">         &#123;</span><br><span class="line">              arrTem[i][j]=<span class="number">1</span>;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;%4d&quot;</span>,arrTem[i][j]);</span><br><span class="line">         &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">         &#123;</span><br><span class="line">                  <span class="comment">//每一个值是它对应的左上角的值和正上方值之和</span></span><br><span class="line">              arrTem[i][j]=arrTem[i<span class="number">-1</span>][j<span class="number">-1</span>]+arrTem[i<span class="number">-1</span>][j];</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;%4d&quot;</span>,arrTem[i][j]);</span><br><span class="line">         &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span>  <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321111001724.png" alt="image-20220321111001724"></p>
-<h2 id="三大结构"><a href="#三大结构" class="headerlink" title="三大结构"></a>三大结构</h2><p>顺序结构：顺序结构就是从上到下，一条一条语句的执行 </p>
-<p>选择结构：是当满足一定条件的时候，执行某一段语句，满足条件或者不满足条件用真假来描述 </p>
-<p>循环结构相比于选择结构，也是满足一定的条件，就执行某一些语句，不同的是 ，它执行完之后， 还会再回来，判断条件满足不满足，又要执行一遍语句序列 </p>
-<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><table>
-<thead>
-<tr>
-<th>逻辑运算符</th>
-<th>表示</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&amp;&amp;</td>
-<td>与</td>
-<td>当且仅当两个运算量的值都为‘真’时，运算结果为‘真’，否则为‘假’</td>
-</tr>
-<tr>
-<td>||</td>
-<td>或</td>
-<td>当且仅当两个运算量的值都为“假”时，运算结果为“假”，否则为“真”</td>
-</tr>
-<tr>
-<td>！</td>
-<td>非</td>
-<td>当运算量的值为“真”时，运算结果为“假”，当运算量的值为“假”时，运算结果</td>
-</tr>
-</tbody></table>
-<p>与位运算符的区别：</p>
-<p>（1）逻辑运算符用if条件或者循环条件判断，得到的是1或者0两个逻辑结果<br>（2）位运算是属于两个操作数转换位二进制之后，针对于特定位的操作，得到的是一个数字</p>
-<p>运算顺序</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">!a&amp;&amp;b||x&gt;y&amp;&amp;c</span><br></pre></td></tr></table></figure>
-
-<p>按以下的优先次序:<br>（1）！（非）-&gt;&amp;&amp;（与）-&gt;||（或），即”！“为三者中最高的<br>（2）逻辑运算符中的”&amp;&amp;“和”||“低于关系运算符，”！“高于算术运算符</p>
-<p>在逻辑表达式中，并不是两边的表达式都被执行，只是在必须执行下一个表达式时才能求出表达式的解</p>
-<p>“&amp;&amp;”与”| |”均为短路运算符<br>“&amp;&amp;”当确认左边表达式为假，则不再判断右边的表达式<br>“||”当确认左边表达式为真，则不再判断右边的表达式</p>
-<h3 id="选择结构"><a href="#选择结构" class="headerlink" title="选择结构"></a>选择结构</h3><p>基本形式 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if--else （else条件为假时执行）</span><br><span class="line">if--else if </span><br><span class="line">switch-case</span><br></pre></td></tr></table></figure>
-
-<p><strong>switch - case语句的一般形式为：</strong></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>()&#123;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">1</span>：</span><br><span class="line">            语句序列；</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">2</span>：</span><br><span class="line">            语句序列；</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    </span><br><span class="line">    	<span class="keyword">default</span>:</span><br><span class="line">        	语句序列；</span><br><span class="line">            <span class="keyword">break</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>switch说明</strong></p>
-<ol>
-<li><p>switch后面括号内的表达式 的值与某一个case后面的常量表达式的值相等时，就执行此case后面的语句，如所有的case中的 常量表达式的值都没有与表达式的值匹配的，就执行default后面的语句 </p>
-</li>
-<li><p>每一个case的常量表达式的值必须互不相同，否则就会出现相互矛盾的现象 </p>
-</li>
-<li><p>各个case和default的出现次序不影响执行结果 </p>
-</li>
-<li><p>执行完一个case后面的语句后，流程控制转义到下一个case继续执行 </p>
-</li>
-<li><p>break语句使得执行完case语句后跳出switch语句。如果没有break语句，程序将与下一个case语句匹配， 直到遇到Break为止 </p>
-</li>
-<li><p>多个case可以共用一组执行语句 </p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)&#123;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">1</span>：</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">2</span>：</span><br><span class="line">            语句序列：</span><br><span class="line">            <span class="keyword">break</span>；</span><br><span class="line">        defasult:</span><br><span class="line">        	语句序列：</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>在使用case进行语句时，不要忘记case的条件只能是常量或者常量表达式‘</p>
-</li>
-</ol>
-<p><strong>if–else语句的优缺点</strong><br>（1）使用if结构可以实现较为复杂的逻辑判断<br>（2）用switch结构能够实现的结构，使用if结构都可以实现<br>（3）分支较少的情况使用if结构更简单<br>（4）分支较多的情况下使用if结构会使 此程序结构变得复杂<br>（5）如果if嵌套层次过深，也容易使程序结构变得复杂<br><strong>switch语句的优缺点</strong><br>（1）没有复杂的逻辑判断，程序结构简单<br>（2）对于分支很多的情况，特别适合用switch结构<br>（3）switch结构只能基于一个整数值进行分支选择<br>（4）switch只能判断是否相等，不能判断在某一区间的值<br>（5）虽然使用switch语句编写的程序有规律，可读性强，但是由于switch语句不能根据表达式的取值范围做出选 择，所以使用时也有很大的局限性</p>
-<h3 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h3><h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">while语句的一般形式</span><br><span class="line">while(表达式)             //while循环头</span><br><span class="line"> &#123;</span><br><span class="line">   语句                   //while循环体</span><br><span class="line"> &#125;</span><br><span class="line">执行过程：</span><br><span class="line"> （1）判断表达式的真假，求出表达式</span><br><span class="line"> （2）如果表达式的值不为0（真），则执行语句，然后程序转至步骤(1)，再次求出表达式的值；如果表达式为0，while循环语句结束</span><br></pre></td></tr></table></figure>
-
-<h4 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do-while循环"></a>do-while循环</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">do</span><br><span class="line">&#123;</span><br><span class="line"> //循环体语句</span><br><span class="line">&#125;while(表达式);</span><br><span class="line">注：在使用do--while语句时，条件要放在while关键字的括号内，其后必须加上分号</span><br></pre></td></tr></table></figure>
-
-<p>先执行循环体，在判断循环控制条件，循环体至少也要执行一次</p>
-<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><p>for语句可以分为两部分，即for循环头和for循环体</p>
-<p>for 循环头由关键字for和包含在一个括号内由分号隔开的3个表达式组成 ，循环体可以是一条语句，也可以是包含在大括号内的复合语句。<br>关于for的三个表达式</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for循环的三个语句的执行顺序</span><br><span class="line">  for(printf(&quot;我是语句1\n&quot;);printf(&quot;我是语句2\n&quot;);printf(&quot;我是语句3\n&quot;));</span><br><span class="line">   &#123; </span><br><span class="line">             printf(&quot;我是循环体&quot;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><ol>
-<li><p>表达式的省略问题</p>
-<p>for语句的一般形式中的“表达式1”可以省略，此时应在for语句之前给循环变量赋初值<br>如果表达式2省略，即不判断循环条件，循环无终止地进行下去<br>表达式3也可以省略，但此时程序设计者应另外设法保证循环能正常结束<br>可以省略表达式1和表达式3，只有表达式2，即只给循环条件</p>
-</li>
-<li><p>表达式的填写问题</p>
-<p>表达式1可以是设置循环变量初值得赋值表达式，也可以是与循环变量无关的其他表达式<br>表达式2一般是关系表达式或逻辑表达式，但也可以是任意表达式，只要其值为非零，就执行循环体<br>表达式3一般是修改循环变量的语句，但也可以是任意表达式</p>
-</li>
-</ol>
-<h4 id="break与continue"><a href="#break与continue" class="headerlink" title="break与continue"></a>break与continue</h4><p><strong>break</strong><br>         break语句在switch-case语句中是跳出，break语句在循环中还有另外一种用法<br>         当循环中遇到break语句时，立即结束循环，跳到循环体外，执行循环结构后面的语句<br><strong>continue</strong><br>         对于continue来说，作用是跳过本次循环<br>continue与break多与if连用</p>
-<p><strong>打印九九乘法表</strong></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdafx.h&gt;</span></span></span><br><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">9</span>;i++)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=i;j++)</span><br><span class="line">        &#123;</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;%d*%d=%d&quot;</span>,j,i,j*i);</span><br><span class="line">        &#125;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C（三）</title>
     <url>/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/</url>
     <content><![CDATA[<img src="/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/veer-354426716.webp" alt="veer-354426716" style="zoom: 200%;">
@@ -2624,6 +2338,292 @@
       </tags>
   </entry>
   <entry>
+    <title>C</title>
+    <url>/2022/03/15/C/</url>
+    <content><![CDATA[<img src="/2022/03/15/C/images1.jpg" alt="images1" style="zoom:200%;">
+
+<span id="more"></span>
+
+<h1 id="计算机中的数据"><a href="#计算机中的数据" class="headerlink" title="计算机中的数据"></a>计算机中的数据</h1><h2 id="十六进制"><a href="#十六进制" class="headerlink" title="十六进制"></a>十六进制</h2><p>逢16进1，每一位都是16的整数次幂（基数16），符号：“H”</p>
+<h2 id="十进制"><a href="#十进制" class="headerlink" title="十进制"></a>十进制</h2><p>逢10进1</p>
+<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>逢2进1，每一位都是2的整数次幂(基数2) ，符号：“B” </p>
+<h2 id="八进制"><a href="#八进制" class="headerlink" title="八进制"></a>八进制</h2><p>逢8进1，每一位都是8的整数次幂(基数是8) ，符号：”O” </p>
+<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>逆序取余</p>
+<p>二进制数得到每一位就是十进制数每次除以2得到余数，最后把所有的余数倒着排列，就得到二进制数 </p>
+<p>10的二进制</p>
+<p>10除以2得5余0</p>
+<p>5除以2得2余1</p>
+<p>2除以2得1余0</p>
+<p>1除以2得0余1</p>
+<p>整数10的二进制就是1010</p>
+<h3 id="八进制转十六进制"><a href="#八进制转十六进制" class="headerlink" title="八进制转十六进制"></a>八进制转十六进制</h3><p>方法：</p>
+<p>以二进制位中介，即先将八进制数按照一位拆三位的方法转换为二进制，在对这个二进制数使用四位合一位的方法转换为十六进制</p>
+<p>规则：</p>
+<p>整数部分从低位向高位每3位用一个等值的八进制来替换，不足3位时在高位补0凑满3位<br>小数部分从高位向低位每3位用一个等值八进制数来替换，不足3位时在低位补0凑满3位 </p>
+<p>十进制：16</p>
+<p>八进制：20</p>
+<p>二进制：010 000</p>
+<p>十六进制：10</p>
+<h2 id="计算机中存储单位"><a href="#计算机中存储单位" class="headerlink" title="计算机中存储单位"></a>计算机中存储单位</h2><p>位是计算机中数据最小单位，它表示一个二进制数，0或者1，英文是Bit </p>
+<p>字长是CPU的主要技术指标之一，指的是一次最大能并行处理的二进制位数</p>
+<p>Byte 表示字节，一个字节是8位<br>word是两个字节，也就是16位<br>dword是四个字节，也就是32位</p>
+<h2 id="源码反码补码关系"><a href="#源码反码补码关系" class="headerlink" title="源码反码补码关系"></a>源码反码补码关系</h2><p><strong>正数：</strong></p>
+<p>​	三码合一 </p>
+<p><strong>负数：</strong><br>    原码：最高位不变，后面数据和其绝对值相同<br>    反码：将源码除最高位，其余安位取反<br>    补码：将反码+1 </p>
+<p><strong>例如：</strong><br>1 010 1010 （原）<br>1 101 0101 （反码：符号位不变，其他位按位取反）<br>1 101 0110 （补码:反码+1）<br>在计算机中保存的都是补码，使用补码的目的是将减法运算转换为加法运算</p>
+<h1 id="C基础"><a href="#C基础" class="headerlink" title="C基础"></a>C基础</h1><p>一个程序包含哪些东西</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include //编译预处理命令 </span><br><span class="line">#include //编译预处理命令 </span><br><span class="line">int main(void) //程序启动函数 </span><br><span class="line">&#123; //函数开始标志 </span><br><span class="line">	printf(&quot;Hello world&quot;); //库函数输出信息 </span><br><span class="line">	system(&quot;pause&quot;); //让程序暂停一下 </span><br><span class="line">	return 0； //函数退出返回0 </span><br><span class="line">&#125; //程序结束标志</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>1，编写好源代码<br>2，编译前，进行预处理<br>3，进行编译，生成obj文件<br>4，进行连接，生成可执行文件<br>5，生成目标程序，即可以运行<br>其中，预处理，编译，连接可以使用VS一键完成，也就是只要你写好了源代码，直接可以生成能够执行的程了。</p>
+<p>（main 函数 ，预处理 ，库函数 ，关键字，注释）</p>
+<p><strong>VS中的默认main函数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int  _tmain(int argc, _TCHAR*  argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>预处理</strong></p>
+<p>以#号开头的命令(通常称为指令)，他是在程序编译之前进行的处理，通常会对文件做一些复制，替换等操作</p>
+<p><strong>为什么要使用#includ</strong> </p>
+<p>对于本程序而言#include的作用是包含stdio函数库，包含了函数库头文件之后，就可以使用其中的函数。<br><code>#include</code>有两种形式<br>1)#include “文件名” 在当前工程目录中会找到该头文件<br>2)#include &lt;文件名&gt; 在vs自带的头文件夹中去找该头文件</p>
+<p><strong>库函数</strong></p>
+<p>C语言已经写好的代码，直接提供给开发者使用，提供的代码就叫做库函数，使用相应的库函数，必须要先包含相应的头文件</p>
+<p><strong>关键字</strong></p>
+<p>被赋予了某些特殊含义的单词，不能用于其他任何目的，所有的关键字小写，C语言中的关键字32个</p>
+<p><img src="/2022/03/15/C/image-20220315163741780.png" alt="image-20220315163741780"></p>
+<h2 id="数据类型及变量"><a href="#数据类型及变量" class="headerlink" title="数据类型及变量"></a>数据类型及变量</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>整型，就是整数</li>
+<li>浮点型，就是小数 </li>
+<li>字符型，就是文本符号</li>
+</ul>
+<h3 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h3><p><strong>常量</strong><br>常量就是固定不变的数据，根据类型有以下四种:<br>1、整形常量<br>所有整数（正整数，负整数，零）<br>2、浮点型常量<br>所有小数。<br>3、字符常量<br>普通字符，用单引号括起来的一个字符(不包括单引号本身)如：’A’，’1‘.<br>4、字符串常量<br>用双引号括起来的若干个字符串（不包括双引号本身）如：“hello world”</p>
+<p><strong>变量</strong> </p>
+<p>变量就是一块有名字的内存空间，我们可以通过变量的名字来为其背后的内存空间填充数据，或者使用内存空间中的数据</p>
+<p>定义变量<br>变量类型 变量名 &#x3D; 初始值</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int num =10;</span><br><span class="line">  num=200;</span><br><span class="line">  printf(&quot;%d&quot;,num+100);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>int 是整数型，num就是变量名，10就是变量的初始值，变量可以被修改，也可以参与运算。当变量被定义之后，自动就开辟出了空间，变量名就代表这片空间了 ，可以通过VS的自动窗口，局部变量窗口，监视窗口动态的查看变量的值</p>
+<p><strong>变量类型</strong></p>
+<p>整数：int short long<br>小数：float double<br>字符：char wchar_t<br>另外还有一个关键字：unsigned可以修饰整数和字符，可以表示无符号数（就是正数）</p>
+<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a><strong>字符类型</strong></h2><p>字符类型本质上说，也是数字。有一个美国国家标准协会指定了一个标准，用0<del>127之间的数字代表不同的字符。所以每一个字符都和一个数字一一对应。美国人制定的这个标准称之为ASCII ，一个字节能表示0</del>255，所以存储一个普通的英文符只需要一个字节，故而char也就是1个字节大小， wchar就是用来存储复杂字符的，而且他是两个字节，共有65536个状态。 </p>
+<p>定义char型字符变量，直接使用char即可，赋值的但字符需要用’ ‘括起来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char  ch  = &#x27;A&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>定义wchar_t型字符变量，直接使用wchar_t，需要注意的是字符要用这种格式L’ ‘。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wchar_t   ch  = L&#x27;A&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="标识符的命名规则"><a href="#标识符的命名规则" class="headerlink" title="标识符的命名规则"></a>标识符的命名规则</h2><p>1，只能由字母（A<del>Z，a</del>z)，数字(0~9),下划线(_)组成<br>2，数字不能开头<br>3，不可以使用关键字<br>4，C语言中的标识符区分大小写 </p>
+<p><strong>字符型与数字</strong></p>
+<p>字符型与整数类型没有本质的区别，都表示数字，只是，字符类型所能表示的数字被人为设计与不同的字符一一对应，所以字符类型的变量也可以用于数学计算，只是它表示的数据范围有限。有符号的情况下<br>(char -128<del>127,wchar_t -32768</del>32767) </p>
+<p><strong>字符串</strong></p>
+<p>C语言中还有一种类型叫做字符串常量，但是没有一个变量能够存储字符串常量，需要借助于字符数组或指针<br>字符串的表示方式：使用双引号扩起来<br>列如:char szCh[]&#x3D;”adsfgh23435” </p>
+<p><strong>标识符</strong></p>
+<p>编程的时候，有许多需要命名的对象，比如函数名，变量名等，这些名称叫做标识符 </p>
+<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p>匈牙利命名法的变量名由一个或多个小写字母开始，这些字母由助于记忆变量的类型和用途，紧跟着的就是程序员 选择的任何名称，而在最前面加入前缀m_,s_,g_表示变量的作用域类型<br>匈牙利命名法的目标是便于记忆，而且使变量名清晰易懂，（一看变量名就知道他是什么类型，知道是干什么用的），增强了代码的可读性，方便程序员之间相互交流代码</p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>开发</tag>
+        <tag>Windows</tag>
+        <tag>语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C（二）</title>
+    <url>/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/images.jpg" alt="images" style="zoom: 200%;">
+
+<span id="more"></span>
+
+<p>输入输出函数，运算符，一维数组，二维数组，三大结构（顺序，选择，循环）</p>
+<h2 id="输入输出函数"><a href="#输入输出函数" class="headerlink" title="输入输出函数"></a>输入输出函数</h2><p>输入输出函数</p>
+<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321100851507.png" alt="image-20220321100851507"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printf(&quot;格式化字符串&quot;，参数列表)</span><br></pre></td></tr></table></figure>
+
+<p><strong>格式化字符串：</strong></p>
+<p>实际上就是一个字符串，然后printf会把字符串原封不动的打印到屏幕上，除非遇到格式控制符</p>
+<p><strong>参数列表：</strong></p>
+<p>参数列表可以传递各种各样的数据，参数和字符串的格式控制符是一一匹配的。参数列表中的参数，可以有任意多个，可以是常量，也可以是变量，但是需要和格式字符串中的控制符匹配上。</p>
+<p><strong>printf作用:</strong></p>
+<p>把格式字符串原样输出，除非遇到格式控制符，遇到格式控制符的时候，会去参数列表中匹配，把匹配到的参数替换到相应的格式控制符的位置输出出来 </p>
+<p>格式控制符：</p>
+<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321101327088.png" alt="image-20220321101327088"></p>
+<p>转义字符：</p>
+<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321101351593.png" alt="image-20220321101351593"></p>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>单目运算符 &#x3D;<br>算术运算符 +，-，*，&#x2F;<br>关系运算符 &lt;,&gt;,&lt;&#x3D;,&gt;&gt;&#x3D;,&#x3D;&#x3D;<br>逻辑运算符 !,!&#x3D;,&amp;&amp;,||<br>位运算符 <del>,&amp;,|,&lt;&lt;,&gt;&gt;&gt;,</del><br>逗号运算符 ，<br>求大小运算符 sizeof<br>sizeof 它能得到某一个数据或者数据类型所占用的内存大小</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
+<li><p>自动类型转换<br>（1）当一个算数表达式中为类型不同的变量时，会进行自动类型转换</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char-&gt;short-&gt;int-&gt;long-&gt;float-&gt;double </span><br></pre></td></tr></table></figure>
+
+<p>（2）进行赋值运算的时候，会将右值类型自动转换为左值，有可能会丢失数据 </p>
+</li>
+<li><p>强制类型转换<br>通过使用转换可以将一个表达式强制转换成一种类型<br>括号的优先级最高，逗号的优先级最低</p>
+</li>
+</ul>
+<h2 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h2><p>数据类型： 数组名[数组长度]    int arrTem[11]</p>
+<p><strong>说明</strong><br>1，数组名的命名规则和变量名相同，遵循标识符命名规则<br>2，数组名后接一个或多个方括号，用以指定数组的维数(元素个数)<br>3，数组长度只能时常量和常量表达式(大于0)，不能是变量 </p>
+<p><strong>使用</strong></p>
+<p>数组可以通过下标来访问某一个元素，下标可以使用常量，变量，其他有整数值的表达式。通过下标对每个数组元素的使用和普通变量一样。</p>
+<p><strong>数组的初始化</strong></p>
+<ol>
+<li>整体赋值<br>int ary[5]&#x3D;{1,2,3,4,5}; </li>
+<li>部分赋值<br>int ary[5]&#x3D;{1,2,3} &#x2F;&#x2F;还有最后两个元素为0 </li>
+<li>不给定数组长度，根据实际数组元素个数分配<br>Int arr[]&#x3D;{1,2,3,4,5,6}; &#x2F;&#x2F;共有6个元素，所以实际分配24个字节空间</li>
+</ol>
+<p>使用数组的时候，假如不小心下标超过了最大界限会发生什么？这种情况，编译器是不会检查的，称之为数组的越界问题。这种情况会破坏程序的内存，照成程序间接性的不稳定。（就是程序运行可能会出错，有可能不会出错） </p>
+<p><strong>字符数组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char ary[]=&#123;&#x27;H&#x27;,&#x27;e&#x27;,&#x27;l&#x27;,&#x27;l&#x27;,&#x27;o&#x27;&#125;；//正确用法 </span><br><span class="line">char ary2[]=&quot;hello&quot;; //字符数组的特殊用法，可以用一个字符串初始化数组 </span><br></pre></td></tr></table></figure>
+
+<p>在C语言中，字符串是以‘\0’为结尾的，所使用字符串的地方，都是检查字符串结尾的’\0’来判断字符串是不是结束了<br>注意：字符串的结尾是一个’\0’，这个字符的ASC||码是0.而字符‘0’的ASC||码是0x30 </p>
+<p><strong>字符数组的输入与输出</strong></p>
+<p>数组名就是数组的起始地址，他是一个常量</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span>  <span class="built_in">string</span>[<span class="number">10</span>];</span><br><span class="line">  scanf_s(<span class="string">&quot;%s&quot;</span>,<span class="built_in">string</span>,<span class="number">10</span>);会检测输入的数据是不是超过了第三个参数</span><br><span class="line">  <span class="comment">//scanf(&quot;%s&quot;,string);//越界是不会检查的</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%x&quot;</span>,<span class="built_in">string</span>);  <span class="comment">//为什么scanf中的string不用取地址？因为数组名就是首地址， </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>关于一些字符串的操作函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>strlen</td>
+<td>求字符串的长度</td>
+</tr>
+<tr>
+<td>strcpy&#x2F;strcpy_s</td>
+<td>字符串拷贝函数</td>
+</tr>
+<tr>
+<td>strcmp</td>
+<td>比较两个字符串是否一样</td>
+</tr>
+<tr>
+<td>strcat&#x2F;strcat_s</td>
+<td>将两个字符串拼接到一起</td>
+</tr>
+</tbody></table>
+<h2 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h2><p><strong>声明方式：</strong><br>类型说明符 数组名【常量表达式1】【常量表达式2】<code>int temp[3][4]</code></p>
+<p>二维数组也可以看成是一个一维数组，它的每一个元素又是一个一维数组 </p>
+<p><strong>初始化</strong></p>
+<p>二维数组和一维数组一样，也可以在声明时对其进行初始化，二维数组的初始化方式比一维数组较为复杂，但都是一维数组初始化方法衍生而来的 </p>
+<p>1, 分行给二维数组赋初值 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;;//使用大括号分别把每行标记出来</span><br></pre></td></tr></table></figure>
+
+<p>2，可以将所有数据写在一个花括号内，按数组排列的顺序对各元素赋初始值 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;1,2,3,4,5,6&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>3，可以对部分元素赋初值 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int arr[2][3]=&#123;&#123;1&#125;,&#123;2&#125;,&#123;3&#125;&#125;; //分行方式初始化 </span><br><span class="line">int arr[2][3]=&#123;1,2,3&#125; //整体方式初始化 </span><br></pre></td></tr></table></figure>
+
+<p><strong>区别</strong></p>
+<p>分行方式：至少每行都有值，不足的补0<br>整体方式：将第一行赋值完后，再赋值后面的内容，有可能该部分值只给了第一行，后面的值都默认为0 </p>
+<p>4，如果对全部元素都赋初值（即提供全部初始数据），则定义数组时对第一维的长度可以不指定，但第二维的长度不能省 </p>
+<p><strong>引用</strong></p>
+<p>数组名【下标】【下标】<br>1，下标可以是普通的数值<br>2，下标可以是整形表达式<br><code>arrTem[2-1][2*2-1]</code>;&#x2F;&#x2F;无论什么表达式，只要满足结果大于0 </p>
+<p><strong>使用</strong></p>
+<p>数组元素使用的时候和普通变量一样，可以出现在表达式中，也可以被赋值 </p>
+<p><strong>说明：</strong> </p>
+<ol>
+<li>二维数组可被看作是一种特殊的一维数组，它的元素又是一个一维数组 </li>
+<li>二维数组中元素排列的顺序是按行存放的，即在内存中先顺序存放完第一行的元素后，再存放第二行的元素</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">打印杨辉三角</span><br><span class="line">思路</span><br><span class="line">说明：杨辉三角的边都为<span class="number">1</span></span><br><span class="line">中间的每一个值是它对应的左上角和正上方值之和</span><br><span class="line"><span class="number">1</span>，定义一个<span class="number">10</span>*<span class="number">10</span>的二维数组，将斜面和每一行中第一个元素赋值为<span class="number">1</span>；</span><br><span class="line"><span class="number">2</span>，其他元素根据<span class="number">1</span>中定义的值做加法得到</span><br><span class="line">例：<span class="type">int</span>  arrTem[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line">        arrTem[<span class="number">2</span>][<span class="number">1</span>]=arrTem[<span class="number">1</span>][<span class="number">0</span>]+arrTem[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span>  arrTem[<span class="number">10</span>][<span class="number">10</span>]=&#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line"> &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=i;j++)</span><br><span class="line">   &#123;</span><br><span class="line">           <span class="keyword">if</span>((j==<span class="number">0</span>)||(j==i))</span><br><span class="line">         &#123;</span><br><span class="line">              arrTem[i][j]=<span class="number">1</span>;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;%4d&quot;</span>,arrTem[i][j]);</span><br><span class="line">         &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">         &#123;</span><br><span class="line">                  <span class="comment">//每一个值是它对应的左上角的值和正上方值之和</span></span><br><span class="line">              arrTem[i][j]=arrTem[i<span class="number">-1</span>][j<span class="number">-1</span>]+arrTem[i<span class="number">-1</span>][j];</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">&quot;%4d&quot;</span>,arrTem[i][j]);</span><br><span class="line">         &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span>  <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/image-20220321111001724.png" alt="image-20220321111001724"></p>
+<h2 id="三大结构"><a href="#三大结构" class="headerlink" title="三大结构"></a>三大结构</h2><p>顺序结构：顺序结构就是从上到下，一条一条语句的执行 </p>
+<p>选择结构：是当满足一定条件的时候，执行某一段语句，满足条件或者不满足条件用真假来描述 </p>
+<p>循环结构相比于选择结构，也是满足一定的条件，就执行某一些语句，不同的是 ，它执行完之后， 还会再回来，判断条件满足不满足，又要执行一遍语句序列 </p>
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><table>
+<thead>
+<tr>
+<th>逻辑运算符</th>
+<th>表示</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>与</td>
+<td>当且仅当两个运算量的值都为‘真’时，运算结果为‘真’，否则为‘假’</td>
+</tr>
+<tr>
+<td>||</td>
+<td>或</td>
+<td>当且仅当两个运算量的值都为“假”时，运算结果为“假”，否则为“真”</td>
+</tr>
+<tr>
+<td>！</td>
+<td>非</td>
+<td>当运算量的值为“真”时，运算结果为“假”，当运算量的值为“假”时，运算结果</td>
+</tr>
+</tbody></table>
+<p>与位运算符的区别：</p>
+<p>（1）逻辑运算符用if条件或者循环条件判断，得到的是1或者0两个逻辑结果<br>（2）位运算是属于两个操作数转换位二进制之后，针对于特定位的操作，得到的是一个数字</p>
+<p>运算顺序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">!a&amp;&amp;b||x&gt;y&amp;&amp;c</span><br></pre></td></tr></table></figure>
+
+<p>按以下的优先次序:<br>（1）！（非）-&gt;&amp;&amp;（与）-&gt;||（或），即”！“为三者中最高的<br>（2）逻辑运算符中的”&amp;&amp;“和”||“低于关系运算符，”！“高于算术运算符</p>
+<p>在逻辑表达式中，并不是两边的表达式都被执行，只是在必须执行下一个表达式时才能求出表达式的解</p>
+<p>“&amp;&amp;”与”| |”均为短路运算符<br>“&amp;&amp;”当确认左边表达式为假，则不再判断右边的表达式<br>“||”当确认左边表达式为真，则不再判断右边的表达式</p>
+<h3 id="选择结构"><a href="#选择结构" class="headerlink" title="选择结构"></a>选择结构</h3><p>基本形式 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if--else （else条件为假时执行）</span><br><span class="line">if--else if </span><br><span class="line">switch-case</span><br></pre></td></tr></table></figure>
+
+<p><strong>switch - case语句的一般形式为：</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>()&#123;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">1</span>：</span><br><span class="line">            语句序列；</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">2</span>：</span><br><span class="line">            语句序列；</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    </span><br><span class="line">    	<span class="keyword">default</span>:</span><br><span class="line">        	语句序列；</span><br><span class="line">            <span class="keyword">break</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>switch说明</strong></p>
+<ol>
+<li><p>switch后面括号内的表达式 的值与某一个case后面的常量表达式的值相等时，就执行此case后面的语句，如所有的case中的 常量表达式的值都没有与表达式的值匹配的，就执行default后面的语句 </p>
+</li>
+<li><p>每一个case的常量表达式的值必须互不相同，否则就会出现相互矛盾的现象 </p>
+</li>
+<li><p>各个case和default的出现次序不影响执行结果 </p>
+</li>
+<li><p>执行完一个case后面的语句后，流程控制转义到下一个case继续执行 </p>
+</li>
+<li><p>break语句使得执行完case语句后跳出switch语句。如果没有break语句，程序将与下一个case语句匹配， 直到遇到Break为止 </p>
+</li>
+<li><p>多个case可以共用一组执行语句 </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)&#123;</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">1</span>：</span><br><span class="line">        <span class="keyword">case</span> 常量<span class="number">2</span>：</span><br><span class="line">            语句序列：</span><br><span class="line">            <span class="keyword">break</span>；</span><br><span class="line">        defasult:</span><br><span class="line">        	语句序列：</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>在使用case进行语句时，不要忘记case的条件只能是常量或者常量表达式‘</p>
+</li>
+</ol>
+<p><strong>if–else语句的优缺点</strong><br>（1）使用if结构可以实现较为复杂的逻辑判断<br>（2）用switch结构能够实现的结构，使用if结构都可以实现<br>（3）分支较少的情况使用if结构更简单<br>（4）分支较多的情况下使用if结构会使 此程序结构变得复杂<br>（5）如果if嵌套层次过深，也容易使程序结构变得复杂<br><strong>switch语句的优缺点</strong><br>（1）没有复杂的逻辑判断，程序结构简单<br>（2）对于分支很多的情况，特别适合用switch结构<br>（3）switch结构只能基于一个整数值进行分支选择<br>（4）switch只能判断是否相等，不能判断在某一区间的值<br>（5）虽然使用switch语句编写的程序有规律，可读性强，但是由于switch语句不能根据表达式的取值范围做出选 择，所以使用时也有很大的局限性</p>
+<h3 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h3><h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">while语句的一般形式</span><br><span class="line">while(表达式)             //while循环头</span><br><span class="line"> &#123;</span><br><span class="line">   语句                   //while循环体</span><br><span class="line"> &#125;</span><br><span class="line">执行过程：</span><br><span class="line"> （1）判断表达式的真假，求出表达式</span><br><span class="line"> （2）如果表达式的值不为0（真），则执行语句，然后程序转至步骤(1)，再次求出表达式的值；如果表达式为0，while循环语句结束</span><br></pre></td></tr></table></figure>
+
+<h4 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do-while循环"></a>do-while循环</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">do</span><br><span class="line">&#123;</span><br><span class="line"> //循环体语句</span><br><span class="line">&#125;while(表达式);</span><br><span class="line">注：在使用do--while语句时，条件要放在while关键字的括号内，其后必须加上分号</span><br></pre></td></tr></table></figure>
+
+<p>先执行循环体，在判断循环控制条件，循环体至少也要执行一次</p>
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><p>for语句可以分为两部分，即for循环头和for循环体</p>
+<p>for 循环头由关键字for和包含在一个括号内由分号隔开的3个表达式组成 ，循环体可以是一条语句，也可以是包含在大括号内的复合语句。<br>关于for的三个表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for循环的三个语句的执行顺序</span><br><span class="line">  for(printf(&quot;我是语句1\n&quot;);printf(&quot;我是语句2\n&quot;);printf(&quot;我是语句3\n&quot;));</span><br><span class="line">   &#123; </span><br><span class="line">             printf(&quot;我是循环体&quot;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><ol>
+<li><p>表达式的省略问题</p>
+<p>for语句的一般形式中的“表达式1”可以省略，此时应在for语句之前给循环变量赋初值<br>如果表达式2省略，即不判断循环条件，循环无终止地进行下去<br>表达式3也可以省略，但此时程序设计者应另外设法保证循环能正常结束<br>可以省略表达式1和表达式3，只有表达式2，即只给循环条件</p>
+</li>
+<li><p>表达式的填写问题</p>
+<p>表达式1可以是设置循环变量初值得赋值表达式，也可以是与循环变量无关的其他表达式<br>表达式2一般是关系表达式或逻辑表达式，但也可以是任意表达式，只要其值为非零，就执行循环体<br>表达式3一般是修改循环变量的语句，但也可以是任意表达式</p>
+</li>
+</ol>
+<h4 id="break与continue"><a href="#break与continue" class="headerlink" title="break与continue"></a>break与continue</h4><p><strong>break</strong><br>         break语句在switch-case语句中是跳出，break语句在循环中还有另外一种用法<br>         当循环中遇到break语句时，立即结束循环，跳到循环体外，执行循环结构后面的语句<br><strong>continue</strong><br>         对于continue来说，作用是跳过本次循环<br>continue与break多与if连用</p>
+<p><strong>打印九九乘法表</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdafx.h&gt;</span></span></span><br><span class="line"><span class="type">int</span>  <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">9</span>;i++)</span><br><span class="line">   &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=i;j++)</span><br><span class="line">        &#123;</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;%d*%d=%d&quot;</span>,j,i,j*i);</span><br><span class="line">        &#125;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>N5X刷Android_10</title>
     <url>/2022/03/14/N5X%E5%88%B7Android-10/</url>
     <content><![CDATA[<p>N5X刷入Android10</p>
@@ -2973,6 +2973,470 @@
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爬虫基础-从零开始</title>
+    <url>/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/</url>
+    <content><![CDATA[<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+<li>模拟计算机对服务器发起的Request请求</li>
+<li>接受服务器端的Response内容并解析，提取所需的信息</li>
+</ul>
+<h1 id="常用Python语法"><a href="#常用Python语法" class="headerlink" title="常用Python语法"></a>常用Python语法</h1><h2 id="字符串的切片和索引"><a href="#字符串的切片和索引" class="headerlink" title="字符串的切片和索引"></a>字符串的切片和索引</h2><p>字符串的切片和索引就是通过<code>string[x]</code>，获取字符串的一部分信息</p>
+<h2 id="字符串方法"><a href="#字符串方法" class="headerlink" title="字符串方法"></a>字符串方法</h2><p><strong>split()方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27;www.baidu.com&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(a.split(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line"><span class="comment">#result[&#x27;www&#x27;,&#x27;baidu&#x27;,&#x27;com&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>split()方法就是通过给定的分割符，将一个字符串分割为一个列表。<br><strong>repalce()方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27;There is apples&#x27;</span></span><br><span class="line">b = a.replace(<span class="string">&#x27;is&#x27;</span>,<span class="string">&#x27;are&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"><span class="comment">#result There are apples</span></span><br></pre></td></tr></table></figure>
+
+<p>类似文本中的”查找替换”功能<br><strong>strip()方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27; python is cool &#x27;</span></span><br><span class="line"><span class="built_in">print</span>(a.strip())</span><br><span class="line"><span class="comment">#result python is cool</span></span><br></pre></td></tr></table></figure>
+
+<p>strip()方法返回去除两侧空格的字符串，也可以指定需要去除的字符，将他们列为参数中即可</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27;***python**is**good***&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(a.strip(<span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"><span class="comment">#result python**is**good</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>format()方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&#x27;&#123;&#125; is my love&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;Python&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="comment">#result Python is my love</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串格式化符就像是做选择题，留了空给做题者选择。在爬虫过程中，有些网页链接的部分参数是可变的，这时使用字符串格式化符可以减少代码的使用量。<br>例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">conten = <span class="built_in">input</span>(<span class="string">&#x27;请输入搜索内容&#x27;</span>)</span><br><span class="line">url_path = <span class="string">&#x27;https://www.pexels/com/search/&#123;&#125;/&#x27;</span>.<span class="built_in">format</span>(content)</span><br><span class="line"><span class="built_in">print</span>(url_path)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/8afbde6f337b785ddbe1e3c89cb1605aa0b0b0f53098ecf6cb99fc8fbc494567.png" alt="图 1">  </p>
+<h2 id="Python数据结构"><a href="#Python数据结构" class="headerlink" title="Python数据结构"></a>Python数据结构</h2><h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>特征：</p>
+<ul>
+<li>列表中的每一个元素都是可变的</li>
+<li>列表的元素都是有序的，也就是说每个元素都有对应的位置（类似字符串的切片和索引）</li>
+<li>列表可以容纳所有的对象。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">list</span> = [<span class="string">&#x27;peter&#x27;</span>,<span class="string">&#x27;lilei&#x27;</span>,<span class="string">&#x27;wangwu&#x27;</span>,<span class="string">&#x27;xiangming&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>[<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>[<span class="number">2</span>:])</span><br><span class="line"><span class="comment">#resutl</span></span><br><span class="line">wangwu</span><br><span class="line">[<span class="string">&#x27;wangwu&#x27;</span>, <span class="string">&#x27;xiangming&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>如果是切片，返回的也是列表的数据结构<br>列表会经常用到多重循环</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">names = [<span class="string">&#x27;xiaoming&#x27;</span>,<span class="string">&#x27;wanggu&#x27;</span>,<span class="string">&#x27;peter&#x27;</span>]</span><br><span class="line">ages = [<span class="number">23</span>,<span class="number">15</span>,<span class="number">58</span>]</span><br><span class="line"><span class="keyword">for</span> name,age <span class="keyword">in</span> <span class="built_in">zip</span>(name.ages)</span><br><span class="line">    <span class="built_in">print</span>(name,age)</span><br><span class="line"><span class="comment">#result</span></span><br><span class="line">xiaoming <span class="number">23</span></span><br><span class="line">wanggu <span class="number">15</span></span><br><span class="line">peter <span class="number">58</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>Python的字典数据结构与现实中的字典类似，以键值对（‘key’-‘value’）的形式出现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">user_info=&#123;</span><br><span class="line">    <span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;xiaoming&#x27;</span></span><br><span class="line">    <span class="string">&#x27;age&#x27;</span>:<span class="string">&#x27;23&#x27;</span></span><br><span class="line">    <span class="string">&#x27;sex&#x27;</span>:<span class="string">&#x27;man&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="元组和集合"><a href="#元组和集合" class="headerlink" title="元组和集合"></a>元组和集合</h3><p>元组类似于列表，但是元组的元素不能修改只能查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tuple = (1,2,3)</span><br></pre></td></tr></table></figure>
+
+<p>集合的概念类似数学中的集合。每个集合中的元素是无序的，不可以有重复的对象。因此可通过集合把重复的数据去除</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">list</span> = [<span class="string">&#x27;xiaoming&#x27;</span>,<span class="string">&#x27;zhangyu&#x27;</span>,<span class="string">&#x27;xiaoming&#x27;</span>]</span><br><span class="line"><span class="built_in">set</span> = <span class="built_in">set</span>(<span class="built_in">list</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">set</span>)</span><br><span class="line"><span class="comment">#result &#123;&#x27;zhangyu&#x27;, &#x27;xiaoming&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p>Python中通过open()函数打开文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">open</span>(name[,mode[,buffering]])</span><br></pre></td></tr></table></figure>
+
+<p>open()函数使用文件名作为唯一的强制参赛，然后返回一个文件对象。模式（mode）和缓冲（buffering）是可选参数。</p>
+<p>如果在本机上有名为file.txt的文件，其存储路径为<code>C:\User\Administrator\Desktop</code>，那么可以通过下面代码打开文件</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;C:\User\Administrator\Desktop\file.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果open()函数只是加入文件的路径这一个参数，则只能打开文件并读取文件的相关内容。如果要向文件中写入内容，则必须加入模式这个参赛了。<br>模式参赛的常用值</p>
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/cd5e7b38fe329e81b4cdfe20540f2653826e80ee7dcb7566667e896aeffbf701.png" alt="图 2">  </p>
+<h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><p>python读取文件通过read()方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = <span class="built_in">open</span> (<span class="string">&#x27;/home/a1ili/Desktop/1.txt&#x27;</span>)</span><br><span class="line">content = f.read()</span><br><span class="line"><span class="built_in">print</span>(content)</span><br><span class="line"><span class="comment">#result</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/aabc0daff737955f57121884ceb93631578010ab39f9121b790f75c9e575d989.png" alt="图 3">  </p>
+<h3 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h3><p>当完成读写工作后，应该使用close()方法关闭文件。这样可以保证python进行缓冲的清理和文件的安全性。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = <span class="built_in">open</span> (<span class="string">&#x27;/home/a1ili/Desktop/1.txt&#x27;</span>)</span><br><span class="line">content = f.read()</span><br><span class="line"><span class="built_in">print</span>(content)</span><br><span class="line">f.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Python面向对象"><a href="#Python面向对象" class="headerlink" title="Python面向对象"></a>Python面向对象</h2><h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line"></span><br><span class="line">my_bike = Bike()</span><br><span class="line">you_bike = Bike()</span><br><span class="line"><span class="built_in">print</span>(you_bike.compose)</span><br></pre></td></tr></table></figure>
+
+<p>my_bike就是类的实例，通过<code>.</code>加上类的属性，就是类属性的引用。类的属性会被类的实例共享</p>
+<h3 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line"></span><br><span class="line">my_bike = Bike()</span><br><span class="line">my_bike.anoter = <span class="string">&#x27;basket&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(my_bike.anoter)</span><br><span class="line"><span class="comment">#result basket</span></span><br></pre></td></tr></table></figure>
+
+<p>通过给类的实例属性进行赋值，也就是实例属性。compose属性属于所有的该款自行车，而other属性只属于my_bike这个类的实例。</p>
+<h3 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">use</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;you are riding&#x27;</span>)</span><br><span class="line"></span><br><span class="line">my_bike=Bike()</span><br><span class="line">my_bike.use()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/4179604d4357269cd0803c45a3114da6bcc6bcd5a65fd933c6af17279aefe1c5.png" alt="图 4">  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">use</span>(<span class="params">self,time</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;you are ride &#123;&#125;m&#x27;</span>.<span class="built_in">format</span>(time*<span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">my_bike=Bike()</span><br><span class="line">my_bike.use(<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e02eb1df0bb076c304c84e8343b3d4b5a257f41de908c4c79bd8536604fbc355.png" alt="图 5">  </p>
+<p>python的类中有一些“魔法方法”，<code>__init__()</code>方法就是其中之一。在我们创造实例的时候，不需要引用该方法也会被自动执行</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">use</span>(<span class="params">self,time</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;you are ride &#123;&#125;m&#x27;</span>.<span class="built_in">format</span>(time*<span class="number">100</span>))</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.other = <span class="string">&#x27;basket&#x27;</span></span><br><span class="line"></span><br><span class="line">my_bike=Bike()</span><br><span class="line"><span class="built_in">print</span>(my_bike.other)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e54945d1278c258fd0de4af76832a3e493943485a5c4aeeb6d67f6fa67a55d75.png" alt="图 7">  </p>
+<h2 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Bike</span>:</span><br><span class="line">    compose = [<span class="string">&#x27;frame&#x27;</span>,<span class="string">&#x27;wheel&#x27;</span>,<span class="string">&#x27;pedal&#x27;</span>]</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">use</span>(<span class="params">self,time</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;you are ride &#123;&#125;m&#x27;</span>.<span class="built_in">format</span>(time*<span class="number">100</span>))</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.other = <span class="string">&#x27;basket&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Share_bike</span>(<span class="title class_ inherited__">Bike</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">cost</span>(<span class="params">self,hour</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;you spent &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(hour))</span><br><span class="line"></span><br><span class="line">my_bike=Share_bike()</span><br><span class="line"><span class="built_in">print</span>(my_bike.other)</span><br><span class="line">my_bike.cost(<span class="number">2</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/6e37d345e26c874d67c98383ea661cda972ed0151e9439bc7a52f23ff2fcbebf.png" alt="图 8">  </p>
+<h1 id="多页面爬虫流程"><a href="#多页面爬虫流程" class="headerlink" title="多页面爬虫流程"></a>多页面爬虫流程</h1><p>有的网页存在多页的情况，每页的网页结构都相同或类似，这种流程为</p>
+<ol>
+<li>手动翻页并观察各网页的URL构成特点，构造出所有的URL存入列表中。</li>
+<li>根据URL列表依次循环取出URL</li>
+<li>定义爬虫函数</li>
+<li>循环调用爬虫函数，存储数据</li>
+<li>循环完毕，结束爬虫程序</li>
+</ol>
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/e2d15bbe0adef3531865a6d4fae414c018aac727657896deb762b7cfc0104af7.png" alt="图 1">  </p>
+<h1 id="跨页面爬虫流程"><a href="#跨页面爬虫流程" class="headerlink" title="跨页面爬虫流程"></a>跨页面爬虫流程</h1><ol>
+<li>定义爬虫函数爬取列表页所有专题的URL</li>
+<li>将专题URL存入列表中</li>
+<li>定义爬取详细页数据函数</li>
+<li>进入专题详细页面爬取详细页数据</li>
+<li>存储数据，循环完毕，结束爬虫程序</li>
+</ol>
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/0a7ebde500e1077798346af020b5733b2d0c244fbc50dedc415fcc1b963b4329.png" alt="图 2">  </p>
+<h1 id="网页构造"><a href="#网页构造" class="headerlink" title="网页构造"></a>网页构造</h1><p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/1edb085d880b0f18d7a503c2e437446001797c769e08b9fa41ef950965f74a6a.png" alt="图 3"><br>图中左侧为HTML文件，右侧为CSS样式，用<code>&lt;script&gt;&lt;/script&gt;</code>标签的就是<code>JavaScript</code>代码。用户浏览的网页就是浏览器选然后的结果，如果把网页比喻成房子的话，那么HTML为房子的框架和格局（几室几厅)，css就是房子的样式（地板、房漆）, JavaScript 就是房子中的电器 。</p>
+<h1 id="爬虫三大库"><a href="#爬虫三大库" class="headerlink" title="爬虫三大库"></a>爬虫三大库</h1><h2 id="Requests库"><a href="#Requests库" class="headerlink" title="Requests库"></a>Requests库</h2><p>使用：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">res = requests.get(<span class="string">&#x27;http://bj.xiaozhu.com&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+
+<p>返回的结果就是网页的源代码<br>有时爬虫需要加入请求头来伪装成浏览器，以便更好地抓取数据。在Chrome浏览器中按F12键打开Chrome开发者工具，刷新网页后找到 User-Agent 进行复制<br>请求头的使用方法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">res = requests.get(<span class="string">&#x27;http://bj.xiaozhu.com&#x27;</span>,headers=headers)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+
+<p>Requests 库不仅有get()方法，还有post()等方法。post()方法用于提交表单来爬取需要登录才能获得数据的网站</p>
+<h2 id="Requests库的错误和异常"><a href="#Requests库的错误和异常" class="headerlink" title="Requests库的错误和异常"></a>Requests库的错误和异常</h2><ul>
+<li>Requests抛出一个ConnectionError异常，原因为网络问题（如 DNS 查询失败、拒绝连接等）</li>
+<li>Response.raise_for_status（）抛出一个HTTPError异常，原因为HTTP请求返回了不成功的状态码（如网页不存在，返回 404 错误)</li>
+<li>Requests抛出一个Timeout异常，原因为请求超时。</li>
+<li>Requests抛出一个TooMa町Redirects异常，原因为请求超过了设定的最重定向次数。</li>
+</ul>
+<p>所有Requests显式抛出的异常都继承自requests.exceptions.RequestException，这时，可通过Python中的try来避免异常</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">res = requests.get(<span class="string">&#x27;https://bj.xiaozhu.com/&#x27;</span>,headers=headers)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="built_in">print</span>(res.text)</span><br><span class="line"><span class="keyword">except</span> ConnectionError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;连接失败&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="BeautifulSoup库"><a href="#BeautifulSoup库" class="headerlink" title="BeautifulSoup库"></a>BeautifulSoup库</h2><p>通过 BeautifulSoup 库可以轻松地解析 Requests 库请求的网页，并把网页源代码解析为 Soup 文档，以便过滤提取数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> bs4</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">res = requests.get(<span class="string">&#x27;https://bj.xiaozhu.com/&#x27;</span>,headers=headers)</span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line">soup = BeautifulSoup(res.text,<span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(soup.prettify())</span><br></pre></td></tr></table></figure>
+
+<p>Beautifulsoup除了支持Python标准库中的HTML解析器外，还支持一些第三方的解析器</p>
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/98cdeb8165b2b10f16bf3395f8e8e8947c9264d3de8d4e36d69dc56c86381cc2.png" alt="图 1">  </p>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p><strong>find_all()</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">find_all(tag,attibutes,recursive,text,limit,keywords)</span><br><span class="line"></span><br><span class="line">soup.find_all(<span class="string">&#x27;div&#x27;</span>,<span class="string">&quot;item&quot;</span>)<span class="comment">##查找div标签，class=&quot;item&quot;</span></span><br><span class="line">soup.find_all(<span class="string">&#x27;div&#x27;</span>,<span class="keyword">class</span>=<span class="string">&#x27;item&#x27;</span>)</span><br><span class="line">soup.find_all(<span class="string">&#x27;div&#x27;</span>,attrs=&#123;<span class="string">&#x27;class&#x27;</span>:<span class="string">&quot;item&quot;</span>&#125;) <span class="comment"># attrs参数定义一个字典来搜索包含特殊属性的tag</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>find()方法</strong></p>
+<p>find()方法与find_all()方法类似，只是find_all()方法返回的是文档中符合条件的所有tag ，是一个集合(class’bs4.element.ResultSet’),find()方法返回的一个Tag(class’bs4 .element.Tag’)<br><strong>selector()方法</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup.selector(div.item&gt;a&gt;h1) <span class="comment">#括号内容通过Chorm复制得道</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>鼠标定位到想要提取的数据位置，右击，在弹出的快捷菜单中选择“检查”命令。</li>
+<li>在网页源代码中右击所选元素</li>
+<li>在弹出的快捷菜单中选择Copy selector。</li>
+</ul>
+<p>案例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> bs4</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">url</span>):</span><br><span class="line">    wb_data = requests.get(<span class="string">&#x27;http://www.kugou.com/yy/rank/home/1-8888.html&#x27;</span>,headers=headers)</span><br><span class="line">    soup = BeautifulSoup(wb_data.text,<span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line">    ranks = soup.select(<span class="string">&#x27;span.pc_temp_num&#x27;</span>)</span><br><span class="line">    titles = soup.select(<span class="string">&#x27;div.pc_temp_songlist &gt; ul &gt; li&gt; a&#x27;</span>)</span><br><span class="line">    times = soup.select(<span class="string">&#x27;div.pc_temp_songlist &gt; ul &gt; li&gt; span.pc_temp_tips_r &gt; span&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> rank,title,time <span class="keyword">in</span> <span class="built_in">zip</span>(ranks,titles,times):</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;rank&#x27;</span>:rank.get_text().strip(),</span><br><span class="line">            <span class="string">&#x27;singer&#x27;</span>:title.get_text().split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">0</span>],</span><br><span class="line">            <span class="string">&#x27;song&#x27;</span>:title.get_text().split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>],</span><br><span class="line">            <span class="string">&#x27;time&#x27;</span>:time.get_text().strip()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">print</span>(data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    urls = [<span class="string">&#x27;http://www.kugou.com/yy/rank/home/&#123;&#125;-8888.html&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(i)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">24</span>)]</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        get_info(url)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/96d7eb1f96d9cb2947a2ecfb50ae8fee040538860db4ee0ce317d97cf7979626.png" alt="图 2">  </p>
+<p>本案例并未完全使用“Copy selector”，的全部信息，由于有些标签是固定的,因此选用部分路径即可。</p>
+<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><p>Python中的re模块拥有着全部的正则表达式功能，为网络爬虫提供了可能。</p>
+<h2 id="一般字符"><a href="#一般字符" class="headerlink" title="一般字符"></a>一般字符</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.</code></td>
+<td>匹配任意单个字符（不包括换行符\n）</td>
+</tr>
+<tr>
+<td><code>\</code></td>
+<td>转义字符（把有特殊含义的字符转换成字面意思）</td>
+</tr>
+<tr>
+<td><code>[...]</code></td>
+<td>字符集。对应字符集中的任意字符</td>
+</tr>
+</tbody></table>
+<p>说明：</p>
+<ol>
+<li><code>.</code>字符为匹配任意单个字符。例如， <code>a.b</code> 可以的匹配结果为 abc、aic、a&amp;c等，但不包括换行符。</li>
+<li><code>\</code>字符为转义字符，可以把字符改变为原来的意思。听上去不是很好理解，例如<code>.</code>字符是匹配任意的单个字符,但有时不需要这个功能，只想让它代表一个点，这时就可以使用<code>\.</code>，就能匹配为<code>.</code>了。</li>
+<li><code>[...］</code>为字符集，相当于在中括号中任选一个。例如 a[bcd］，匹配的结果为ab、ac和ad 。</li>
+</ol>
+<h2 id="预定以字符集"><a href="#预定以字符集" class="headerlink" title="预定以字符集"></a>预定以字符集</h2><table>
+<thead>
+<tr>
+<th>预定以字符集</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\d</code></td>
+<td>匹配一个数字字符，等价于<code>[0-9]</code></td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>匹配一个非数字字符，等价于<code>[^0-9]</code></td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>匹配任何空白字符，包括空格，制表符，换页符等，等价于<code>[\f\n\r\t\v]</code></td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任何非空白字符，等价于<code>[^\f\n\r\t\v]</code></td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>匹配包括下划线的任何单词字符，等价于<code>[A-Za-z0-9]</code></td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>匹配任何非单词字符。等价于<code>[^A-Za-z0-9_]</code></td>
+</tr>
+</tbody></table>
+<h2 id="数量词"><a href="#数量词" class="headerlink" title="数量词"></a>数量词</h2><table>
+<thead>
+<tr>
+<th>数量词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code></td>
+<td>匹配前一个字符0或无限次</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>匹配前一个字符1或无限次</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前一个字符0或1次</td>
+</tr>
+<tr>
+<td><code>&#123;m&#125;</code></td>
+<td>匹配前一个字符m次</td>
+</tr>
+<tr>
+<td><code>&#123;m,n&#125;</code></td>
+<td>匹配前一个字符m次至n次</td>
+</tr>
+</tbody></table>
+<p>说明：</p>
+<ol>
+<li>“＊”数量词匹配前一个字符 0 或无限次。例如， ab*c 匹配 ac、abc、abbc和abbbc等。</li>
+<li>“＋”与”*”很类似，只是至少匹配前一个字符一次。例如，ab+c匹配abc、abbc和 abbbc 等。</li>
+<li>“?”数量词匹配前一个字符0或1次。例如，ab?c匹配ac和abc 。</li>
+<li>“｛m｝”数量词匹配前一个字符 m 次 。例如，ab{3}c 匹配 abbbc 。</li>
+<li>“{m,n}”数量词匹配前一个字符 m 至 n 次。例如， ab {1, 3}c 匹配 abc、abbc和abbbc</li>
+</ol>
+<h2 id="边界匹配"><a href="#边界匹配" class="headerlink" title="边界匹配"></a>边界匹配</h2><table>
+<thead>
+<tr>
+<th>边界匹配</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^</code></td>
+<td>匹配字符串开头</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配字符串结尾</td>
+</tr>
+<tr>
+<td><code>\A</code></td>
+<td>仅匹配字符串开头</td>
+</tr>
+<tr>
+<td><code>\Z</code></td>
+<td>仅匹配字符串结尾</td>
+</tr>
+</tbody></table>
+<p>说明：</p>
+<ol>
+<li>“A”匹配字符串的开头。例如，让^abc匹配 abc 开头的字符串。</li>
+<li>“$”匹配字符串的结尾 。 例如，abc$ 匹配 abc 结尾的字符串。</li>
+<li>“\A”匹配字符串的结尾。例如， \Aabc。</li>
+<li>“\Z”匹配字符串的结尾。例如， abc\Z 。</li>
+</ol>
+<h2 id="re模块及其方法"><a href="#re模块及其方法" class="headerlink" title="re模块及其方法"></a>re模块及其方法</h2><h3 id="search-函数"><a href="#search-函数" class="headerlink" title="search()函数"></a>search()函数</h3><p>匹配并提取第一个符合规律的内容，返回一个正则表达式对象</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">re.match(pattern,string,flags=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<ul>
+<li>pattern为匹配的正则表达式</li>
+<li>string为要匹配的字符串</li>
+<li>flags为标志位，用户控制正则表达式的匹配方式，如是否区分大小写，多行匹配等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">a = <span class="string">&#x27;one1two2three3&#x27;</span></span><br><span class="line">infos = re.search(<span class="string">&#x27;\d+&#x27;</span>,a)</span><br><span class="line"><span class="built_in">print</span>(infos) <span class="comment">#search方法返回的是正则表达式对象</span></span><br><span class="line"><span class="built_in">print</span>(infos.group())</span><br></pre></td></tr></table></figure>
+
+<h3 id="sub-函数"><a href="#sub-函数" class="headerlink" title="sub()函数"></a>sub()函数</h3><p>用于替换字符串中的匹配项</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">re.sub(pattern,repl,string,count=<span class="number">0</span>,flags=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ol>
+<li>pattern为匹配的正则表达式</li>
+<li>repl为替换的字符串</li>
+<li>string为要被查找替换的原始字符串</li>
+<li>counts为模式匹配后替换的最大次数，默认0表示替换所有的匹配</li>
+<li>flags为标志位，用于控制正则表达式的匹配方式，如是否区分大小写，多行匹配等。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">phone = <span class="string">&#x27;123-456-789&#x27;</span></span><br><span class="line">new_phone = re.sub(<span class="string">&#x27;\D&#x27;</span>,<span class="string">&#x27;&#x27;</span>,phone)</span><br><span class="line"><span class="built_in">print</span>(new_phone) <span class="comment">#sub()方法用于替换</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="findall-函数"><a href="#findall-函数" class="headerlink" title="findall()函数"></a>findall()函数</h3><p>findall()函数匹配所有符合规律的内容，并以列表的形式返回。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">a = <span class="string">&#x27;one1two2three3&#x27;</span></span><br><span class="line">infos = re.findall(<span class="string">&#x27;\d+&#x27;</span>,a)</span><br><span class="line"><span class="built_in">print</span>(infos)</span><br></pre></td></tr></table></figure>
+
+<h3 id="re模块修饰符"><a href="#re模块修饰符" class="headerlink" title="re模块修饰符"></a>re模块修饰符</h3><table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>re.I</td>
+<td>使匹配对大小写不敏感</td>
+</tr>
+<tr>
+<td>re.L</td>
+<td>做本地化识别（local-aware）匹配</td>
+</tr>
+<tr>
+<td>re.M</td>
+<td>多行匹配，影响^和$</td>
+</tr>
+<tr>
+<td>re.S</td>
+<td>使匹配包括换行在内的所有字符</td>
+</tr>
+<tr>
+<td>re.U</td>
+<td>根据Unicode字符集解析字符。这个标志影响\w,\W,\b,\B</td>
+</tr>
+<tr>
+<td>re.X</td>
+<td>该标志通过给予更灵活的格式，以便将正则表达式写得更易理解</td>
+</tr>
+</tbody></table>
+<p>案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:</span><br><span class="line">        <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;/home/a1ili/Y-A/doupo.txt&#x27;</span>,<span class="string">&#x27;a+&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">url</span>):</span><br><span class="line">    res = requests.get(url,headers=headers)</span><br><span class="line">    <span class="keyword">if</span> res.status_code == <span class="number">200</span>:</span><br><span class="line">        contents = re.findall(<span class="string">&#x27;&lt;p&gt;(.*?)&lt;/p&gt;&#x27;</span>,res.content.decode(<span class="string">&#x27;utf-8&#x27;</span>),re.S)</span><br><span class="line">        <span class="keyword">for</span> content <span class="keyword">in</span> contents:</span><br><span class="line">            f.write(content+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    urls = [<span class="string">&#x27;http://www.doupoxs.com/doupocangqiong/&#123;&#125;.html&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(i)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">1665</span>)]</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        get_info(url)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<h1 id="LXML库与Xpath语法"><a href="#LXML库与Xpath语法" class="headerlink" title="LXML库与Xpath语法"></a>LXML库与Xpath语法</h1><p>Lxml库是基于libxml2的XML解析库的Python封装。该模块使用 C 语言编写，解析速度比 Beautiful Soup 更快。 Lxml 库使用 Xpath 语法解析定位网页数据。</p>
+<h2 id="LXML库的使用"><a href="#LXML库的使用" class="headerlink" title="LXML库的使用"></a>LXML库的使用</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">text = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;red&quot;&gt;&lt;h1&gt;red flower&lt;/h1&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;yellow&quot;&gt;&lt;h2&gt;yellow flower&lt;/h2&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;white&quot;&gt;&lt;h3&gt;white flower&lt;/h3&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line"><span class="built_in">print</span>(html)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/0b1e53f6758ae790a333a394d56f4d9ca54d69bde372c9dafb5549e17af92075.png" alt="图 9">  </p>
+<p>etree库把HTML文档解析为Element对象，可以通过下面代码输出解析过的HTML文档。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">text = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;red&quot;&gt;&lt;h1&gt;red flower&lt;/h1&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;yellow&quot;&gt;&lt;h2&gt;yellow flower&lt;/h2&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;white&quot;&gt;&lt;h3&gt;white flower&lt;/h3&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment">#result</span></span><br><span class="line"><span class="string">b&#x27;&lt;html&gt;&lt;body&gt;&lt;div&gt;\n    &lt;ul&gt;\n        &lt;li class=&quot;red&quot;&gt;&lt;h1&gt;red flower&lt;/h1&gt;&lt;/li&gt;\n        &lt;li class=&quot;yellow&quot;&gt;&lt;h2&gt;yellow flower&lt;/h2&gt;&lt;/li&gt;\n        &lt;li class=&quot;white&quot;&gt;&lt;h3&gt;white flower&lt;/h3&gt;&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/div&gt;\n&lt;/body&gt;&lt;/html&gt;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>lxml继承了libxml2的特性，具有自动修正html代码的功能。添加了html和body标签</p>
+<h2 id="读取html文件"><a href="#读取html文件" class="headerlink" title="读取html文件"></a>读取html文件</h2><p>除了直接读取 字符串，lxml库还支持从文件中提取内容</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">&#x27;color.html&#x27;</span>)</span><br><span class="line">result = etree.tostring(html,pretty_print=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>html文件与代码文件在同一层时，用相对路径，不再同一层时使用绝对路径</p>
+<p>在同一路径新建color.html，文件内容如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>flower<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;red&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>red flower<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;yellow&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>yellow flower<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;white&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h3</span>&gt;</span>white flower<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="解析html文件"><a href="#解析html文件" class="headerlink" title="解析html文件"></a>解析html文件</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:</span><br><span class="line">        <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">res= requests.get(<span class="string">&#x27;https://book.douban.com/top250&#x27;</span>,headers=headers)</span><br><span class="line">html = etree.HTML(res.text)</span><br><span class="line"><span class="built_in">print</span>(html)</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Xpath语法"><a href="#Xpath语法" class="headerlink" title="Xpath语法"></a>Xpath语法</h2><p>Xpath是一门在xml文档中查找信息的语言</p>
+<h3 id="节点选择"><a href="#节点选择" class="headerlink" title="节点选择"></a>节点选择</h3><table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>从根节点选取</td>
+</tr>
+<tr>
+<td><code>//</code></td>
+<td>从匹配选择的当前节点选择文档中的节点，而不考虑他们的位置</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>选取当前节点</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>选取当前节点的父节点</td>
+</tr>
+<tr>
+<td><code>@</code></td>
+<td>选取属性</td>
+</tr>
+</tbody></table>
+<p><strong>节点选择实例</strong></p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>user_database</code></td>
+<td>选取元素<code>user_database</code>的所有子节点</td>
+</tr>
+<tr>
+<td><code>/user_database</code></td>
+<td>选取根元素user_database。注释：假如路径起始于正斜杠（&#x2F;），则此路经始终代表到某元素的绝对路径</td>
+</tr>
+<tr>
+<td>user_database&#x2F;user</td>
+<td>选取属于user_database的子元素的所有user元素</td>
+</tr>
+<tr>
+<td><code>//user</code></td>
+<td>选取所有user子元素，而不管他们在文档中的位置</td>
+</tr>
+<tr>
+<td><code>user_database//user</code></td>
+<td>选择属于user_databae元素的后代的所有user元素，而不管他们位于user_database之下的什么位置</td>
+</tr>
+<tr>
+<td><code>//@attribute</code></td>
+<td>选取名为attibute的所有属性</td>
+</tr>
+</tbody></table>
+<p>Xpath语法中的谓语用来查找某个特定的节点或者包含某个指定值的节点，谓语被嵌套在方括号中。</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/user_database/user[1]</code></td>
+<td>选取属于user_database子元素的第一个user元素</td>
+</tr>
+<tr>
+<td><code>//li@attribute()</code></td>
+<td>选取所有拥有名为attribute属性的li元素</td>
+</tr>
+<tr>
+<td><code>//li[@attribute=&#39;red&#39;</code>]</td>
+<td>选取所有li元素，且这些元素拥有值为red的attribute属性</td>
+</tr>
+</tbody></table>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><p>步骤：</p>
+<ol>
+<li>鼠标定位到想要提取的数据位置，右击，从弹出的快捷菜单中选择“检查”命令。</li>
+<li>在网页源码中右击所选元素</li>
+<li>从弹出的快捷菜单中选择copy Xpath命令。</li>
+</ol>
+<p>当需要进行批量爬取时，通过类似Beautiful中的selector()方法删除谓语部分是不可行的。这时的思路为”先抓大后抓小，寻找循环点”。</p>
+<p>有时候会遇到相同的字符开头的多个标签：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;tag-1&quot;</span>&gt;</span>需要的内容1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;tag-2&quot;</span>&gt;</span>需要的内容2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;tag-3&quot;</span>&gt;</span>需要的内容3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>想要同时爬取时，不需要构造多个Xpath路径，通过start-with()便可以获取多个标签</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;li class=&quot;tag-1&quot;&gt;需要的内容1&lt;/li&gt;</span></span><br><span class="line"><span class="string">&lt;li class=&quot;tag-2&quot;&gt;需要的内容2&lt;/li&gt;</span></span><br><span class="line"><span class="string">&lt;li class=&quot;tag-3&quot;&gt;需要的内容3&lt;/li&gt;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">selector = etree.HTML(html)</span><br><span class="line">contents = selector.xpath(<span class="string">&#x27;//li[starts-with(@class,&quot;tag&quot;)]/text()&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> content <span class="keyword">in</span> contents:</span><br><span class="line">    <span class="built_in">print</span>(content)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/74b51a3caf99edb6561cfc1147d08365c77ff3babbb4c3dc70373eda0d3bbb0e.png" alt="图 10">  </p>
+<p>当遇到标签套标签的情况时：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;red&quot;</span>&gt;</span>需要的内容1</span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>需要的内容2<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>向同时爬取文本内容，可以通过string(.)完成：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&lt;div class=&quot;red&quot;&gt;需要的内容1</span></span><br><span class="line"><span class="string">    &lt;h1&gt;需要的内容2&lt;/h1&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">selector = etree.HTML(html)</span><br><span class="line">content1 = selector.xpath(<span class="string">&#x27;//div[@class=&quot;red&quot;]&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">content2 = content1.xpath(<span class="string">&#x27;string(.)&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(content2)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/3b5dbe9beef8e4dc98e0e94be6d3f4b953f5dac1c6b10b92f71f40f0d95f6306.png" alt="图 11">  </p>
+<p>案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">fp = <span class="built_in">open</span>(<span class="string">&#x27;douabn.csv&#x27;</span>,<span class="string">&#x27;wt&#x27;</span>,newline=<span class="string">&#x27;&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">writer = csv.writer(fp)</span><br><span class="line">writer.writerow((<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;url&#x27;</span>,<span class="string">&#x27;author&#x27;</span>,<span class="string">&#x27;publisher&#x27;</span>,<span class="string">&#x27;date&#x27;</span>,<span class="string">&#x27;price&#x27;</span>,<span class="string">&#x27;rate&#x27;</span>,<span class="string">&#x27;comment&#x27;</span>))</span><br><span class="line">urls = [<span class="string">&#x27;https://book.douban.com/top250?start=&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(i)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">250</span>,<span class="number">25</span>)]</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:</span><br><span class="line">        <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">    html = requests.get(url,headers=headers)</span><br><span class="line">    selector = etree.HTML(html.text)</span><br><span class="line">    infos = selector.xpath(<span class="string">&#x27;//tr[@class = &quot;item&quot;]&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> info <span class="keyword">in</span> infos:</span><br><span class="line">        name = info.xpath(<span class="string">&#x27;td/div/a/@title&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        url = info.xpath(<span class="string">&#x27;//td/div/a/@href&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        book_infos = info.xpath(<span class="string">&#x27;td/p/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        auth = book_infos.split(<span class="string">&#x27;/&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        publisher = book_infos.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">3</span>]</span><br><span class="line">        data = book_infos.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">2</span>]</span><br><span class="line">        price = book_infos.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line">        rate = info.xpath(<span class="string">&#x27;td/div/span[2]/text()&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        comments = info.xpath(<span class="string">&#x27;td/p/span/text()&#x27;</span>)</span><br><span class="line">        comment = comments[<span class="number">0</span>] <span class="keyword">if</span> <span class="built_in">len</span>(comments) != <span class="number">0</span> <span class="keyword">else</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">        writer.writerow((name,url,auth,publisher,data,price,rate,comment))</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>书名：《从零开始学爬虫》</p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
+        <tag>python</tag>
       </tags>
   </entry>
 </search>
