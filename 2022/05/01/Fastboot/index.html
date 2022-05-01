@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="埋头苦干的劲头 抬头看路的清醒">
-<meta property="og:type" content="website">
-<meta property="og:title" content="A1ili&#39;s Blog">
-<meta property="og:url" content="http://example.com/tags/%E6%8A%93%E5%8C%85%E5%AE%9E%E6%88%98/index.html">
+  <meta name="description" content="一些常用命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fastboot">
+<meta property="og:url" content="http://example.com/2022/05/01/Fastboot/index.html">
 <meta property="og:site_name" content="A1ili&#39;s Blog">
-<meta property="og:description" content="埋头苦干的劲头 抬头看路的清醒">
+<meta property="og:description" content="一些常用命令">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-01T05:35:19.000Z">
+<meta property="article:modified_time" content="2022-05-01T05:36:18.079Z">
 <meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="tool">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/tags/%E6%8A%93%E5%8C%85%E5%AE%9E%E6%88%98/">
+<link rel="canonical" href="http://example.com/2022/05/01/Fastboot/">
 
 
 <script id="page-configurations">
@@ -38,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 抓包实战 | A1ili's Blog</title>
+  <title>Fastboot | A1ili's Blog</title>
   
 
 
@@ -185,51 +188,120 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">抓包实战
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/Fastboot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fastboot
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-01 13:35:19 / 修改时间：13:36:18" itemprop="dateCreated datePublished" datetime="2022-05-01T13:35:19+08:00">2022-05-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <p>一些常用命令</p>
+<span id="more"></span>
+
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><ul>
+<li>system:系统分区</li>
+<li>userdata:数据分区</li>
+<li>cache:缓存分区</li>
+<li>recovery:Recovery分区</li>
+<li>boot:存放内核和ramdisk的分区</li>
+<li>hboot:这个是SPL所在的分区，也是fastboot所在的分区.刷错就真的变砖了</li>
+<li>splash1:这个就是开机第一屏幕了</li>
+<li>radio:这个是radio所在的分区</li>
+</ul>
+<h1 id="刷分区"><a href="#刷分区" class="headerlink" title="刷分区"></a>刷分区</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash &#x27;对应分区&#x27; &#x27;镜像&#x27;</span><br><span class="line">ep: fastboot flash system system.img</span><br></pre></td></tr></table></figure>
+
+<h1 id="清空分区"><a href="#清空分区" class="headerlink" title="清空分区"></a>清空分区</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fastboot erase &#x27;分区名&#x27;</span><br><span class="line">ep: fastboot erase cache</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><p>解锁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot oem unlock</span><br></pre></td></tr></table></figure>
+
+<p>获取手机全部信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
+
+<p>引导启动外部镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot boot xxx.img</span><br></pre></td></tr></table></figure>
+
+<p>查看手机是否连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot devices</span><br></pre></td></tr></table></figure>
+
+<p>重启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot reboot</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-18T11:12:40+08:00"
-              content="2022-03-18">
-          03-18
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/18/%E6%8A%93%E5%8C%85%EF%BC%88%E4%BA%8C%EF%BC%89/" itemprop="url">
-            <span itemprop="name">抓包（二）</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/01/Objection/" rel="prev" title="Objection">
+      <i class="fa fa-chevron-left"></i> Objection
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -282,6 +354,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B7%E5%88%86%E5%8C%BA"><span class="nav-number">2.</span> <span class="nav-text">刷分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E7%A9%BA%E5%88%86%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">清空分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">其他命令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

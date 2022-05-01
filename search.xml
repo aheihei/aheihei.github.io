@@ -3441,4 +3441,131 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Objection</title>
+    <url>/2022/05/01/Objection/</url>
+    <content><![CDATA[<p>Objection是基于frida的命令行hook工具</p>
+<span id="more"></span>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install objection</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<ol>
+<li>启动对应版本的frida-server</li>
+<li>转发端口</li>
+<li>附加需要调试的app，进入交互界面</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">objection -g [packageName] explore</span><br></pre></td></tr></table></figure>
+
+<h1 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h1><h2 id="空格键"><a href="#空格键" class="headerlink" title="空格键"></a>空格键</h2><p>直接输入空格，会有提示与补全</p>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help + command</span><br><span class="line">提示详细介绍指定命令的作用与例子</span><br></pre></td></tr></table></figure>
+
+<h2 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a>sqlite</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlite connect [sqlite数据库]</span><br></pre></td></tr></table></figure>
+
+<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><p><img src="/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png" alt="图 1">  </p>
+<h2 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h2><p>退出</p>
+<h2 id="reconnect"><a href="#reconnect" class="headerlink" title="reconnect"></a>reconnect</h2><p>从新连接</p>
+<h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除命令</p>
+<h2 id="frida"><a href="#frida" class="headerlink" title="frida"></a>frida</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Command: frida</span><br><span class="line"></span><br><span class="line">Usage: frida</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   frida</span><br></pre></td></tr></table></figure>
+
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: import &lt;path to local fridascript&gt; (optional: &lt;job name&gt;) (optional: --no-exception-handler)</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   import ~/home/myscript.js</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name --no-exception-handler</span><br><span class="line">   import ~/home/script.js --no-exception-handler</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">memory list modules</span><br><span class="line">列出当前进程加载的所有so模块</span><br><span class="line"></span><br><span class="line">memory list exports XX.so</span><br><span class="line">列出XX.so的导出函数</span><br></pre></td></tr></table></figure>
+
+<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory search &quot;&lt;pattern eg: 41 41 41 ?? 41&gt;&quot; (--string) (--offsets-only)</span><br><span class="line">在当前内存中查找某一模块</span><br></pre></td></tr></table></figure>
+
+<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory write &quot;&lt;address&gt;&quot; &quot;&lt;pattern eg: 41 41 41 41&gt;&quot; (--string)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">memory dump all &lt;local destination&gt;</span><br><span class="line">memory dump from_base &lt;base_address&gt; &lt;size_to_dump&gt; &lt;local_destination&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ui alert </span><br><span class="line">#show an alert message</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: plugin load &lt;plugin path&gt; (&lt;plugin namespace&gt;)</span><br><span class="line"># 加载插件</span><br></pre></td></tr></table></figure>
+
+<h2 id="evaluate"><a href="#evaluate" class="headerlink" title="evaluate"></a>evaluate</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入js脚本编写界面</span><br></pre></td></tr></table></figure>
+
+<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file cat filename</span><br><span class="line">#查看文件</span><br><span class="line"></span><br><span class="line">file download &lt;remote location&gt; (optional: &lt;local destination&gt;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file http start [端口号]</span><br></pre></td></tr></table></figure>
+
+<h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">commands clear </span><br><span class="line"># 清除命令</span><br><span class="line">commands history</span><br><span class="line">commands save [path]</span><br></pre></td></tr></table></figure>
+
+<h2 id="jobs"><a href="#jobs" class="headerlink" title="jobs"></a>jobs</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jobs list</span><br><span class="line">jobs kill</span><br></pre></td></tr></table></figure>
+
+<h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><h2 id="android"><a href="#android" class="headerlink" title="android"></a>android</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android clipboard monitor </span><br><span class="line">#监听剪切板</span><br><span class="line">android deoptimize</span><br><span class="line">#暴力执行</span><br></pre></td></tr></table></figure>
+
+<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">android heap execute js &lt;hashcode&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap execute method &lt;hashcode&gt; &lt;method&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap search instances &lt;class&gt; (eg: com.example.test)</span><br></pre></td></tr></table></figure>
+
+<h3 id="hooking"><a href="#hooking" class="headerlink" title="hooking"></a>hooking</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking generate class</span><br><span class="line"></span><br><span class="line">android hooking generate simple [classname]</span><br><span class="line"></span><br><span class="line">android hooking get current_activity</span><br><span class="line"></span><br><span class="line">android hooking list activities</span><br><span class="line"></span><br><span class="line">android hooking list class_loaders</span><br><span class="line"></span><br><span class="line">android hooking list class_methods [class_name]</span><br><span class="line"></span><br><span class="line">android hooking list classes</span><br><span class="line"></span><br><span class="line">android hooking list receivers</span><br><span class="line"></span><br><span class="line">android hooking list services</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="search-1"><a href="#search-1" class="headerlink" title="search"></a>search</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking search classes &lt;name&gt;</span><br><span class="line"></span><br><span class="line">android hooking search methods &lt;name&gt; (optional: &lt;package-filter&gt;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking set return_value &quot;&lt;fully qualified class method&gt;&quot; &quot;&lt;optional overload&gt;&quot; (eg: &quot;com.example.test.doLogin&quot;) &lt;true/false&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking watch class &lt;class&gt; (eg: com.example.test)</span><br><span class="line"></span><br><span class="line">android hooking watch class_method &lt;fully qualified class method&gt; &lt;optional overload&gt; (optional: --dump-args) (optional: --dump-backtrace) (optional: --dump-return)</span><br></pre></td></tr></table></figure>
+
+<h3 id="intent"><a href="#intent" class="headerlink" title="intent"></a>intent</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android intent launch_activity &lt;activity_class&gt;</span><br><span class="line"></span><br><span class="line">android intent launch_service &lt;service_class&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="keystore"><a href="#keystore" class="headerlink" title="keystore"></a>keystore</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android keystore list</span><br><span class="line">android keystore watch</span><br><span class="line">android keystore clear</span><br></pre></td></tr></table></figure>
+
+<h3 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android proxy set [ip] [port]</span><br></pre></td></tr></table></figure>
+
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android root disable</span><br><span class="line">android root simulate</span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android shell_exec</span><br></pre></td></tr></table></figure>
+
+<h3 id="sslpinning"><a href="#sslpinning" class="headerlink" title="sslpinning"></a>sslpinning</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android sslpinning disable</span><br></pre></td></tr></table></figure>
+
+<h3 id="ui-1"><a href="#ui-1" class="headerlink" title="ui"></a>ui</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android ui FLAG_SECURE [true/false]</span><br><span class="line"></span><br><span class="line">android ui screenshot [1.png]</span><br></pre></td></tr></table></figure>
+
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2>]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fastboot</title>
+    <url>/2022/05/01/Fastboot/</url>
+    <content><![CDATA[<p>一些常用命令</p>
+<span id="more"></span>
+
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><ul>
+<li>system:系统分区</li>
+<li>userdata:数据分区</li>
+<li>cache:缓存分区</li>
+<li>recovery:Recovery分区</li>
+<li>boot:存放内核和ramdisk的分区</li>
+<li>hboot:这个是SPL所在的分区，也是fastboot所在的分区.刷错就真的变砖了</li>
+<li>splash1:这个就是开机第一屏幕了</li>
+<li>radio:这个是radio所在的分区</li>
+</ul>
+<h1 id="刷分区"><a href="#刷分区" class="headerlink" title="刷分区"></a>刷分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot flash &#x27;对应分区&#x27; &#x27;镜像&#x27;</span><br><span class="line">ep: fastboot flash system system.img</span><br></pre></td></tr></table></figure>
+
+<h1 id="清空分区"><a href="#清空分区" class="headerlink" title="清空分区"></a>清空分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot erase &#x27;分区名&#x27;</span><br><span class="line">ep: fastboot erase cache</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><p>解锁</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot oem unlock</span><br></pre></td></tr></table></figure>
+
+<p>获取手机全部信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
+
+<p>引导启动外部镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot boot xxx.img</span><br></pre></td></tr></table></figure>
+
+<p>查看手机是否连接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br></pre></td></tr></table></figure>
+
+<p>重启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot reboot</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
 </search>

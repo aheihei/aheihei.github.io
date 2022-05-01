@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Objection是基于frida的命令行hook工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objection">
+<meta property="og:url" content="http://example.com/2022/05/01/Objection/index.html">
+<meta property="og:site_name" content="A1ili&#39;s Blog">
+<meta property="og:description" content="Objection是基于frida的命令行hook工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png">
+<meta property="article:published_time" content="2022-05-01T05:33:36.000Z">
+<meta property="article:modified_time" content="2022-05-01T05:35:03.206Z">
+<meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png">
+
+<link rel="canonical" href="http://example.com/2022/05/01/Objection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Objection | A1ili's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">A1ili's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">keep on going</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/Objection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Objection
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-01 13:33:36 / 修改时间：13:35:03" itemprop="dateCreated datePublished" datetime="2022-05-01T13:33:36+08:00">2022-05-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Objection是基于frida的命令行hook工具</p>
+<span id="more"></span>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install objection</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<ol>
+<li>启动对应版本的frida-server</li>
+<li>转发端口</li>
+<li>附加需要调试的app，进入交互界面</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objection -g [packageName] explore</span><br></pre></td></tr></table></figure>
+
+<h1 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h1><h2 id="空格键"><a href="#空格键" class="headerlink" title="空格键"></a>空格键</h2><p>直接输入空格，会有提示与补全</p>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">help + command</span><br><span class="line">提示详细介绍指定命令的作用与例子</span><br></pre></td></tr></table></figure>
+
+<h2 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a>sqlite</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite connect [sqlite数据库]</span><br></pre></td></tr></table></figure>
+
+<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><p><img src="/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png" alt="图 1">  </p>
+<h2 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h2><p>退出</p>
+<h2 id="reconnect"><a href="#reconnect" class="headerlink" title="reconnect"></a>reconnect</h2><p>从新连接</p>
+<h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除命令</p>
+<h2 id="frida"><a href="#frida" class="headerlink" title="frida"></a>frida</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Command: frida</span><br><span class="line"></span><br><span class="line">Usage: frida</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   frida</span><br></pre></td></tr></table></figure>
+
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Usage: import &lt;path to local fridascript&gt; (optional: &lt;job name&gt;) (optional: --no-exception-handler)</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   import ~/home/myscript.js</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name --no-exception-handler</span><br><span class="line">   import ~/home/script.js --no-exception-handler</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">memory list modules</span><br><span class="line">列出当前进程加载的所有so模块</span><br><span class="line"></span><br><span class="line">memory list exports XX.so</span><br><span class="line">列出XX.so的导出函数</span><br></pre></td></tr></table></figure>
+
+<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Usage: memory search &quot;&lt;pattern eg: 41 41 41 ?? 41&gt;&quot; (--string) (--offsets-only)</span><br><span class="line">在当前内存中查找某一模块</span><br></pre></td></tr></table></figure>
+
+<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Usage: memory write &quot;&lt;address&gt;&quot; &quot;&lt;pattern eg: 41 41 41 41&gt;&quot; (--string)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage: </span><br><span class="line">memory dump all &lt;local destination&gt;</span><br><span class="line">memory dump from_base &lt;base_address&gt; &lt;size_to_dump&gt; &lt;local_destination&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ui alert </span><br><span class="line">#show an alert message</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Usage: plugin load &lt;plugin path&gt; (&lt;plugin namespace&gt;)</span><br><span class="line"># 加载插件</span><br></pre></td></tr></table></figure>
+
+<h2 id="evaluate"><a href="#evaluate" class="headerlink" title="evaluate"></a>evaluate</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进入js脚本编写界面</span><br></pre></td></tr></table></figure>
+
+<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">file cat filename</span><br><span class="line">#查看文件</span><br><span class="line"></span><br><span class="line">file download &lt;remote location&gt; (optional: &lt;local destination&gt;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file http start [端口号]</span><br></pre></td></tr></table></figure>
+
+<h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">commands clear </span><br><span class="line"># 清除命令</span><br><span class="line">commands history</span><br><span class="line">commands save [path]</span><br></pre></td></tr></table></figure>
+
+<h2 id="jobs"><a href="#jobs" class="headerlink" title="jobs"></a>jobs</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jobs list</span><br><span class="line">jobs kill</span><br></pre></td></tr></table></figure>
+
+<h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><h2 id="android"><a href="#android" class="headerlink" title="android"></a>android</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">android clipboard monitor </span><br><span class="line">#监听剪切板</span><br><span class="line">android deoptimize</span><br><span class="line">#暴力执行</span><br></pre></td></tr></table></figure>
+
+<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Usage: </span><br><span class="line">android heap execute js &lt;hashcode&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap execute method &lt;hashcode&gt; &lt;method&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap search instances &lt;class&gt; (eg: com.example.test)</span><br></pre></td></tr></table></figure>
+
+<h3 id="hooking"><a href="#hooking" class="headerlink" title="hooking"></a>hooking</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">android hooking generate class</span><br><span class="line"></span><br><span class="line">android hooking generate simple [classname]</span><br><span class="line"></span><br><span class="line">android hooking get current_activity</span><br><span class="line"></span><br><span class="line">android hooking list activities</span><br><span class="line"></span><br><span class="line">android hooking list class_loaders</span><br><span class="line"></span><br><span class="line">android hooking list class_methods [class_name]</span><br><span class="line"></span><br><span class="line">android hooking list classes</span><br><span class="line"></span><br><span class="line">android hooking list receivers</span><br><span class="line"></span><br><span class="line">android hooking list services</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="search-1"><a href="#search-1" class="headerlink" title="search"></a>search</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android hooking search classes &lt;name&gt;</span><br><span class="line"></span><br><span class="line">android hooking search methods &lt;name&gt; (optional: &lt;package-filter&gt;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android hooking set return_value &quot;&lt;fully qualified class method&gt;&quot; &quot;&lt;optional overload&gt;&quot; (eg: &quot;com.example.test.doLogin&quot;) &lt;true/false&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android hooking watch class &lt;class&gt; (eg: com.example.test)</span><br><span class="line"></span><br><span class="line">android hooking watch class_method &lt;fully qualified class method&gt; &lt;optional overload&gt; (optional: --dump-args) (optional: --dump-backtrace) (optional: --dump-return)</span><br></pre></td></tr></table></figure>
+
+<h3 id="intent"><a href="#intent" class="headerlink" title="intent"></a>intent</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android intent launch_activity &lt;activity_class&gt;</span><br><span class="line"></span><br><span class="line">android intent launch_service &lt;service_class&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="keystore"><a href="#keystore" class="headerlink" title="keystore"></a>keystore</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android keystore list</span><br><span class="line">android keystore watch</span><br><span class="line">android keystore clear</span><br></pre></td></tr></table></figure>
+
+<h3 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android proxy set [ip] [port]</span><br></pre></td></tr></table></figure>
+
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android root disable</span><br><span class="line">android root simulate</span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android shell_exec</span><br></pre></td></tr></table></figure>
+
+<h3 id="sslpinning"><a href="#sslpinning" class="headerlink" title="sslpinning"></a>sslpinning</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android sslpinning disable</span><br></pre></td></tr></table></figure>
+
+<h3 id="ui-1"><a href="#ui-1" class="headerlink" title="ui"></a>ui</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android ui FLAG_SECURE [true/false]</span><br><span class="line"></span><br><span class="line">android ui screenshot [1.png]</span><br></pre></td></tr></table></figure>
+
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/25/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B/" rel="prev" title="爬虫基础-从零开始">
+      <i class="fa fa-chevron-left"></i> 爬虫基础-从零开始
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/01/Fastboot/" rel="next" title="Fastboot">
+      Fastboot <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8"><span class="nav-number">1.</span> <span class="nav-text">命令大全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E9%94%AE"><span class="nav-number">1.1.</span> <span class="nav-text">空格键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#help"><span class="nav-number">1.2.</span> <span class="nav-text">help</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlite"><span class="nav-number">1.3.</span> <span class="nav-text">sqlite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env"><span class="nav-number">1.4.</span> <span class="nav-text">env</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exit"><span class="nav-number">1.5.</span> <span class="nav-text">exit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reconnect"><span class="nav-number">1.6.</span> <span class="nav-text">reconnect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm"><span class="nav-number">1.7.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frida"><span class="nav-number">1.8.</span> <span class="nav-text">frida</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import"><span class="nav-number">1.9.</span> <span class="nav-text">import</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory"><span class="nav-number">1.10.</span> <span class="nav-text">memory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.10.1.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search"><span class="nav-number">1.10.2.</span> <span class="nav-text">search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#write"><span class="nav-number">1.10.3.</span> <span class="nav-text">write</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dump"><span class="nav-number">1.10.4.</span> <span class="nav-text">dump</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ui"><span class="nav-number">1.11.</span> <span class="nav-text">ui</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugin"><span class="nav-number">1.12.</span> <span class="nav-text">plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluate"><span class="nav-number">1.13.</span> <span class="nav-text">evaluate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ios"><span class="nav-number">1.14.</span> <span class="nav-text">ios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">1.15.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#commands"><span class="nav-number">1.16.</span> <span class="nav-text">commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jobs"><span class="nav-number">1.17.</span> <span class="nav-text">jobs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ping"><span class="nav-number">1.18.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwd"><span class="nav-number">1.19.</span> <span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android"><span class="nav-number">1.20.</span> <span class="nav-text">android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#heap"><span class="nav-number">1.20.1.</span> <span class="nav-text">heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hooking"><span class="nav-number">1.20.2.</span> <span class="nav-text">hooking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#search-1"><span class="nav-number">1.20.2.1.</span> <span class="nav-text">search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">1.20.2.2.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#watch"><span class="nav-number">1.20.2.3.</span> <span class="nav-text">watch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intent"><span class="nav-number">1.20.3.</span> <span class="nav-text">intent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keystore"><span class="nav-number">1.20.4.</span> <span class="nav-text">keystore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy"><span class="nav-number">1.20.5.</span> <span class="nav-text">proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root"><span class="nav-number">1.20.6.</span> <span class="nav-text">root</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-exec"><span class="nav-number">1.20.7.</span> <span class="nav-text">shell_exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sslpinning"><span class="nav-number">1.20.8.</span> <span class="nav-text">sslpinning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ui-1"><span class="nav-number">1.20.9.</span> <span class="nav-text">ui</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ls"><span class="nav-number">1.21.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cd"><span class="nav-number">1.22.</span> <span class="nav-text">cd</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Brave Laughter"
+      src="/images/85364458.jfif">
+  <p class="site-author-name" itemprop="name">Brave Laughter</p>
+  <div class="site-description" itemprop="description">埋头苦干的劲头 抬头看路的清醒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brave Laughter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
