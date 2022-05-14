@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="常见加密算法原理–Base64">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见加密算法原理--Base64">
+<meta property="og:url" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/index.html">
+<meta property="og:site_name" content="A1ili&#39;s Blog">
+<meta property="og:description" content="常见加密算法原理–Base64">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115909772.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115938457.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120006175.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120052354.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120118423.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142835427.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142906978.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135359242.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135442796.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142309697.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512225743174.png">
+<meta property="og:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512230124704.png">
+<meta property="article:published_time" content="2022-05-14T14:22:12.000Z">
+<meta property="article:modified_time" content="2022-05-14T14:24:05.766Z">
+<meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="加密算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115909772.png">
+
+<link rel="canonical" href="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>常见加密算法原理--Base64 | A1ili's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">A1ili's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">keep on going</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常见加密算法原理--Base64
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-14 22:22:12 / 修改时间：22:24:05" itemprop="dateCreated datePublished" datetime="2022-05-14T22:22:12+08:00">2022-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86/" itemprop="url" rel="index"><span itemprop="name">常见加密</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>常见加密算法原理–Base64</p>
+<span id="more"></span>
+
+<h1 id="Base64介绍"><a href="#Base64介绍" class="headerlink" title="Base64介绍"></a>Base64介绍</h1><p><strong>Base64</strong>（基底64）是一种基于64个可打印字符来表示二进制数据的表示方法。由于log264 &#x3D; 6，所以每6个比特为一个单元，对应某个可打印字符。3个字节相当于24个比特，对应于4个Base64单元，即3个字节可由4个可打印字符来表示。在Base64中的可打印字符包括字母<code>A-Z</code>、<code>a-z</code>、数字<code>0-9</code>，这样共有62个字符，此外两个可打印符号在不同的系统中而不同</p>
+<h1 id="Base64编码原理"><a href="#Base64编码原理" class="headerlink" title="Base64编码原理"></a>Base64编码原理</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115909772.png" alt="image-20220514115909772"></p>
+<p>编码时，每 3 个字节一组，共 8bit*3&#x3D;24bit，划分成 4 组，即每 6bit 代表一个编码后的索引值，划分如下图所示：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115938457.png" alt="image-20220514115938457"></p>
+<p>这样可能不太直观，举个例子就容易理解了。比如我们对 <code>cat</code> 进行编码：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120006175.png" alt="image-20220514120006175"></p>
+<p>可以看到 <code>cat</code> 编码后变成了 <code>Y2F0</code>。</p>
+<p>如果待编码内容的字节数不是 3 的整数倍，那需要进行一些额外的处理。</p>
+<p>如果最后剩下 1 个字节，那么将补 4 个 0 位，编码成 2 个 Base64 字符，然后补两个 <code>=</code>：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120052354.png" alt="image-20220514120052354"></p>
+<p>如果最后剩下 2 个字节，那么将补 2 个 0 位，编码成 3 个 Base64 字符，然后补一个 <code>=</code>：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120118423.png" alt="image-20220514120118423"></p>
+<p>NDK代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> base64en[] = &#123;</span><br><span class="line">        <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;D&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;F&#x27;</span>, <span class="string">&#x27;G&#x27;</span>, <span class="string">&#x27;H&#x27;</span>,  <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;J&#x27;</span>, <span class="string">&#x27;K&#x27;</span>, <span class="string">&#x27;L&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;N&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;P&#x27;</span>,  <span class="string">&#x27;Q&#x27;</span>, <span class="string">&#x27;R&#x27;</span>, <span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;U&#x27;</span>, <span class="string">&#x27;V&#x27;</span>, <span class="string">&#x27;W&#x27;</span>, <span class="string">&#x27;X&#x27;</span>,   <span class="string">&#x27;Y&#x27;</span>, <span class="string">&#x27;Z&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;j&#x27;</span>, <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;q&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;v&#x27;</span>,  <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;z&#x27;</span>, <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;8&#x27;</span>, <span class="string">&#x27;9&#x27;</span>, <span class="string">&#x27;+&#x27;</span>, <span class="string">&#x27;/&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">base64_enc</span><span class="params">(<span class="type">char</span> *data, <span class="type">int</span> len, <span class="type">char</span> *out)</span>&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> last_c = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123;</span><br><span class="line">        c = data[i];</span><br><span class="line">        <span class="comment">//刚好三个字符运算</span></span><br><span class="line">        <span class="keyword">switch</span> (i % <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                (c &gt;&gt; 2) &amp; 0x3f</span></span><br><span class="line"><span class="comment">                1）“&gt;&gt;” 取第一个字节的高六位</span></span><br><span class="line"><span class="comment">                2）“&amp;”  避免其他字符影响 把取得的高六位与0x3f(0011111)按位与</span></span><br><span class="line"><span class="comment">                &amp;按位与运算：只有对应的两个二进位都为1时，结果位才为1</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[(c &gt;&gt; <span class="number">2</span>) &amp; <span class="number">0x3f</span> ];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                last_c保存上一个字符</span></span><br><span class="line"><span class="comment">                last_c &amp; 3 取最后两位，清除其他位</span></span><br><span class="line"><span class="comment">                &lt;&lt;4把上一个数的低两位放到第二个数的高两位</span></span><br><span class="line"><span class="comment">                | 或上第二个数的高四位，得到索引值</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[((last_c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>) | ((c &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xf</span> )];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                out[index++] = base64en[( ( last_c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span> ) | ((c &gt;&gt; <span class="number">6</span> ) &amp; <span class="number">0x3</span>)];</span><br><span class="line">                out[index++] = base64en[c &amp; <span class="number">0x3f</span>];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        last_c = c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//补两个等号</span></span><br><span class="line">    <span class="keyword">if</span>(len % <span class="number">3</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        out[index++] = base64en[(c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="comment">//补一个等号</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (len % <span class="number">3</span> == <span class="number">2</span>)&#123;</span><br><span class="line">        out[index++] = base64en[( c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_base64_1enc</span><span class="params">(JNIEnv *env, jobject thiz, jstring data)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement base64_enc()</span></span><br><span class="line">    <span class="type">char</span> *c_data = const_cast&lt;<span class="type">char</span> *&gt;(env-&gt;GetStringUTFChars(data, <span class="number">0</span>));</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(c_data);</span><br><span class="line">    <span class="type">char</span> out[<span class="number">100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    base64_enc(c_data, len, out);</span><br><span class="line">    env-&gt;ReleaseStringUTFChars(data,c_data);</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(out);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_stringFromJNI</span><span class="params">(JNIEnv *env, jobject thiz)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement stringFromJNI()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fridaHook</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">base_enc</span>(<span class="params">data</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libbase64.so&quot;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(base)</span><br><span class="line">    <span class="keyword">var</span> func_addr = base.<span class="title function_">add</span>(<span class="number">0x89C</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(func_addr)</span><br><span class="line">    <span class="keyword">var</span> func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(func_addr,<span class="string">&#x27;void&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;int&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">    <span class="keyword">var</span> arg1 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">ptr</span>(arg1).<span class="title function_">writeUtf8String</span>(data)</span><br><span class="line">    <span class="keyword">var</span> arg3 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">func</span>(arg1,data.<span class="property">length</span>,arg3)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(arg3))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142835427.png" alt="image-20220514142835427"></p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142906978.png" alt="image-20220514142906978"></p>
+<p>地址计算细节</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135359242.png" alt="image-20220514135359242"></p>
+<p>如果opcode有两个字节的如下，说明是shum指令集地址要加1</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135442796.png" alt="image-20220514135442796"></p>
+<p>如果指令集不对应会报以下错误</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142309697.png" alt="image-20220514142309697"></p>
+<h1 id="左移和右移运算"><a href="#左移和右移运算" class="headerlink" title="左移和右移运算"></a>左移和右移运算</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512225743174.png" alt="image-20220512225743174"></p>
+<p>在dbg中进行实践，给寄存器eax赋值0x8，然后左移两位，给eax重新赋值再右移两位</p>
+<table>
+<thead>
+<tr>
+<th>数值</th>
+<th>二级制</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8</td>
+<td>1000</td>
+<td>原数</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>右移两位</td>
+</tr>
+<tr>
+<td>32</td>
+<td>100000</td>
+<td>左移两位</td>
+</tr>
+</tbody></table>
+<p>代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0x8</span>;</span><br><span class="line">    <span class="type">int</span> b =a &gt;&gt; <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> c = a &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; b&lt;&lt;<span class="string">&quot;\n&quot;</span> &lt;&lt;c ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512230124704.png" alt="image-20220512230124704"></p>
+<p>左移n位，指 按2进制的 位 左移n位， （等于 乘 2的n次方），超出最高位的数则丢掉。</p>
+<p>右移n位，指 按2进制的 位 右移n位， （等于 除以 2的n次方），低于最低位的数则丢掉。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag"># 加密算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/14/decpry/" rel="prev" title="decpry">
+      <i class="fa fa-chevron-left"></i> decpry
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Base64%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Base64介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Base64%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Base64编码原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A6%E7%A7%BB%E5%92%8C%E5%8F%B3%E7%A7%BB%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">左移和右移运算</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Brave Laughter"
+      src="/images/85364458.jfif">
+  <p class="site-author-name" itemprop="name">Brave Laughter</p>
+  <div class="site-description" itemprop="description">埋头苦干的劲头 抬头看路的清醒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brave Laughter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
