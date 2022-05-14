@@ -341,6 +341,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/14/cmp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/14/cmp/" class="post-title-link" itemprop="url">cmp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-14 22:14:55 / 修改时间：22:28:09" itemprop="dateCreated datePublished" datetime="2022-05-14T22:14:55+08:00">2022-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>CTF-win</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/14/cmp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/14/x86-x64%E6%B1%87%E7%BC%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,7 +441,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-14 22:07:20 / 修改时间：22:20:29" itemprop="dateCreated datePublished" datetime="2022-05-14T22:07:20+08:00">2022-05-14</time>
+              <time title="创建时间：2022-05-14 22:07:20 / 修改时间：22:27:45" itemprop="dateCreated datePublished" datetime="2022-05-14T22:07:20+08:00">2022-05-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -389,204 +464,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>通用寄存器8个</p>
-<table>
-<thead>
-<tr>
-<th>16位</th>
-<th>32位</th>
-<th>64位</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>AX</td>
-<td>EAX</td>
-<td>RAX</td>
-</tr>
-<tr>
-<td>BX</td>
-<td>EBX</td>
-<td>RBX</td>
-</tr>
-<tr>
-<td>CX</td>
-<td>ECX</td>
-<td>RCX</td>
-</tr>
-<tr>
-<td>DX</td>
-<td>EDX</td>
-<td>RDX</td>
-</tr>
-<tr>
-<td>SP</td>
-<td>ESP</td>
-<td>RSP</td>
-</tr>
-<tr>
-<td>BP</td>
-<td>EBP</td>
-<td>RBP</td>
-</tr>
-<tr>
-<td>DI</td>
-<td>EDI</td>
-<td>RDI</td>
-</tr>
-<tr>
-<td>SI</td>
-<td>ESI</td>
-<td>RSI</td>
-</tr>
-</tbody></table>
-<p>AX&#x2F;EAX&#x2F;RAX、BX&#x2F;EBX&#x2F;RBX、CX&#x2F;ECX&#x2F;RCX、DX&#x2F;EDX&#x2F;RDX在一般情况下作为通用的数据寄存器，用来暂时存放计算过程中所用到的操作数、结果或其他信息。它们还可分为两个独立的8位寄存器使用，命名为AL、AH、BL、BH、CL、CH、DL和DH。</p>
-<ul>
-<li>AX&#x2F;EAX&#x2F;RAX作为累加器，算术运算的主要寄存器，在乘法指令中指定用来存放操作数，另外，所有的I&#x2F;O指令都使用AX或AL与外部设备传送信息。</li>
-<li>BX&#x2F;EBX&#x2F;RBX在计算存储器地址时，可作为基址寄存器使用。</li>
-<li>CX&#x2F;ECX&#x2F;RCX常用来保存计数值，如在移位指令、循环指令和串处理指令中用作隐含的计数器。DX在作双字长运算时，可把DX和AX组合在一起存放一个双字长数，DX用来存放高16位数据。此外，对某些I&#x2F;O操作，DX可用来存放I&#x2F;O的端口地址。</li>
-<li>SP&#x2F;ESP&#x2F;RSP、BP&#x2F;EBP&#x2F;RBP、SI&#x2F;ESI&#x2F;RSI、DI&#x2F;EDI&#x2F;RDI四个16&#x2F;32位寄存器可以象数据寄存器一样在运算过程中存放操作数，但它们只能以字（16&#x2F;32位&#x2F;64位）为单位使用。此外，它们更经常的用途是在存储器寻址时，提供偏移地址。因此，它们可称为指针或变址寄存器。</li>
-<li>SP&#x2F;ESP称为堆栈指针寄存器，用来指出栈顶的偏移地址。</li>
-<li>BP&#x2F;EBP称为基址指针寄存器，在寻址时作为基地址寄存器使用，但它必须与堆栈段寄存器SS联用来确定堆栈段中的存储单元地址。</li>
-</ul>
-<h2 id="标志寄存器FLAG"><a href="#标志寄存器FLAG" class="headerlink" title="标志寄存器FLAG"></a>标志寄存器FLAG</h2><p>条件码标志用来记录程序中运行结果的状态信息，它们是根据有关指令的运行结果由(CPU)自动设置的。由于这些状态信息往往作为后续条件转移指令的转移控制条件，所以称为条件码。</p>
-<ul>
-<li>进位标志CF，记录运算时最高有效位产生的进位值</li>
-<li>符号标志SF，记录运算结果的符号，结果为负时置1，否则置0</li>
-<li>零标志ZF，运算结果为0时ZF位置1，否则0</li>
-<li>溢出标志OF，在运算过程中，如操作数超出了机器可表示数的范围称为溢出，溢出时OF值为1否则为0</li>
-<li>辅助进位标志AF，记录运算时第3位（半个字节）产生的进位值。</li>
-<li>奇偶标志PF，用来为机器中传送信息时可能产生的代码出错情况提供检验条件。当结果操作数中1的个数为偶数时值为1，否则为0</li>
-</ul>
-<h1 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h1><h2 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h2><h3 id="传送指令mov"><a href="#传送指令mov" class="headerlink" title="传送指令mov"></a>传送指令mov</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov reg/mem,reg/mem/imm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中：Reg—Register(寄存器)，Mem—Memory(存储器)，Imm—Immediate(立即数)，它们可以是8位、16位或32位(特别指出其位数的除外)。</p>
-<h3 id="传送-填充指令"><a href="#传送-填充指令" class="headerlink" title="传送-填充指令"></a>传送-填充指令</h3><p>传送—填充指令是把位数短的源操作数传送给位数长的目的操作数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOVSX/MOVZX  Reg/Mem, Reg/Mem/Imm　</span><br></pre></td></tr></table></figure>
-
-<p>指令的主要功能和限制与MOV指令类似，不同之处是：在传送时，对目的操作数的高位进行填充。根据其填充方式，又分为：符号填充和零填充。</p>
-<p><strong>符号填充指令movsx</strong><br>movsx的填充方式是：用源操作的符号来填充目的操作数的高位数据位</p>
-<p><strong>零填充指令movzx</strong><br>movzx的填充方式是：横用0来填充目的操作数的高位数据位</p>
-<h3 id="交换指令XCHG"><a href="#交换指令XCHG" class="headerlink" title="交换指令XCHG"></a>交换指令XCHG</h3><p>交换指令XCHG是两个寄存器，寄存器和内存变量之间内容的交换指令，两个操作数的数据类型要相同</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XCHG  Reg/Mem, Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AX=5678H，BX=1234H，指令XCHG  AX, BX执行后,(AX)=1234H，(BX)=5678H</span><br></pre></td></tr></table></figure>
-
-<h3 id="取有效地址指令"><a href="#取有效地址指令" class="headerlink" title="取有效地址指令"></a>取有效地址指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lea reg,mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="取段寄存器指令"><a href="#取段寄存器指令" class="headerlink" title="取段寄存器指令"></a>取段寄存器指令</h3><p>该组指令的功能是把内存单元的一个“低字”传送给指令中指定的16位寄存器，把随后的一个“高字”传给相应的段寄存器(DS、ES、FS、GS和SS)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDS/LES/LFS/LGS/LSS　Reg, Mem</span><br></pre></td></tr></table></figure>
-
-<h2 id="堆栈操作指令"><a href="#堆栈操作指令" class="headerlink" title="堆栈操作指令"></a>堆栈操作指令</h2><p>堆栈是一个重要的数据结构，它具有“先进后出”的特点，通常用来保存程序的返回地址。它主要有两大类操作：进&#x2F;压栈操作和出&#x2F;弹栈操作。</p>
-<h3 id="PUSH"><a href="#PUSH" class="headerlink" title="PUSH"></a>PUSH</h3><p>指令格式：PUSH　Reg&#x2F;Mem  PUSH　Imm　　　<br>　　　<br>一个字进栈，系统自动完成两步操作：SP←SP-2，(SP)←操作数； </p>
-<p>一个双字进栈，系统自动完成两步操作：ESP←ESP-4，(ESP)←操作数。 </p>
-<h3 id="PUSHA"><a href="#PUSHA" class="headerlink" title="PUSHA"></a>PUSHA</h3><p>指令格式：PUSHA</p>
-<p>其功能是依次把寄存器AX、CX、DX、BX、SP、BP、SI和DI等压栈。</p>
-<h3 id="PUSHAD"><a href="#PUSHAD" class="headerlink" title="PUSHAD"></a>PUSHAD</h3><p>指令格式：PUSHAD</p>
-<p>其功能是把寄存器EAX、ECX、EDX、EBX、ESP、EBP、ESI和EDI等压栈。</p>
-<h2 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h2><h3 id="POP"><a href="#POP" class="headerlink" title="POP"></a>POP</h3><p>指令格式：POP　Reg&#x2F;Mem</p>
-<p>弹出一个字，系统自动完成两步操作：操作数←(SP)，SP←SP-2；</p>
-<p>弹出一个双字，系统自动完成两步操作：操作数←(ESP)，ESP←ESP-4。</p>
-<h3 id="POPA"><a href="#POPA" class="headerlink" title="POPA"></a>POPA</h3><p>指令格式：POPA</p>
-<p>其功能是依次把寄存器DI、SI、BP、SP、BX、DX、CX和AX等弹出栈。其实，程序员不用记住它们的具体顺序，只要与指令PUSHA对称使用就可以了。</p>
-<h3 id="POPAD"><a href="#POPAD" class="headerlink" title="POPAD"></a>POPAD</h3><p>指令格式：POPAD　　</p>
-<p>其功能是依次把寄存器EDI、ESI、EBP、ESP、EBX、EDX、ECX和EAX等弹出栈，它与PUSHAD对称使用即可。</p>
-<h2 id="算术运算指令"><a href="#算术运算指令" class="headerlink" title="算术运算指令"></a>算术运算指令</h2><h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数的值加到目的操作数中。</p>
-<h3 id="带进位加指令ADC-见得较少"><a href="#带进位加指令ADC-见得较少" class="headerlink" title="带进位加指令ADC(见得较少)"></a>带进位加指令ADC(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADC  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数和进位标志位CF的值(0&#x2F;1)一起加到目的操作数中。</p>
-<h3 id="加1指令INC"><a href="#加1指令INC" class="headerlink" title="加1指令INC"></a>加1指令INC</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INC  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
-<p>指令的功能是把操作数的值加1。</p>
-<h3 id="交换加指令XADD-见得较少"><a href="#交换加指令XADD-见得较少" class="headerlink" title="交换加指令XADD(见得较少)"></a>交换加指令XADD(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XADD  Reg/Mem, Reg　</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是先交换两个操作数的值，再进行算术“加”法操作</p>
-<h3 id="减法指令"><a href="#减法指令" class="headerlink" title="减法指令"></a>减法指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是从目的操作数中减去源操作数。</p>
-<h3 id="带借位减SBB-见得较少"><a href="#带借位减SBB-见得较少" class="headerlink" title="带借位减SBB(见得较少)"></a>带借位减SBB(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SBB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数和标志位CF的值从目的操作数中一起减去。</p>
-<h3 id="减1指令DEC"><a href="#减1指令DEC" class="headerlink" title="减1指令DEC"></a>减1指令DEC</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEC  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
-<p>指令的功能是把操作数的值减去1。</p>
-<h3 id="求补指令NEG"><a href="#求补指令NEG" class="headerlink" title="求补指令NEG"></a>求补指令NEG</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NEG  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能：操作数＝0－操作数，即改变操作数的正负号</p>
-<h3 id="乘法指令"><a href="#乘法指令" class="headerlink" title="乘法指令"></a>乘法指令</h3><p>计算机的乘法指令分为无符号乘法指令和有符号乘法指令，它们的唯一区别就在于：数据的最高位是作为“数值”参与运算，还是作为“符号位”参与运算。<br>乘法指令的被乘数都是隐含操作数，乘数在指令中显式地写出来。CPU会根据乘数是8位、16位，还是32位操作数，来自动选用被乘数：AL、AX或EAX。<br>指令的功能是把显式操作数和隐含操作数相乘，并把乘积存入相应的寄存器中。</p>
-<h3 id="无符号乘法指令mul-x2F-fmul"><a href="#无符号乘法指令mul-x2F-fmul" class="headerlink" title="无符号乘法指令mul&#x2F;fmul"></a>无符号乘法指令mul&#x2F;fmul</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MUL  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF和OF(AF、PF、SF和ZF无定义)</p>
-<p>指令的功能是把显式操作数和隐含操作数(都作为无符号数)相乘</p>
-<h3 id="有符号乘法指令IMUL-x2F-FIMUL"><a href="#有符号乘法指令IMUL-x2F-FIMUL" class="headerlink" title="有符号乘法指令IMUL&#x2F;FIMUL"></a>有符号乘法指令IMUL&#x2F;FIMUL</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IMUL Reg/Mem </span><br><span class="line"></span><br><span class="line">IMUL Reg, Imm</span><br><span class="line">IMUL Reg, Reg, Imm </span><br><span class="line">IMUL Reg, Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="除法指令"><a href="#除法指令" class="headerlink" title="除法指令"></a>除法指令</h3><p>除法指令的被除数是隐含操作数，除数在指令中显式地写出来。CPU会根据除数是8位、16位，还是32位，来自动选用被除数AX、DX-AX，还是EDX-EAX。</p>
-<p>除法指令功能是用显式操作数去除隐含操作数，可得到商和余数。当除数为0，或商超出数据类型所能表示的范围时，系统会自动产生0号中断。</p>
-<h3 id="无符号除法指令DIV-x2F-FDIV"><a href="#无符号除法指令DIV-x2F-FDIV" class="headerlink" title="无符号除法指令DIV&#x2F;FDIV"></a>无符号除法指令DIV&#x2F;FDIV</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DIV  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>指令的功能是用显式操作数去除隐含操作数(都作为无符号数)。指令对标志位的影响无定义。</p>
-<h3 id="有符号除法指令IDIV-x2F-FIDIV"><a href="#有符号除法指令IDIV-x2F-FIDIV" class="headerlink" title="有符号除法指令IDIV&#x2F;FIDIV"></a>有符号除法指令IDIV&#x2F;FIDIV</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IDIV  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<h2 id="逻辑运算指令"><a href="#逻辑运算指令" class="headerlink" title="逻辑运算指令"></a>逻辑运算指令</h2><p>逻辑运算指令是另一组重要的指令，它包括：逻辑与(AND)、逻辑或(OR)、逻辑非(NOT)和异或指令(XOR)，逻辑运算指令也是经常使用的指令。</p>
-<h3 id="逻辑与操作指令"><a href="#逻辑与操作指令" class="headerlink" title="逻辑与操作指令"></a>逻辑与操作指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AND　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑“与操作”，操作结果存入目标操作数中。</p>
-<h3 id="逻辑或操作指令OR"><a href="#逻辑或操作指令OR" class="headerlink" title="逻辑或操作指令OR"></a>逻辑或操作指令OR</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)<br>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”或操作”，操作结果存入目标操作数中。</p>
-<h3 id="逻辑非操作指令NOT"><a href="#逻辑非操作指令NOT" class="headerlink" title="逻辑非操作指令NOT"></a>逻辑非操作指令NOT</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NOT　Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>其功能是把操作数中的每位变反，即：1←0，0←1。指令的执行不影响任何标志位。</p>
-<h3 id="逻辑异或指令XOR"><a href="#逻辑异或指令XOR" class="headerlink" title="逻辑异或指令XOR"></a>逻辑异或指令XOR</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XOR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”异或操作”，操作结果存入目标操作数中。</p>
-<h2 id="检测位指令TEST"><a href="#检测位指令TEST" class="headerlink" title="检测位指令TEST"></a>检测位指令TEST</h2><p>检测位指令是把二个操作数进行逻辑“与”操作，并根据运算结果设置相应的标志位，但并不保存该运算结果，所以，不会改变指令中的操作数。在该指令后，通常用JE、JNE、JZ和JNZ等条件转移指令。</p>
-<p>指令格式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TEST  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<h2 id="循环指令"><a href="#循环指令" class="headerlink" title="循环指令"></a>循环指令</h2><p>LOOP　  标号<br>LOOPW　 标号　　　　　 ;CX作为循环计数器<br>LOOPD　 标号　　　　　 ;ECX作为循环计数器</p>
-<h2 id="转移指令"><a href="#转移指令" class="headerlink" title="转移指令"></a>转移指令</h2><h3 id="无条件转移指令"><a href="#无条件转移指令" class="headerlink" title="无条件转移指令"></a>无条件转移指令</h3><p>无条件转移指令包括：JMP、子程序的调用和返回指令、中断的调用和返回指令等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JMP  标号/Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="条件转移指令"><a href="#条件转移指令" class="headerlink" title="条件转移指令"></a>条件转移指令</h3><p>条件转移指令是一组极其重要的转移指令，它根据标志寄存器中的一个(或多个)标志位来决定是否需要转移，这就为实现多功能程序提供了必要的手段。微机的指令系统提供了丰富的条件转移指令来满足各种不同的转移需要，在编程序时，要对它们灵活运用。</p>
-<p>条件转移指令又分三大类：基于无符号数的条件转移指令、基于有符号数的条件转移指令和基于特殊算术标志位的条件转移指令。</p>
-<h3 id="无符号的条件转移指令"><a href="#无符号的条件转移指令" class="headerlink" title="无符号的条件转移指令"></a>无符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JA/JNBE</span><br><span class="line">CF=0 and ZF=0 Jump Above or Jump Not Below or Equal</span><br><span class="line"></span><br><span class="line">JAE/JNB</span><br><span class="line">CF=0 Jump Above or Equal or Jump Not Below </span><br><span class="line"></span><br><span class="line">JB/JNAE</span><br><span class="line">CF=1 Jump Below or Jump Not Above or Equal</span><br><span class="line"></span><br><span class="line">JBE/JNA</span><br><span class="line">CF=1 or AF=1 Jump Below or Equal or Jump Not Above </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="有符号的条件转移指令"><a href="#有符号的条件转移指令" class="headerlink" title="有符号的条件转移指令"></a>有符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JG/JNLE</span><br><span class="line">ZF=0 and SF=OF Jump Greater or Jump Not Less or Equal </span><br><span class="line"></span><br><span class="line">JGE/JNL</span><br><span class="line">SF=OF Jump Greater or Equal or Jump Not Less </span><br><span class="line"></span><br><span class="line">JL/JNGE</span><br><span class="line">SF≠OF Jump Less or Jump Not Greater or Equal </span><br><span class="line"></span><br><span class="line">JLE/JNG</span><br><span class="line">ZF=1 or SF≠OF Jump Less or Equal or Jump Not Greater </span><br></pre></td></tr></table></figure>
-
-<h3 id="特殊算术标志位的条件转移指令"><a href="#特殊算术标志位的条件转移指令" class="headerlink" title="特殊算术标志位的条件转移指令"></a>特殊算术标志位的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">JC</span><br><span class="line">CF=1 Jump Carry </span><br><span class="line"></span><br><span class="line">JNC</span><br><span class="line">CF=0 Jump Not Carry</span><br><span class="line"></span><br><span class="line">JO</span><br><span class="line">OF=1 Jump Overflow</span><br><span class="line"></span><br><span class="line">JNO</span><br><span class="line">OF=0 Jump Not Overflow</span><br><span class="line"></span><br><span class="line">JP/JPE</span><br><span class="line">PF=1 Jump Parity or Jump Parity Even</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">JNP/JPO</span><br><span class="line">PF=0 Jump Not Parity or Jump Parity Odd </span><br><span class="line"></span><br><span class="line">JS</span><br><span class="line">SF=1 Jump Sign (negative)</span><br><span class="line"></span><br><span class="line">JNS</span><br><span class="line">SF=0 Jump No Sign (positive) </span><br></pre></td></tr></table></figure>
-
-<h2 id="子程序的调用和返回指令"><a href="#子程序的调用和返回指令" class="headerlink" title="子程序的调用和返回指令"></a>子程序的调用和返回指令</h2><p>子程序的调用和返回是一对互逆操作，也是一种特殊的转移操作。</p>
-<p>一方面，之所以说是转移，是因为当调用一个子程序时，程序的执行顺序被改变，CPU将转而执行子程序中的指令序列，在这方面，调用子程序的操作含有转移指令的功能，子程序的返回指令的转移特性与此类似；</p>
-<p>另一方面，转移指令是一种“一去不复返”的操作，而当子程序完后，还要求CPU能转而执行调用指令之下的指令，它是一种“有去有回”的操作。</p>
-<p>为了满足子程序调用和返回操作的特殊性，在指令系统中设置了相应的特定指令。</p>
-<h3 id="调用指令（CALL）"><a href="#调用指令（CALL）" class="headerlink" title="调用指令（CALL）"></a>调用指令（CALL）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL　子程序名/Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>子程序的调用指令分为近(near)调用和远(far)调用。如果被调用子程序的属性是近的，那么，CALL指令将产生一个近调用，它把该指令之后地址的偏移量(用一个字来表示的)压栈，把被调用子程序入口地址的偏移量送给指令指针寄存器IP即可实现执行程序的转移</p>
-<p>如果被调用子程序的属性是远的，那么，CALL指令将产生一个远调用。这时，调用指令不仅要把该指令之后地址的偏移量压进栈，而且也要把段寄存器CS的值压进栈。在此之后，再把被调用子程序入口地址的偏移量和段值分别送给IP和CS，这样完成了子程序的远调用操作</p>
-<p>子程序调用指令本身的执行不影响任何标志位，但子程序体中指令的执行会改变标志位，所以，如果希望子程序的执行不能改变调用指令前后的标志位，那么，就要在子程序的开始处保护标志位，在子程序的返回前恢复标志位。</p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CALL  DISPLAY</span><br><span class="line"> DISPLAY是子程序名 </span><br><span class="line">CALL  BX</span><br><span class="line"> BX的内容是子程序的偏移量 </span><br><span class="line">CALL  WORD1</span><br><span class="line"> WORD1是内存字变量，其值是子程序的偏移量 </span><br><span class="line">CALL  DWORD1</span><br><span class="line"> DWORD1是双字变量，其值是子程序的偏移量和段值 </span><br><span class="line">CALL  word ptr [BX]</span><br><span class="line"> BX所指内存字单元的值是子程序的偏移量 </span><br><span class="line">CALL  dword ptr [BX]</span><br><span class="line"> BX所指内存双字单元的值是子程序的偏移量和段值 </span><br></pre></td></tr></table></figure>
-
-<h3 id="返回指令（RET）"><a href="#返回指令（RET）" class="headerlink" title="返回指令（RET）"></a>返回指令（RET）</h3><p>当子程序执行完时，需要返回到调用它的程序之中。为实现此功能，指令系统提供了一条专用的返回指令。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RET/RETN/RETF [Imm]</span><br></pre></td></tr></table></figure>
-
-<p>子程序的返回在功能上是子程序调用的逆操作。为了与子程序的远、近调用相对应，子程序的返回也分：远返回和近返回。返回指令在堆栈操作方面是调用指令的逆过程</p>
-
+          <p>x86汇编</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/14/x86-x64%E6%B1%87%E7%BC%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -657,81 +543,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/01/Fastboot/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/Objection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/85364458.jfif">
-      <meta itemprop="name" content="Brave Laughter">
-      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A1ili's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/01/Objection/" class="post-title-link" itemprop="url">Objection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-05-01 13:33:36 / 修改时间：13:35:03" itemprop="dateCreated datePublished" datetime="2022-05-01T13:33:36+08:00">2022-05-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Objection是基于frida的命令行hook工具</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/01/Objection/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -822,7 +633,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
