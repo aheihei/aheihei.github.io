@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":5},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动、静态链接库">
+<meta property="og:url" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/index.html">
+<meta property="og:site_name" content="A1ili&#39;s Blog">
+<meta property="og:description" content="库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093744162.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093842095.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094018496.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094040008.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094103407.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516214933865.png">
+<meta property="og:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516215003809.png">
+<meta property="article:published_time" content="2022-05-22T04:53:00.000Z">
+<meta property="article:modified_time" content="2022-05-22T04:54:44.579Z">
+<meta property="article:author" content="Brave Laughter">
+<meta property="article:tag" content="语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093744162.png">
+
+<link rel="canonical" href="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>动、静态链接库 | A1ili's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">A1ili's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">keep on going</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/85364458.jfif">
+      <meta itemprop="name" content="Brave Laughter">
+      <meta itemprop="description" content="埋头苦干的劲头 抬头看路的清醒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A1ili's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动、静态链接库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-22 12:53:00 / 修改时间：12:54:44" itemprop="dateCreated datePublished" datetime="2022-05-22T12:53:00+08:00">2022-05-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%9E%E5%BF%86%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">回忆录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>库</p>
+<span id="more"></span>
+
+<h1 id="动态链接库"><a href="#动态链接库" class="headerlink" title="动态链接库"></a>动态链接库</h1><p>它是Microsoft在windows操作中实现共享函数库概念的一种实现方式。其中windows中 一些作为DLL实现的文件有：</p>
+<ul>
+<li>系统API模块（.dll）文件：如user32.dll，kernel32.dll</li>
+<li>ActiveX控件（.ocx）文件：如widows上的日历控件</li>
+<li>控制面板(.cpl)文件：控制面板中的每一项都是一个专用的DLL</li>
+<li>设备驱动程序(.drv)文件：如控制打印到打印机的打印机驱动程序</li>
+</ul>
+<p>动态链接库不用重复编译或链接，一旦装入内存，DLL函数可以被系统中的任何正在运行的应用应用程序软件所使用</p>
+<h2 id="库"><a href="#库" class="headerlink" title="库"></a>库</h2><p>对象库：（object  library）</p>
+<p>对象库是一个扩展名为.LIB的文件，这个文件中的代码在运行连接器进行静态链接时被添加到程序的.EXE文件中例如，在Microsoft  Visual C++中，程序通常链接的C运行时对象库是LIBC.LIB。</p>
+<p>导入库：（import  library）</p>
+<p>导入库是一种特殊形式的对象库文件。如同对象库一样，导入库不包含任何代码。相反，他们只给连接器提供信息，以建立.EXE文件中用于动态链接的重定位表格。微软的编译器中的KFRNEL32.LIB，USER32.LIB及GDI32.LIB文件是Windows函数的导入库如果在程序中调用Rectangle函数，GDI32.LIB会告诉连接器这个函数是在GDI32.DLL动态链接库中。这一信息被存放在.EXE文件中。所以Windows可以在你的程序运行时与GDI32.DLL动态链接库进行动态链接。</p>
+<p>对象库和导入库仅在程序开发时被使用，而动态链接库则是在运行时使用。当一个用到动态库的程序运行时，该库必须存在磁盘上。当Windows在运行程序前加载DLL模块的时候，该库文件必须存放在.EXE程序所在的目录下，或在当前目录，windows目录，Windows目录，MS-DOS环境下的PATH字符串中的某一目录下。（系统将按上述顺序来检索目录）</p>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>VS2019创建项目</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093744162.png" alt="image-20220515093744162"></p>
+<p>使用默认生成的文件直接使用</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093842095.png" alt="image-20220515093842095"></p>
+<p>编译后把生成的dll放到要调用项目的文件夹中，和exe在同一个目录</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094018496.png" alt="image-20220515094018496"></p>
+<p>调用</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094040008.png" alt="image-20220515094040008"></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094103407.png" alt="image-20220515094103407"></p>
+<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><p>a，声明导出函数</p>
+<ol>
+<li>通过使用_declspec(dllexport)，添加到需要导出的函数前，进行声明</li>
+</ol>
+<p>（ extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); ）</p>
+<p>b，使用动态链接库</p>
+<ol>
+<li><p>​	定义函数指针(可有可无),如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typedef int (__stdcall *lpPlus)(int,int);					</span><br><span class="line"></span><br><span class="line">typedef int (__stdcall *lpSub)(int,int);	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明函数指针变量,如：	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lpPlus myPlus;					</span><br><span class="line">lpSub mySub;	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动态加载dll到内存中,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HINSTANCE   hModule = LoadLibrary(&quot;DllDemo.dll&quot;); </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取函数地址,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myPlus = (lpPlus)GetProcAddress(hModule,   &quot;Plus&quot;);</span><br><span class="line">mySub = (lpSub)GetProcAddress(hModule,   (char*)0x10);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用函数,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = myPlus(10,2);					</span><br><span class="line">int b = mySub(10,2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>释放动态链接库,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FreeLibrary(hModule);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>代码示例</p>
+<p>dll.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//_declspec(dllexport) DWORD g_nNum;</span></span><br><span class="line"><span class="comment">// 导出一个函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//str.Format(L&quot;fun : g_nNum=%d&quot;, g_nNum);</span></span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun2</span><span class="params">()</span> &#123;</span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun2&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动态（显示）调用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="title function_">int</span><span class="params">(*pfnfun)</span><span class="params">()</span>;</span><br><span class="line">	pfnfun fun = nullptr;</span><br><span class="line">	HINSTANCE hModule = LoadLibrary(<span class="string">L&quot;DllInstance.dll&quot;</span>);</span><br><span class="line">	<span class="comment">// 通过dll的句柄,获取保存在dll中的指定函数的地址</span></span><br><span class="line">	fun = (pfnfun)GetProcAddress(hModule, <span class="string">&quot;fun&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (fun != nullptr) &#123;</span><br><span class="line">		fun();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="另一种方式导出函数"><a href="#另一种方式导出函数" class="headerlink" title="另一种方式导出函数"></a>另一种方式导出函数</h3><p> 通过模块定义文件<code>.DEF</code>来进行声明，在头文件中添加一个文件后缀名为<code>.def</code>，在其中添加如下格式代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPORTS	</span><br><span class="line">函数名	@编号</span><br><span class="line">函数名	@编号 	NONAME</span><br></pre></td></tr></table></figure>
+
+<p>vs2019添加方法</p>
+<p><strong>1</strong></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516214933865.png" alt="image-20220516214933865"></p>
+<p><strong>2</strong></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516215003809.png" alt="image-20220516215003809"></p>
+<p>注：LIBRARY 后面的名称与项目名一致</p>
+<p>使用序号导出的好处:</p>
+<ol>
+<li>名字是一段程序的精华注释，通过名字可以直接猜测到函数的功能</li>
+<li>通过使用序号，可以达到隐藏的目的</li>
+</ol>
+<h2 id="隐式调用"><a href="#隐式调用" class="headerlink" title="隐式调用"></a>隐式调用</h2><p>这种方法相比显示（动态）调用简单一些，只需要链接到.lib文件并将.dll文件置入你的新项目的路径中去。因此，创建一个新的默认win32控制台项目并添加一个源文件。将你做的dll放入你的新项目相同的目录下  </p>
+<p>步骤</p>
+<ol>
+<li>将 *.dll  *.lib 放到工程目录下面	</li>
+<li>将 #pragma comment(lib,”DLL名.lib”) 添加到调用文件中	</li>
+<li>加入函数的声明	（可有可无）</li>
+</ol>
+<p>注意：</p>
+<p>extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); </p>
+<p>extern “C” _declspec(dllimport) 调用约定 返回类型 函数名 (参数列表); </p>
+<h1 id="静态链接库"><a href="#静态链接库" class="headerlink" title="静态链接库"></a>静态链接库</h1><p>静态库是将函数和数据编译进一个二进制文件，通常可以命名为*.lib，编译器在链接过程中，将这些二进制数据复制出来，并与调用库的其他模块数据组合在一起，形成最终的可执行文件，等以后使用这个可执行文件时，就不需要这个静态库的支持了。 </p>
+<p>比起静态库的调用，静态库只有一种方法，即对应的隐试链接。</p>
+<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><ol>
+<li><p><strong>编写静态链接库文件</strong></p>
+<ul>
+<li><strong>在vs2015中创建新项目，项目类型：Win32 控制台程序-&gt;静态库.</strong></li>
+<li><strong>在项目中创建xxxx.h和xxxx.cpp  编写代码 然后构建即可.</strong></li>
+</ul>
+</li>
+<li><p><strong>静态链接库的使用</strong></p>
+<ol>
+<li><p><strong>将生成的.h与.lib文件复制到项目根目录，然后在代码中引用：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;xxxx.h&quot;</span><br><span class="line">#pragma comment(lib, &quot;xxxx.lib&quot;) </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>将xxxx.H与xxxx.LIB文件复制到VS2015安装目录，与库文件放在一起</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Include(xxxx.h)</span><br><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Lib(xxxx.lib)</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后在工程-&gt;设置-&gt;连接-&gt;对象&#x2F;库模块中添加xxxx.lib</strong></p>
+</li>
+<li><p><strong>静态链接库的缺点</strong></p>
+<ul>
+<li><strong>使用静态链接生成的可执行文件体积较大</strong></li>
+<li><strong>包含相同的公共代码，造成浪费</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>名称粉碎</strong></p>
+<p>假如想使用C++下导出的函数更具有通用性，需要在函数声明前加上extern  “C”,从而防止C++的名称粉碎机制造成dll文件不能供其他语言调用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">                       DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">                       LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">					 )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:   使用LoadLibrary调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_ATTACH:    有线程创建的时候调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_DETACH:     线程结束调用</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:   模块销毁调用</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%AD%E8%A8%80/" rel="tag"># 语言</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/" rel="prev" title="常见加密算法原理--Base64">
+      <i class="fa fa-chevron-left"></i> 常见加密算法原理--Base64
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">动态链接库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">简单使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.</span> <span class="nav-text">使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F%E5%AF%BC%E5%87%BA%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">另一种方式导出函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">隐式调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">静态链接库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">使用方式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Brave Laughter"
+      src="/images/85364458.jfif">
+  <p class="site-author-name" itemprop="name">Brave Laughter</p>
+  <div class="site-description" itemprop="description">埋头苦干的劲头 抬头看路的清醒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brave Laughter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
