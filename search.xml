@@ -1880,6 +1880,97 @@
       </tags>
   </entry>
   <entry>
+    <title>C</title>
+    <url>/2022/03/15/C/</url>
+    <content><![CDATA[<img src="/2022/03/15/C/images1.jpg" alt="images1" style="zoom:200%;">
+
+<span id="more"></span>
+
+<h1 id="计算机中的数据"><a href="#计算机中的数据" class="headerlink" title="计算机中的数据"></a>计算机中的数据</h1><h2 id="十六进制"><a href="#十六进制" class="headerlink" title="十六进制"></a>十六进制</h2><p>逢16进1，每一位都是16的整数次幂（基数16），符号：“H”</p>
+<h2 id="十进制"><a href="#十进制" class="headerlink" title="十进制"></a>十进制</h2><p>逢10进1</p>
+<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>逢2进1，每一位都是2的整数次幂(基数2) ，符号：“B” </p>
+<h2 id="八进制"><a href="#八进制" class="headerlink" title="八进制"></a>八进制</h2><p>逢8进1，每一位都是8的整数次幂(基数是8) ，符号：”O” </p>
+<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>逆序取余</p>
+<p>二进制数得到每一位就是十进制数每次除以2得到余数，最后把所有的余数倒着排列，就得到二进制数 </p>
+<p>10的二进制</p>
+<p>10除以2得5余0</p>
+<p>5除以2得2余1</p>
+<p>2除以2得1余0</p>
+<p>1除以2得0余1</p>
+<p>整数10的二进制就是1010</p>
+<h3 id="八进制转十六进制"><a href="#八进制转十六进制" class="headerlink" title="八进制转十六进制"></a>八进制转十六进制</h3><p>方法：</p>
+<p>以二进制位中介，即先将八进制数按照一位拆三位的方法转换为二进制，在对这个二进制数使用四位合一位的方法转换为十六进制</p>
+<p>规则：</p>
+<p>整数部分从低位向高位每3位用一个等值的八进制来替换，不足3位时在高位补0凑满3位<br>小数部分从高位向低位每3位用一个等值八进制数来替换，不足3位时在低位补0凑满3位 </p>
+<p>十进制：16</p>
+<p>八进制：20</p>
+<p>二进制：010 000</p>
+<p>十六进制：10</p>
+<h2 id="计算机中存储单位"><a href="#计算机中存储单位" class="headerlink" title="计算机中存储单位"></a>计算机中存储单位</h2><p>位是计算机中数据最小单位，它表示一个二进制数，0或者1，英文是Bit </p>
+<p>字长是CPU的主要技术指标之一，指的是一次最大能并行处理的二进制位数</p>
+<p>Byte 表示字节，一个字节是8位<br>word是两个字节，也就是16位<br>dword是四个字节，也就是32位</p>
+<h2 id="源码反码补码关系"><a href="#源码反码补码关系" class="headerlink" title="源码反码补码关系"></a>源码反码补码关系</h2><p><strong>正数：</strong></p>
+<p>​	三码合一 </p>
+<p><strong>负数：</strong><br>    原码：最高位不变，后面数据和其绝对值相同<br>    反码：将源码除最高位，其余安位取反<br>    补码：将反码+1 </p>
+<p><strong>例如：</strong><br>1 010 1010 （原）<br>1 101 0101 （反码：符号位不变，其他位按位取反）<br>1 101 0110 （补码:反码+1）<br>在计算机中保存的都是补码，使用补码的目的是将减法运算转换为加法运算</p>
+<h1 id="C基础"><a href="#C基础" class="headerlink" title="C基础"></a>C基础</h1><p>一个程序包含哪些东西</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include //编译预处理命令 </span><br><span class="line">#include //编译预处理命令 </span><br><span class="line">int main(void) //程序启动函数 </span><br><span class="line">&#123; //函数开始标志 </span><br><span class="line">	printf(&quot;Hello world&quot;); //库函数输出信息 </span><br><span class="line">	system(&quot;pause&quot;); //让程序暂停一下 </span><br><span class="line">	return 0； //函数退出返回0 </span><br><span class="line">&#125; //程序结束标志</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>1，编写好源代码<br>2，编译前，进行预处理<br>3，进行编译，生成obj文件<br>4，进行连接，生成可执行文件<br>5，生成目标程序，即可以运行<br>其中，预处理，编译，连接可以使用VS一键完成，也就是只要你写好了源代码，直接可以生成能够执行的程了。</p>
+<p>（main 函数 ，预处理 ，库函数 ，关键字，注释）</p>
+<p><strong>VS中的默认main函数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int  _tmain(int argc, _TCHAR*  argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>预处理</strong></p>
+<p>以#号开头的命令(通常称为指令)，他是在程序编译之前进行的处理，通常会对文件做一些复制，替换等操作</p>
+<p><strong>为什么要使用#includ</strong> </p>
+<p>对于本程序而言#include的作用是包含stdio函数库，包含了函数库头文件之后，就可以使用其中的函数。<br><code>#include</code>有两种形式<br>1)#include “文件名” 在当前工程目录中会找到该头文件<br>2)#include &lt;文件名&gt; 在vs自带的头文件夹中去找该头文件</p>
+<p><strong>库函数</strong></p>
+<p>C语言已经写好的代码，直接提供给开发者使用，提供的代码就叫做库函数，使用相应的库函数，必须要先包含相应的头文件</p>
+<p><strong>关键字</strong></p>
+<p>被赋予了某些特殊含义的单词，不能用于其他任何目的，所有的关键字小写，C语言中的关键字32个</p>
+<p><img src="/2022/03/15/C/image-20220315163741780.png" alt="image-20220315163741780"></p>
+<h2 id="数据类型及变量"><a href="#数据类型及变量" class="headerlink" title="数据类型及变量"></a>数据类型及变量</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>整型，就是整数</li>
+<li>浮点型，就是小数 </li>
+<li>字符型，就是文本符号</li>
+</ul>
+<h3 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h3><p><strong>常量</strong><br>常量就是固定不变的数据，根据类型有以下四种:<br>1、整形常量<br>所有整数（正整数，负整数，零）<br>2、浮点型常量<br>所有小数。<br>3、字符常量<br>普通字符，用单引号括起来的一个字符(不包括单引号本身)如：’A’，’1‘.<br>4、字符串常量<br>用双引号括起来的若干个字符串（不包括双引号本身）如：“hello world”</p>
+<p><strong>变量</strong> </p>
+<p>变量就是一块有名字的内存空间，我们可以通过变量的名字来为其背后的内存空间填充数据，或者使用内存空间中的数据</p>
+<p>定义变量<br>变量类型 变量名 &#x3D; 初始值</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int num =10;</span><br><span class="line">  num=200;</span><br><span class="line">  printf(&quot;%d&quot;,num+100);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>int 是整数型，num就是变量名，10就是变量的初始值，变量可以被修改，也可以参与运算。当变量被定义之后，自动就开辟出了空间，变量名就代表这片空间了 ，可以通过VS的自动窗口，局部变量窗口，监视窗口动态的查看变量的值</p>
+<p><strong>变量类型</strong></p>
+<p>整数：int short long<br>小数：float double<br>字符：char wchar_t<br>另外还有一个关键字：unsigned可以修饰整数和字符，可以表示无符号数（就是正数）</p>
+<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a><strong>字符类型</strong></h2><p>字符类型本质上说，也是数字。有一个美国国家标准协会指定了一个标准，用0<del>127之间的数字代表不同的字符。所以每一个字符都和一个数字一一对应。美国人制定的这个标准称之为ASCII ，一个字节能表示0</del>255，所以存储一个普通的英文符只需要一个字节，故而char也就是1个字节大小， wchar就是用来存储复杂字符的，而且他是两个字节，共有65536个状态。 </p>
+<p>定义char型字符变量，直接使用char即可，赋值的但字符需要用’ ‘括起来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char  ch  = &#x27;A&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>定义wchar_t型字符变量，直接使用wchar_t，需要注意的是字符要用这种格式L’ ‘。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wchar_t   ch  = L&#x27;A&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="标识符的命名规则"><a href="#标识符的命名规则" class="headerlink" title="标识符的命名规则"></a>标识符的命名规则</h2><p>1，只能由字母（A<del>Z，a</del>z)，数字(0~9),下划线(_)组成<br>2，数字不能开头<br>3，不可以使用关键字<br>4，C语言中的标识符区分大小写 </p>
+<p><strong>字符型与数字</strong></p>
+<p>字符型与整数类型没有本质的区别，都表示数字，只是，字符类型所能表示的数字被人为设计与不同的字符一一对应，所以字符类型的变量也可以用于数学计算，只是它表示的数据范围有限。有符号的情况下<br>(char -128<del>127,wchar_t -32768</del>32767) </p>
+<p><strong>字符串</strong></p>
+<p>C语言中还有一种类型叫做字符串常量，但是没有一个变量能够存储字符串常量，需要借助于字符数组或指针<br>字符串的表示方式：使用双引号扩起来<br>列如:char szCh[]&#x3D;”adsfgh23435” </p>
+<p><strong>标识符</strong></p>
+<p>编程的时候，有许多需要命名的对象，比如函数名，变量名等，这些名称叫做标识符 </p>
+<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p>匈牙利命名法的变量名由一个或多个小写字母开始，这些字母由助于记忆变量的类型和用途，紧跟着的就是程序员 选择的任何名称，而在最前面加入前缀m_,s_,g_表示变量的作用域类型<br>匈牙利命名法的目标是便于记忆，而且使变量名清晰易懂，（一看变量名就知道他是什么类型，知道是干什么用的），增强了代码的可读性，方便程序员之间相互交流代码</p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>开发</tag>
+        <tag>Windows</tag>
+        <tag>语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C（三）</title>
     <url>/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/</url>
     <content><![CDATA[<img src="/2022/03/21/C%EF%BC%88%E4%B8%89%EF%BC%89/veer-354426716.webp" alt="veer-354426716" style="zoom: 200%;">
@@ -2338,97 +2429,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C</title>
-    <url>/2022/03/15/C/</url>
-    <content><![CDATA[<img src="/2022/03/15/C/images1.jpg" alt="images1" style="zoom:200%;">
-
-<span id="more"></span>
-
-<h1 id="计算机中的数据"><a href="#计算机中的数据" class="headerlink" title="计算机中的数据"></a>计算机中的数据</h1><h2 id="十六进制"><a href="#十六进制" class="headerlink" title="十六进制"></a>十六进制</h2><p>逢16进1，每一位都是16的整数次幂（基数16），符号：“H”</p>
-<h2 id="十进制"><a href="#十进制" class="headerlink" title="十进制"></a>十进制</h2><p>逢10进1</p>
-<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p>逢2进1，每一位都是2的整数次幂(基数2) ，符号：“B” </p>
-<h2 id="八进制"><a href="#八进制" class="headerlink" title="八进制"></a>八进制</h2><p>逢8进1，每一位都是8的整数次幂(基数是8) ，符号：”O” </p>
-<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>逆序取余</p>
-<p>二进制数得到每一位就是十进制数每次除以2得到余数，最后把所有的余数倒着排列，就得到二进制数 </p>
-<p>10的二进制</p>
-<p>10除以2得5余0</p>
-<p>5除以2得2余1</p>
-<p>2除以2得1余0</p>
-<p>1除以2得0余1</p>
-<p>整数10的二进制就是1010</p>
-<h3 id="八进制转十六进制"><a href="#八进制转十六进制" class="headerlink" title="八进制转十六进制"></a>八进制转十六进制</h3><p>方法：</p>
-<p>以二进制位中介，即先将八进制数按照一位拆三位的方法转换为二进制，在对这个二进制数使用四位合一位的方法转换为十六进制</p>
-<p>规则：</p>
-<p>整数部分从低位向高位每3位用一个等值的八进制来替换，不足3位时在高位补0凑满3位<br>小数部分从高位向低位每3位用一个等值八进制数来替换，不足3位时在低位补0凑满3位 </p>
-<p>十进制：16</p>
-<p>八进制：20</p>
-<p>二进制：010 000</p>
-<p>十六进制：10</p>
-<h2 id="计算机中存储单位"><a href="#计算机中存储单位" class="headerlink" title="计算机中存储单位"></a>计算机中存储单位</h2><p>位是计算机中数据最小单位，它表示一个二进制数，0或者1，英文是Bit </p>
-<p>字长是CPU的主要技术指标之一，指的是一次最大能并行处理的二进制位数</p>
-<p>Byte 表示字节，一个字节是8位<br>word是两个字节，也就是16位<br>dword是四个字节，也就是32位</p>
-<h2 id="源码反码补码关系"><a href="#源码反码补码关系" class="headerlink" title="源码反码补码关系"></a>源码反码补码关系</h2><p><strong>正数：</strong></p>
-<p>​	三码合一 </p>
-<p><strong>负数：</strong><br>    原码：最高位不变，后面数据和其绝对值相同<br>    反码：将源码除最高位，其余安位取反<br>    补码：将反码+1 </p>
-<p><strong>例如：</strong><br>1 010 1010 （原）<br>1 101 0101 （反码：符号位不变，其他位按位取反）<br>1 101 0110 （补码:反码+1）<br>在计算机中保存的都是补码，使用补码的目的是将减法运算转换为加法运算</p>
-<h1 id="C基础"><a href="#C基础" class="headerlink" title="C基础"></a>C基础</h1><p>一个程序包含哪些东西</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include //编译预处理命令 </span><br><span class="line">#include //编译预处理命令 </span><br><span class="line">int main(void) //程序启动函数 </span><br><span class="line">&#123; //函数开始标志 </span><br><span class="line">	printf(&quot;Hello world&quot;); //库函数输出信息 </span><br><span class="line">	system(&quot;pause&quot;); //让程序暂停一下 </span><br><span class="line">	return 0； //函数退出返回0 </span><br><span class="line">&#125; //程序结束标志</span><br></pre></td></tr></table></figure>
-
-<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>1，编写好源代码<br>2，编译前，进行预处理<br>3，进行编译，生成obj文件<br>4，进行连接，生成可执行文件<br>5，生成目标程序，即可以运行<br>其中，预处理，编译，连接可以使用VS一键完成，也就是只要你写好了源代码，直接可以生成能够执行的程了。</p>
-<p>（main 函数 ，预处理 ，库函数 ，关键字，注释）</p>
-<p><strong>VS中的默认main函数</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int  _tmain(int argc, _TCHAR*  argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>预处理</strong></p>
-<p>以#号开头的命令(通常称为指令)，他是在程序编译之前进行的处理，通常会对文件做一些复制，替换等操作</p>
-<p><strong>为什么要使用#includ</strong> </p>
-<p>对于本程序而言#include的作用是包含stdio函数库，包含了函数库头文件之后，就可以使用其中的函数。<br><code>#include</code>有两种形式<br>1)#include “文件名” 在当前工程目录中会找到该头文件<br>2)#include &lt;文件名&gt; 在vs自带的头文件夹中去找该头文件</p>
-<p><strong>库函数</strong></p>
-<p>C语言已经写好的代码，直接提供给开发者使用，提供的代码就叫做库函数，使用相应的库函数，必须要先包含相应的头文件</p>
-<p><strong>关键字</strong></p>
-<p>被赋予了某些特殊含义的单词，不能用于其他任何目的，所有的关键字小写，C语言中的关键字32个</p>
-<p><img src="/2022/03/15/C/image-20220315163741780.png" alt="image-20220315163741780"></p>
-<h2 id="数据类型及变量"><a href="#数据类型及变量" class="headerlink" title="数据类型及变量"></a>数据类型及变量</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>整型，就是整数</li>
-<li>浮点型，就是小数 </li>
-<li>字符型，就是文本符号</li>
-</ul>
-<h3 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h3><p><strong>常量</strong><br>常量就是固定不变的数据，根据类型有以下四种:<br>1、整形常量<br>所有整数（正整数，负整数，零）<br>2、浮点型常量<br>所有小数。<br>3、字符常量<br>普通字符，用单引号括起来的一个字符(不包括单引号本身)如：’A’，’1‘.<br>4、字符串常量<br>用双引号括起来的若干个字符串（不包括双引号本身）如：“hello world”</p>
-<p><strong>变量</strong> </p>
-<p>变量就是一块有名字的内存空间，我们可以通过变量的名字来为其背后的内存空间填充数据，或者使用内存空间中的数据</p>
-<p>定义变量<br>变量类型 变量名 &#x3D; 初始值</p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int num =10;</span><br><span class="line">  num=200;</span><br><span class="line">  printf(&quot;%d&quot;,num+100);</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>int 是整数型，num就是变量名，10就是变量的初始值，变量可以被修改，也可以参与运算。当变量被定义之后，自动就开辟出了空间，变量名就代表这片空间了 ，可以通过VS的自动窗口，局部变量窗口，监视窗口动态的查看变量的值</p>
-<p><strong>变量类型</strong></p>
-<p>整数：int short long<br>小数：float double<br>字符：char wchar_t<br>另外还有一个关键字：unsigned可以修饰整数和字符，可以表示无符号数（就是正数）</p>
-<h2 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a><strong>字符类型</strong></h2><p>字符类型本质上说，也是数字。有一个美国国家标准协会指定了一个标准，用0<del>127之间的数字代表不同的字符。所以每一个字符都和一个数字一一对应。美国人制定的这个标准称之为ASCII ，一个字节能表示0</del>255，所以存储一个普通的英文符只需要一个字节，故而char也就是1个字节大小， wchar就是用来存储复杂字符的，而且他是两个字节，共有65536个状态。 </p>
-<p>定义char型字符变量，直接使用char即可，赋值的但字符需要用’ ‘括起来</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">char  ch  = &#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>定义wchar_t型字符变量，直接使用wchar_t，需要注意的是字符要用这种格式L’ ‘。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wchar_t   ch  = L&#x27;A&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="标识符的命名规则"><a href="#标识符的命名规则" class="headerlink" title="标识符的命名规则"></a>标识符的命名规则</h2><p>1，只能由字母（A<del>Z，a</del>z)，数字(0~9),下划线(_)组成<br>2，数字不能开头<br>3，不可以使用关键字<br>4，C语言中的标识符区分大小写 </p>
-<p><strong>字符型与数字</strong></p>
-<p>字符型与整数类型没有本质的区别，都表示数字，只是，字符类型所能表示的数字被人为设计与不同的字符一一对应，所以字符类型的变量也可以用于数学计算，只是它表示的数据范围有限。有符号的情况下<br>(char -128<del>127,wchar_t -32768</del>32767) </p>
-<p><strong>字符串</strong></p>
-<p>C语言中还有一种类型叫做字符串常量，但是没有一个变量能够存储字符串常量，需要借助于字符数组或指针<br>字符串的表示方式：使用双引号扩起来<br>列如:char szCh[]&#x3D;”adsfgh23435” </p>
-<p><strong>标识符</strong></p>
-<p>编程的时候，有许多需要命名的对象，比如函数名，变量名等，这些名称叫做标识符 </p>
-<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p>匈牙利命名法的变量名由一个或多个小写字母开始，这些字母由助于记忆变量的类型和用途，紧跟着的就是程序员 选择的任何名称，而在最前面加入前缀m_,s_,g_表示变量的作用域类型<br>匈牙利命名法的目标是便于记忆，而且使变量名清晰易懂，（一看变量名就知道他是什么类型，知道是干什么用的），增强了代码的可读性，方便程序员之间相互交流代码</p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>开发</tag>
-        <tag>Windows</tag>
-        <tag>语言</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C（二）</title>
     <url>/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<img src="/2022/03/18/C%EF%BC%88%E4%BA%8C%EF%BC%89/images.jpg" alt="images" style="zoom: 200%;">
@@ -2624,6 +2624,49 @@
       </tags>
   </entry>
   <entry>
+    <title>Fastboot</title>
+    <url>/2022/05/01/Fastboot/</url>
+    <content><![CDATA[<p>一些常用命令</p>
+<span id="more"></span>
+
+<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><ul>
+<li>system:系统分区</li>
+<li>userdata:数据分区</li>
+<li>cache:缓存分区</li>
+<li>recovery:Recovery分区</li>
+<li>boot:存放内核和ramdisk的分区</li>
+<li>hboot:这个是SPL所在的分区，也是fastboot所在的分区.刷错就真的变砖了</li>
+<li>splash1:这个就是开机第一屏幕了</li>
+<li>radio:这个是radio所在的分区</li>
+</ul>
+<h1 id="刷分区"><a href="#刷分区" class="headerlink" title="刷分区"></a>刷分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot flash &#x27;对应分区&#x27; &#x27;镜像&#x27;</span><br><span class="line">ep: fastboot flash system system.img</span><br></pre></td></tr></table></figure>
+
+<h1 id="清空分区"><a href="#清空分区" class="headerlink" title="清空分区"></a>清空分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot erase &#x27;分区名&#x27;</span><br><span class="line">ep: fastboot erase cache</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><p>解锁</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot oem unlock</span><br></pre></td></tr></table></figure>
+
+<p>获取手机全部信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
+
+<p>引导启动外部镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot boot xxx.img</span><br></pre></td></tr></table></figure>
+
+<p>查看手机是否连接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br></pre></td></tr></table></figure>
+
+<p>重启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot reboot</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>N5X刷Android_10</title>
     <url>/2022/03/14/N5X%E5%88%B7Android-10/</url>
     <content><![CDATA[<p>N5X刷入Android10</p>
@@ -2664,6 +2707,90 @@
       </tags>
   </entry>
   <entry>
+    <title>Objection</title>
+    <url>/2022/05/01/Objection/</url>
+    <content><![CDATA[<p>Objection是基于frida的命令行hook工具</p>
+<span id="more"></span>
+
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install objection</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<ol>
+<li>启动对应版本的frida-server</li>
+<li>转发端口</li>
+<li>附加需要调试的app，进入交互界面</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">objection -g [packageName] explore</span><br></pre></td></tr></table></figure>
+
+<h1 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h1><h2 id="空格键"><a href="#空格键" class="headerlink" title="空格键"></a>空格键</h2><p>直接输入空格，会有提示与补全</p>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help + command</span><br><span class="line">提示详细介绍指定命令的作用与例子</span><br></pre></td></tr></table></figure>
+
+<h2 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a>sqlite</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlite connect [sqlite数据库]</span><br></pre></td></tr></table></figure>
+
+<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><p><img src="/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png" alt="图 1">  </p>
+<h2 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h2><p>退出</p>
+<h2 id="reconnect"><a href="#reconnect" class="headerlink" title="reconnect"></a>reconnect</h2><p>从新连接</p>
+<h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除命令</p>
+<h2 id="frida"><a href="#frida" class="headerlink" title="frida"></a>frida</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Command: frida</span><br><span class="line"></span><br><span class="line">Usage: frida</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   frida</span><br></pre></td></tr></table></figure>
+
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: import &lt;path to local fridascript&gt; (optional: &lt;job name&gt;) (optional: --no-exception-handler)</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   import ~/home/myscript.js</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name --no-exception-handler</span><br><span class="line">   import ~/home/script.js --no-exception-handler</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">memory list modules</span><br><span class="line">列出当前进程加载的所有so模块</span><br><span class="line"></span><br><span class="line">memory list exports XX.so</span><br><span class="line">列出XX.so的导出函数</span><br></pre></td></tr></table></figure>
+
+<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory search &quot;&lt;pattern eg: 41 41 41 ?? 41&gt;&quot; (--string) (--offsets-only)</span><br><span class="line">在当前内存中查找某一模块</span><br></pre></td></tr></table></figure>
+
+<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory write &quot;&lt;address&gt;&quot; &quot;&lt;pattern eg: 41 41 41 41&gt;&quot; (--string)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">memory dump all &lt;local destination&gt;</span><br><span class="line">memory dump from_base &lt;base_address&gt; &lt;size_to_dump&gt; &lt;local_destination&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ui alert </span><br><span class="line">#show an alert message</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: plugin load &lt;plugin path&gt; (&lt;plugin namespace&gt;)</span><br><span class="line"># 加载插件</span><br></pre></td></tr></table></figure>
+
+<h2 id="evaluate"><a href="#evaluate" class="headerlink" title="evaluate"></a>evaluate</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入js脚本编写界面</span><br></pre></td></tr></table></figure>
+
+<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file cat filename</span><br><span class="line">#查看文件</span><br><span class="line"></span><br><span class="line">file download &lt;remote location&gt; (optional: &lt;local destination&gt;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file http start [端口号]</span><br></pre></td></tr></table></figure>
+
+<h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">commands clear </span><br><span class="line"># 清除命令</span><br><span class="line">commands history</span><br><span class="line">commands save [path]</span><br></pre></td></tr></table></figure>
+
+<h2 id="jobs"><a href="#jobs" class="headerlink" title="jobs"></a>jobs</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jobs list</span><br><span class="line">jobs kill</span><br></pre></td></tr></table></figure>
+
+<h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><h2 id="android"><a href="#android" class="headerlink" title="android"></a>android</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android clipboard monitor </span><br><span class="line">#监听剪切板</span><br><span class="line">android deoptimize</span><br><span class="line">#暴力执行</span><br></pre></td></tr></table></figure>
+
+<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">android heap execute js &lt;hashcode&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap execute method &lt;hashcode&gt; &lt;method&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap search instances &lt;class&gt; (eg: com.example.test)</span><br></pre></td></tr></table></figure>
+
+<h3 id="hooking"><a href="#hooking" class="headerlink" title="hooking"></a>hooking</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking generate class</span><br><span class="line"></span><br><span class="line">android hooking generate simple [classname]</span><br><span class="line"></span><br><span class="line">android hooking get current_activity</span><br><span class="line"></span><br><span class="line">android hooking list activities</span><br><span class="line"></span><br><span class="line">android hooking list class_loaders</span><br><span class="line"></span><br><span class="line">android hooking list class_methods [class_name]</span><br><span class="line"></span><br><span class="line">android hooking list classes</span><br><span class="line"></span><br><span class="line">android hooking list receivers</span><br><span class="line"></span><br><span class="line">android hooking list services</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="search-1"><a href="#search-1" class="headerlink" title="search"></a>search</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking search classes &lt;name&gt;</span><br><span class="line"></span><br><span class="line">android hooking search methods &lt;name&gt; (optional: &lt;package-filter&gt;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking set return_value &quot;&lt;fully qualified class method&gt;&quot; &quot;&lt;optional overload&gt;&quot; (eg: &quot;com.example.test.doLogin&quot;) &lt;true/false&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking watch class &lt;class&gt; (eg: com.example.test)</span><br><span class="line"></span><br><span class="line">android hooking watch class_method &lt;fully qualified class method&gt; &lt;optional overload&gt; (optional: --dump-args) (optional: --dump-backtrace) (optional: --dump-return)</span><br></pre></td></tr></table></figure>
+
+<h3 id="intent"><a href="#intent" class="headerlink" title="intent"></a>intent</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android intent launch_activity &lt;activity_class&gt;</span><br><span class="line"></span><br><span class="line">android intent launch_service &lt;service_class&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="keystore"><a href="#keystore" class="headerlink" title="keystore"></a>keystore</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android keystore list</span><br><span class="line">android keystore watch</span><br><span class="line">android keystore clear</span><br></pre></td></tr></table></figure>
+
+<h3 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android proxy set [ip] [port]</span><br></pre></td></tr></table></figure>
+
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android root disable</span><br><span class="line">android root simulate</span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android shell_exec</span><br></pre></td></tr></table></figure>
+
+<h3 id="sslpinning"><a href="#sslpinning" class="headerlink" title="sslpinning"></a>sslpinning</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android sslpinning disable</span><br></pre></td></tr></table></figure>
+
+<h3 id="ui-1"><a href="#ui-1" class="headerlink" title="ui"></a>ui</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android ui FLAG_SECURE [true/false]</span><br><span class="line"></span><br><span class="line">android ui screenshot [1.png]</span><br></pre></td></tr></table></figure>
+
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2>]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python使用问题</title>
     <url>/2022/04/23/Python%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>python使用中的问题总结</p>
@@ -2684,6 +2811,451 @@
       <tags>
         <tag>开发</tag>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cmp</title>
+    <url>/2022/05/14/cmp/</url>
+    <content><![CDATA[<p>CTF-win</p>
+<span id="more"></span>
+
+<p><strong>1</strong><br>查看文件为PE文件，直接脱OD调试，全局搜索字符串<br><img src="/2022/05/14/cmp/81f7720930deac20025cd036e3ad00aa4c40055c0a62bd10bd023b8d3ec49086.png" alt="图 1">  </p>
+<p>搜到的结果<br><img src="/2022/05/14/cmp/21a63837f8ed2dca4ffcefe4fac120c9564ae45245ca8b92215811a7fefce0bb.png" alt="图 2">  </p>
+<p><strong>2</strong><br>双击<code>%s</code>处，进入相应汇编代码位置，并下段<br><img src="/2022/05/14/cmp/5620e0fcc39596c3c96029be37339b153d25b1b28dcc949e6c1f38f16589bb08.png" alt="图 3">  </p>
+<p><strong>3</strong><br>运行，随便输入一个字符串<br><img src="/2022/05/14/cmp/1fa395b7de6ee9684d17417a4235b922d390e21514b8e621ff6148374193cd00.png" alt="图 4">  </p>
+<p><strong>4</strong><br>F8单步调试到比较代码处，观察寄存器<br><img src="/2022/05/14/cmp/4708b2db6c83b933cea9c50c7e5f45286220087785e3b428948a0142c865b81b.png" alt="图 5">  </p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>win逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>decpry</title>
+    <url>/2022/05/14/decpry/</url>
+    <content><![CDATA[<p>CTF-ELF</p>
+<span id="more"></span>
+
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><strong>1</strong></p>
+<p>拖入IDA直接F5看源码<br><img src="/2022/05/14/decpry/6d03c172cfc091a9972a022b0321875e483bff8f1fb8b8d6572e97d50197037d.png" alt="图 1">  </p>
+<p><strong>2</strong><br>查看代码<br><img src="/2022/05/14/decpry/bd5cbd0d80a0ca2d4ddc5df9ff51c3dc88bdabcf5ff5b9bc6adb87ed3d6df182.png" alt="图 2"><br>可以看到decrypt函数，顾名思义就是解密函数，然后使用gdb动态调试（不知道为啥linux版本的gdb不行，要使用debian版的，这玩意卡了我一个小时）</p>
+<p>使用调试命令如下<br><img src="/2022/05/14/decpry/2c068f3f4fe7956b4a9eabbbb2787430ecf0b93979fc87606cb9d657ef060a75.png" alt="图 3">  </p>
+<p><img src="/2022/05/14/decpry/df741cd028b226a0b6850850338c0873484dd248fd81c393a583f0411724d7f3.png" alt="图 4">  </p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>win逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>x86_x64汇编</title>
+    <url>/2022/05/14/x86-x64%E6%B1%87%E7%BC%96/</url>
+    <content><![CDATA[<p>x86汇编</p>
+<span id="more"></span>
+
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>通用寄存器8个</p>
+<table>
+<thead>
+<tr>
+<th>16位</th>
+<th>32位</th>
+<th>64位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AX</td>
+<td>EAX</td>
+<td>RAX</td>
+</tr>
+<tr>
+<td>BX</td>
+<td>EBX</td>
+<td>RBX</td>
+</tr>
+<tr>
+<td>CX</td>
+<td>ECX</td>
+<td>RCX</td>
+</tr>
+<tr>
+<td>DX</td>
+<td>EDX</td>
+<td>RDX</td>
+</tr>
+<tr>
+<td>SP</td>
+<td>ESP</td>
+<td>RSP</td>
+</tr>
+<tr>
+<td>BP</td>
+<td>EBP</td>
+<td>RBP</td>
+</tr>
+<tr>
+<td>DI</td>
+<td>EDI</td>
+<td>RDI</td>
+</tr>
+<tr>
+<td>SI</td>
+<td>ESI</td>
+<td>RSI</td>
+</tr>
+</tbody></table>
+<p>AX&#x2F;EAX&#x2F;RAX、BX&#x2F;EBX&#x2F;RBX、CX&#x2F;ECX&#x2F;RCX、DX&#x2F;EDX&#x2F;RDX在一般情况下作为通用的数据寄存器，用来暂时存放计算过程中所用到的操作数、结果或其他信息。它们还可分为两个独立的8位寄存器使用，命名为AL、AH、BL、BH、CL、CH、DL和DH。</p>
+<ul>
+<li>AX&#x2F;EAX&#x2F;RAX作为累加器，算术运算的主要寄存器，在乘法指令中指定用来存放操作数，另外，所有的I&#x2F;O指令都使用AX或AL与外部设备传送信息。</li>
+<li>BX&#x2F;EBX&#x2F;RBX在计算存储器地址时，可作为基址寄存器使用。</li>
+<li>CX&#x2F;ECX&#x2F;RCX常用来保存计数值，如在移位指令、循环指令和串处理指令中用作隐含的计数器。DX在作双字长运算时，可把DX和AX组合在一起存放一个双字长数，DX用来存放高16位数据。此外，对某些I&#x2F;O操作，DX可用来存放I&#x2F;O的端口地址。</li>
+<li>SP&#x2F;ESP&#x2F;RSP、BP&#x2F;EBP&#x2F;RBP、SI&#x2F;ESI&#x2F;RSI、DI&#x2F;EDI&#x2F;RDI四个16&#x2F;32位寄存器可以象数据寄存器一样在运算过程中存放操作数，但它们只能以字（16&#x2F;32位&#x2F;64位）为单位使用。此外，它们更经常的用途是在存储器寻址时，提供偏移地址。因此，它们可称为指针或变址寄存器。</li>
+<li>SP&#x2F;ESP称为堆栈指针寄存器，用来指出栈顶的偏移地址。</li>
+<li>BP&#x2F;EBP称为基址指针寄存器，在寻址时作为基地址寄存器使用，但它必须与堆栈段寄存器SS联用来确定堆栈段中的存储单元地址。</li>
+</ul>
+<h2 id="标志寄存器FLAG"><a href="#标志寄存器FLAG" class="headerlink" title="标志寄存器FLAG"></a>标志寄存器FLAG</h2><p>条件码标志用来记录程序中运行结果的状态信息，它们是根据有关指令的运行结果由(CPU)自动设置的。由于这些状态信息往往作为后续条件转移指令的转移控制条件，所以称为条件码。</p>
+<ul>
+<li>进位标志CF，记录运算时最高有效位产生的进位值</li>
+<li>符号标志SF，记录运算结果的符号，结果为负时置1，否则置0</li>
+<li>零标志ZF，运算结果为0时ZF位置1，否则0</li>
+<li>溢出标志OF，在运算过程中，如操作数超出了机器可表示数的范围称为溢出，溢出时OF值为1否则为0</li>
+<li>辅助进位标志AF，记录运算时第3位（半个字节）产生的进位值。</li>
+<li>奇偶标志PF，用来为机器中传送信息时可能产生的代码出错情况提供检验条件。当结果操作数中1的个数为偶数时值为1，否则为0</li>
+</ul>
+<h1 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h1><h2 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h2><h3 id="传送指令mov"><a href="#传送指令mov" class="headerlink" title="传送指令mov"></a>传送指令mov</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mov reg/mem,reg/mem/imm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中：Reg—Register(寄存器)，Mem—Memory(存储器)，Imm—Immediate(立即数)，它们可以是8位、16位或32位(特别指出其位数的除外)。</p>
+<h3 id="传送-填充指令"><a href="#传送-填充指令" class="headerlink" title="传送-填充指令"></a>传送-填充指令</h3><p>传送—填充指令是把位数短的源操作数传送给位数长的目的操作数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MOVSX/MOVZX  Reg/Mem, Reg/Mem/Imm　</span><br></pre></td></tr></table></figure>
+
+<p>指令的主要功能和限制与MOV指令类似，不同之处是：在传送时，对目的操作数的高位进行填充。根据其填充方式，又分为：符号填充和零填充。</p>
+<p><strong>符号填充指令movsx</strong><br>movsx的填充方式是：用源操作的符号来填充目的操作数的高位数据位</p>
+<p><strong>零填充指令movzx</strong><br>movzx的填充方式是：横用0来填充目的操作数的高位数据位</p>
+<h3 id="交换指令XCHG"><a href="#交换指令XCHG" class="headerlink" title="交换指令XCHG"></a>交换指令XCHG</h3><p>交换指令XCHG是两个寄存器，寄存器和内存变量之间内容的交换指令，两个操作数的数据类型要相同</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XCHG  Reg/Mem, Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AX=5678H，BX=1234H，指令XCHG  AX, BX执行后,(AX)=1234H，(BX)=5678H</span><br></pre></td></tr></table></figure>
+
+<h3 id="取有效地址指令"><a href="#取有效地址指令" class="headerlink" title="取有效地址指令"></a>取有效地址指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lea reg,mem</span><br></pre></td></tr></table></figure>
+
+<h3 id="取段寄存器指令"><a href="#取段寄存器指令" class="headerlink" title="取段寄存器指令"></a>取段寄存器指令</h3><p>该组指令的功能是把内存单元的一个“低字”传送给指令中指定的16位寄存器，把随后的一个“高字”传给相应的段寄存器(DS、ES、FS、GS和SS)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDS/LES/LFS/LGS/LSS　Reg, Mem</span><br></pre></td></tr></table></figure>
+
+<h2 id="堆栈操作指令"><a href="#堆栈操作指令" class="headerlink" title="堆栈操作指令"></a>堆栈操作指令</h2><p>堆栈是一个重要的数据结构，它具有“先进后出”的特点，通常用来保存程序的返回地址。它主要有两大类操作：进&#x2F;压栈操作和出&#x2F;弹栈操作。</p>
+<h3 id="PUSH"><a href="#PUSH" class="headerlink" title="PUSH"></a>PUSH</h3><p>指令格式：PUSH　Reg&#x2F;Mem  PUSH　Imm　　　<br>　　　<br>一个字进栈，系统自动完成两步操作：SP←SP-2，(SP)←操作数； </p>
+<p>一个双字进栈，系统自动完成两步操作：ESP←ESP-4，(ESP)←操作数。 </p>
+<h3 id="PUSHA"><a href="#PUSHA" class="headerlink" title="PUSHA"></a>PUSHA</h3><p>指令格式：PUSHA</p>
+<p>其功能是依次把寄存器AX、CX、DX、BX、SP、BP、SI和DI等压栈。</p>
+<h3 id="PUSHAD"><a href="#PUSHAD" class="headerlink" title="PUSHAD"></a>PUSHAD</h3><p>指令格式：PUSHAD</p>
+<p>其功能是把寄存器EAX、ECX、EDX、EBX、ESP、EBP、ESI和EDI等压栈。</p>
+<h2 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h2><h3 id="POP"><a href="#POP" class="headerlink" title="POP"></a>POP</h3><p>指令格式：POP　Reg&#x2F;Mem</p>
+<p>弹出一个字，系统自动完成两步操作：操作数←(SP)，SP←SP-2；</p>
+<p>弹出一个双字，系统自动完成两步操作：操作数←(ESP)，ESP←ESP-4。</p>
+<h3 id="POPA"><a href="#POPA" class="headerlink" title="POPA"></a>POPA</h3><p>指令格式：POPA</p>
+<p>其功能是依次把寄存器DI、SI、BP、SP、BX、DX、CX和AX等弹出栈。其实，程序员不用记住它们的具体顺序，只要与指令PUSHA对称使用就可以了。</p>
+<h3 id="POPAD"><a href="#POPAD" class="headerlink" title="POPAD"></a>POPAD</h3><p>指令格式：POPAD　　</p>
+<p>其功能是依次把寄存器EDI、ESI、EBP、ESP、EBX、EDX、ECX和EAX等弹出栈，它与PUSHAD对称使用即可。</p>
+<h2 id="算术运算指令"><a href="#算术运算指令" class="headerlink" title="算术运算指令"></a>算术运算指令</h2><h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ADD  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能是把源操作数的值加到目的操作数中。</p>
+<h3 id="带进位加指令ADC-见得较少"><a href="#带进位加指令ADC-见得较少" class="headerlink" title="带进位加指令ADC(见得较少)"></a>带进位加指令ADC(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ADC  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能是把源操作数和进位标志位CF的值(0&#x2F;1)一起加到目的操作数中。</p>
+<h3 id="加1指令INC"><a href="#加1指令INC" class="headerlink" title="加1指令INC"></a>加1指令INC</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INC  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
+<p>指令的功能是把操作数的值加1。</p>
+<h3 id="交换加指令XADD-见得较少"><a href="#交换加指令XADD-见得较少" class="headerlink" title="交换加指令XADD(见得较少)"></a>交换加指令XADD(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XADD  Reg/Mem, Reg　</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能是先交换两个操作数的值，再进行算术“加”法操作</p>
+<h3 id="减法指令"><a href="#减法指令" class="headerlink" title="减法指令"></a>减法指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SUB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能是从目的操作数中减去源操作数。</p>
+<h3 id="带借位减SBB-见得较少"><a href="#带借位减SBB-见得较少" class="headerlink" title="带借位减SBB(见得较少)"></a>带借位减SBB(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SBB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能是把源操作数和标志位CF的值从目的操作数中一起减去。</p>
+<h3 id="减1指令DEC"><a href="#减1指令DEC" class="headerlink" title="减1指令DEC"></a>减1指令DEC</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DEC  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
+<p>指令的功能是把操作数的值减去1。</p>
+<h3 id="求补指令NEG"><a href="#求补指令NEG" class="headerlink" title="求补指令NEG"></a>求补指令NEG</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NEG  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<p>指令的功能：操作数＝0－操作数，即改变操作数的正负号</p>
+<h3 id="乘法指令"><a href="#乘法指令" class="headerlink" title="乘法指令"></a>乘法指令</h3><p>计算机的乘法指令分为无符号乘法指令和有符号乘法指令，它们的唯一区别就在于：数据的最高位是作为“数值”参与运算，还是作为“符号位”参与运算。<br>乘法指令的被乘数都是隐含操作数，乘数在指令中显式地写出来。CPU会根据乘数是8位、16位，还是32位操作数，来自动选用被乘数：AL、AX或EAX。<br>指令的功能是把显式操作数和隐含操作数相乘，并把乘积存入相应的寄存器中。</p>
+<h3 id="无符号乘法指令mul-x2F-fmul"><a href="#无符号乘法指令mul-x2F-fmul" class="headerlink" title="无符号乘法指令mul&#x2F;fmul"></a>无符号乘法指令mul&#x2F;fmul</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MUL  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：CF和OF(AF、PF、SF和ZF无定义)</p>
+<p>指令的功能是把显式操作数和隐含操作数(都作为无符号数)相乘</p>
+<h3 id="有符号乘法指令IMUL-x2F-FIMUL"><a href="#有符号乘法指令IMUL-x2F-FIMUL" class="headerlink" title="有符号乘法指令IMUL&#x2F;FIMUL"></a>有符号乘法指令IMUL&#x2F;FIMUL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IMUL Reg/Mem </span><br><span class="line"></span><br><span class="line">IMUL Reg, Imm</span><br><span class="line">IMUL Reg, Reg, Imm </span><br><span class="line">IMUL Reg, Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<h3 id="除法指令"><a href="#除法指令" class="headerlink" title="除法指令"></a>除法指令</h3><p>除法指令的被除数是隐含操作数，除数在指令中显式地写出来。CPU会根据除数是8位、16位，还是32位，来自动选用被除数AX、DX-AX，还是EDX-EAX。</p>
+<p>除法指令功能是用显式操作数去除隐含操作数，可得到商和余数。当除数为0，或商超出数据类型所能表示的范围时，系统会自动产生0号中断。</p>
+<h3 id="无符号除法指令DIV-x2F-FDIV"><a href="#无符号除法指令DIV-x2F-FDIV" class="headerlink" title="无符号除法指令DIV&#x2F;FDIV"></a>无符号除法指令DIV&#x2F;FDIV</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DIV  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>指令的功能是用显式操作数去除隐含操作数(都作为无符号数)。指令对标志位的影响无定义。</p>
+<h3 id="有符号除法指令IDIV-x2F-FIDIV"><a href="#有符号除法指令IDIV-x2F-FIDIV" class="headerlink" title="有符号除法指令IDIV&#x2F;FIDIV"></a>有符号除法指令IDIV&#x2F;FIDIV</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IDIV  Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
+<h2 id="逻辑运算指令"><a href="#逻辑运算指令" class="headerlink" title="逻辑运算指令"></a>逻辑运算指令</h2><p>逻辑运算指令是另一组重要的指令，它包括：逻辑与(AND)、逻辑或(OR)、逻辑非(NOT)和异或指令(XOR)，逻辑运算指令也是经常使用的指令。</p>
+<h3 id="逻辑与操作指令"><a href="#逻辑与操作指令" class="headerlink" title="逻辑与操作指令"></a>逻辑与操作指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
+<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑“与操作”，操作结果存入目标操作数中。</p>
+<h3 id="逻辑或操作指令OR"><a href="#逻辑或操作指令OR" class="headerlink" title="逻辑或操作指令OR"></a>逻辑或操作指令OR</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)<br>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”或操作”，操作结果存入目标操作数中。</p>
+<h3 id="逻辑非操作指令NOT"><a href="#逻辑非操作指令NOT" class="headerlink" title="逻辑非操作指令NOT"></a>逻辑非操作指令NOT</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOT　Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>其功能是把操作数中的每位变反，即：1←0，0←1。指令的执行不影响任何标志位。</p>
+<h3 id="逻辑异或指令XOR"><a href="#逻辑异或指令XOR" class="headerlink" title="逻辑异或指令XOR"></a>逻辑异或指令XOR</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XOR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
+<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”异或操作”，操作结果存入目标操作数中。</p>
+<h2 id="检测位指令TEST"><a href="#检测位指令TEST" class="headerlink" title="检测位指令TEST"></a>检测位指令TEST</h2><p>检测位指令是把二个操作数进行逻辑“与”操作，并根据运算结果设置相应的标志位，但并不保存该运算结果，所以，不会改变指令中的操作数。在该指令后，通常用JE、JNE、JZ和JNZ等条件转移指令。</p>
+<p>指令格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TEST  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
+
+<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
+<h2 id="循环指令"><a href="#循环指令" class="headerlink" title="循环指令"></a>循环指令</h2><p>LOOP　  标号<br>LOOPW　 标号　　　　　 ;CX作为循环计数器<br>LOOPD　 标号　　　　　 ;ECX作为循环计数器</p>
+<h2 id="转移指令"><a href="#转移指令" class="headerlink" title="转移指令"></a>转移指令</h2><h3 id="无条件转移指令"><a href="#无条件转移指令" class="headerlink" title="无条件转移指令"></a>无条件转移指令</h3><p>无条件转移指令包括：JMP、子程序的调用和返回指令、中断的调用和返回指令等。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JMP  标号/Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件转移指令"><a href="#条件转移指令" class="headerlink" title="条件转移指令"></a>条件转移指令</h3><p>条件转移指令是一组极其重要的转移指令，它根据标志寄存器中的一个(或多个)标志位来决定是否需要转移，这就为实现多功能程序提供了必要的手段。微机的指令系统提供了丰富的条件转移指令来满足各种不同的转移需要，在编程序时，要对它们灵活运用。</p>
+<p>条件转移指令又分三大类：基于无符号数的条件转移指令、基于有符号数的条件转移指令和基于特殊算术标志位的条件转移指令。</p>
+<h3 id="无符号的条件转移指令"><a href="#无符号的条件转移指令" class="headerlink" title="无符号的条件转移指令"></a>无符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JA/JNBE</span><br><span class="line">CF=0 and ZF=0 Jump Above or Jump Not Below or Equal</span><br><span class="line"></span><br><span class="line">JAE/JNB</span><br><span class="line">CF=0 Jump Above or Equal or Jump Not Below </span><br><span class="line"></span><br><span class="line">JB/JNAE</span><br><span class="line">CF=1 Jump Below or Jump Not Above or Equal</span><br><span class="line"></span><br><span class="line">JBE/JNA</span><br><span class="line">CF=1 or AF=1 Jump Below or Equal or Jump Not Above </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="有符号的条件转移指令"><a href="#有符号的条件转移指令" class="headerlink" title="有符号的条件转移指令"></a>有符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JG/JNLE</span><br><span class="line">ZF=0 and SF=OF Jump Greater or Jump Not Less or Equal </span><br><span class="line"></span><br><span class="line">JGE/JNL</span><br><span class="line">SF=OF Jump Greater or Equal or Jump Not Less </span><br><span class="line"></span><br><span class="line">JL/JNGE</span><br><span class="line">SF≠OF Jump Less or Jump Not Greater or Equal </span><br><span class="line"></span><br><span class="line">JLE/JNG</span><br><span class="line">ZF=1 or SF≠OF Jump Less or Equal or Jump Not Greater </span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊算术标志位的条件转移指令"><a href="#特殊算术标志位的条件转移指令" class="headerlink" title="特殊算术标志位的条件转移指令"></a>特殊算术标志位的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JC</span><br><span class="line">CF=1 Jump Carry </span><br><span class="line"></span><br><span class="line">JNC</span><br><span class="line">CF=0 Jump Not Carry</span><br><span class="line"></span><br><span class="line">JO</span><br><span class="line">OF=1 Jump Overflow</span><br><span class="line"></span><br><span class="line">JNO</span><br><span class="line">OF=0 Jump Not Overflow</span><br><span class="line"></span><br><span class="line">JP/JPE</span><br><span class="line">PF=1 Jump Parity or Jump Parity Even</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">JNP/JPO</span><br><span class="line">PF=0 Jump Not Parity or Jump Parity Odd </span><br><span class="line"></span><br><span class="line">JS</span><br><span class="line">SF=1 Jump Sign (negative)</span><br><span class="line"></span><br><span class="line">JNS</span><br><span class="line">SF=0 Jump No Sign (positive) </span><br></pre></td></tr></table></figure>
+
+<h2 id="子程序的调用和返回指令"><a href="#子程序的调用和返回指令" class="headerlink" title="子程序的调用和返回指令"></a>子程序的调用和返回指令</h2><p>子程序的调用和返回是一对互逆操作，也是一种特殊的转移操作。</p>
+<p>一方面，之所以说是转移，是因为当调用一个子程序时，程序的执行顺序被改变，CPU将转而执行子程序中的指令序列，在这方面，调用子程序的操作含有转移指令的功能，子程序的返回指令的转移特性与此类似；</p>
+<p>另一方面，转移指令是一种“一去不复返”的操作，而当子程序完后，还要求CPU能转而执行调用指令之下的指令，它是一种“有去有回”的操作。</p>
+<p>为了满足子程序调用和返回操作的特殊性，在指令系统中设置了相应的特定指令。</p>
+<h3 id="调用指令（CALL）"><a href="#调用指令（CALL）" class="headerlink" title="调用指令（CALL）"></a>调用指令（CALL）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CALL　子程序名/Reg/Mem</span><br></pre></td></tr></table></figure>
+
+<p>子程序的调用指令分为近(near)调用和远(far)调用。如果被调用子程序的属性是近的，那么，CALL指令将产生一个近调用，它把该指令之后地址的偏移量(用一个字来表示的)压栈，把被调用子程序入口地址的偏移量送给指令指针寄存器IP即可实现执行程序的转移</p>
+<p>如果被调用子程序的属性是远的，那么，CALL指令将产生一个远调用。这时，调用指令不仅要把该指令之后地址的偏移量压进栈，而且也要把段寄存器CS的值压进栈。在此之后，再把被调用子程序入口地址的偏移量和段值分别送给IP和CS，这样完成了子程序的远调用操作</p>
+<p>子程序调用指令本身的执行不影响任何标志位，但子程序体中指令的执行会改变标志位，所以，如果希望子程序的执行不能改变调用指令前后的标志位，那么，就要在子程序的开始处保护标志位，在子程序的返回前恢复标志位。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CALL  DISPLAY</span><br><span class="line"> DISPLAY是子程序名 </span><br><span class="line">CALL  BX</span><br><span class="line"> BX的内容是子程序的偏移量 </span><br><span class="line">CALL  WORD1</span><br><span class="line"> WORD1是内存字变量，其值是子程序的偏移量 </span><br><span class="line">CALL  DWORD1</span><br><span class="line"> DWORD1是双字变量，其值是子程序的偏移量和段值 </span><br><span class="line">CALL  word ptr [BX]</span><br><span class="line"> BX所指内存字单元的值是子程序的偏移量 </span><br><span class="line">CALL  dword ptr [BX]</span><br><span class="line"> BX所指内存双字单元的值是子程序的偏移量和段值 </span><br></pre></td></tr></table></figure>
+
+<h3 id="返回指令（RET）"><a href="#返回指令（RET）" class="headerlink" title="返回指令（RET）"></a>返回指令（RET）</h3><p>当子程序执行完时，需要返回到调用它的程序之中。为实现此功能，指令系统提供了一条专用的返回指令。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RET/RETN/RETF [Imm]</span><br></pre></td></tr></table></figure>
+
+<p>子程序的返回在功能上是子程序调用的逆操作。为了与子程序的远、近调用相对应，子程序的返回也分：远返回和近返回。返回指令在堆栈操作方面是调用指令的逆过程</p>
+]]></content>
+      <categories>
+        <category>汇编</category>
+      </categories>
+      <tags>
+        <tag>x86汇编</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动、静态链接库</title>
+    <url>/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/</url>
+    <content><![CDATA[<p>库</p>
+<span id="more"></span>
+
+<h1 id="动态链接库"><a href="#动态链接库" class="headerlink" title="动态链接库"></a>动态链接库</h1><p>它是Microsoft在windows操作中实现共享函数库概念的一种实现方式。其中windows中 一些作为DLL实现的文件有：</p>
+<ul>
+<li>系统API模块（.dll）文件：如user32.dll，kernel32.dll</li>
+<li>ActiveX控件（.ocx）文件：如widows上的日历控件</li>
+<li>控制面板(.cpl)文件：控制面板中的每一项都是一个专用的DLL</li>
+<li>设备驱动程序(.drv)文件：如控制打印到打印机的打印机驱动程序</li>
+</ul>
+<p>动态链接库不用重复编译或链接，一旦装入内存，DLL函数可以被系统中的任何正在运行的应用应用程序软件所使用</p>
+<h2 id="库"><a href="#库" class="headerlink" title="库"></a>库</h2><p>对象库：（object  library）</p>
+<p>对象库是一个扩展名为.LIB的文件，这个文件中的代码在运行连接器进行静态链接时被添加到程序的.EXE文件中例如，在Microsoft  Visual C++中，程序通常链接的C运行时对象库是LIBC.LIB。</p>
+<p>导入库：（import  library）</p>
+<p>导入库是一种特殊形式的对象库文件。如同对象库一样，导入库不包含任何代码。相反，他们只给连接器提供信息，以建立.EXE文件中用于动态链接的重定位表格。微软的编译器中的KFRNEL32.LIB，USER32.LIB及GDI32.LIB文件是Windows函数的导入库如果在程序中调用Rectangle函数，GDI32.LIB会告诉连接器这个函数是在GDI32.DLL动态链接库中。这一信息被存放在.EXE文件中。所以Windows可以在你的程序运行时与GDI32.DLL动态链接库进行动态链接。</p>
+<p>对象库和导入库仅在程序开发时被使用，而动态链接库则是在运行时使用。当一个用到动态库的程序运行时，该库必须存在磁盘上。当Windows在运行程序前加载DLL模块的时候，该库文件必须存放在.EXE程序所在的目录下，或在当前目录，windows目录，Windows目录，MS-DOS环境下的PATH字符串中的某一目录下。（系统将按上述顺序来检索目录）</p>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>VS2019创建项目</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093744162.png" alt="image-20220515093744162"></p>
+<p>使用默认生成的文件直接使用</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093842095.png" alt="image-20220515093842095"></p>
+<p>编译后把生成的dll放到要调用项目的文件夹中，和exe在同一个目录</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094018496.png" alt="image-20220515094018496"></p>
+<p>调用</p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094040008.png" alt="image-20220515094040008"></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094103407.png" alt="image-20220515094103407"></p>
+<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><p>a，声明导出函数</p>
+<ol>
+<li>通过使用_declspec(dllexport)，添加到需要导出的函数前，进行声明</li>
+</ol>
+<p>（ extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); ）</p>
+<p>b，使用动态链接库</p>
+<ol>
+<li><p>​	定义函数指针(可有可无),如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef int (__stdcall *lpPlus)(int,int);					</span><br><span class="line"></span><br><span class="line">typedef int (__stdcall *lpSub)(int,int);	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明函数指针变量,如：	</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lpPlus myPlus;					</span><br><span class="line">lpSub mySub;	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动态加载dll到内存中,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HINSTANCE   hModule = LoadLibrary(&quot;DllDemo.dll&quot;); </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取函数地址,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">myPlus = (lpPlus)GetProcAddress(hModule,   &quot;Plus&quot;);</span><br><span class="line">mySub = (lpSub)GetProcAddress(hModule,   (char*)0x10);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用函数,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int a = myPlus(10,2);					</span><br><span class="line">int b = mySub(10,2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>释放动态链接库,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FreeLibrary(hModule);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>代码示例</p>
+<p>dll.cpp</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//_declspec(dllexport) DWORD g_nNum;</span></span><br><span class="line"><span class="comment">// 导出一个函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//str.Format(L&quot;fun : g_nNum=%d&quot;, g_nNum);</span></span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun2</span><span class="params">()</span> &#123;</span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun2&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动态（显示）调用</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="title function_">int</span><span class="params">(*pfnfun)</span><span class="params">()</span>;</span><br><span class="line">	pfnfun fun = nullptr;</span><br><span class="line">	HINSTANCE hModule = LoadLibrary(<span class="string">L&quot;DllInstance.dll&quot;</span>);</span><br><span class="line">	<span class="comment">// 通过dll的句柄,获取保存在dll中的指定函数的地址</span></span><br><span class="line">	fun = (pfnfun)GetProcAddress(hModule, <span class="string">&quot;fun&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (fun != nullptr) &#123;</span><br><span class="line">		fun();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="另一种方式导出函数"><a href="#另一种方式导出函数" class="headerlink" title="另一种方式导出函数"></a>另一种方式导出函数</h3><p> 通过模块定义文件<code>.DEF</code>来进行声明，在头文件中添加一个文件后缀名为<code>.def</code>，在其中添加如下格式代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">EXPORTS	</span><br><span class="line">函数名	@编号</span><br><span class="line">函数名	@编号 	NONAME</span><br></pre></td></tr></table></figure>
+
+<p>vs2019添加方法</p>
+<p><strong>1</strong></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516214933865.png" alt="image-20220516214933865"></p>
+<p><strong>2</strong></p>
+<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516215003809.png" alt="image-20220516215003809"></p>
+<p>注：LIBRARY 后面的名称与项目名一致</p>
+<p>使用序号导出的好处:</p>
+<ol>
+<li>名字是一段程序的精华注释，通过名字可以直接猜测到函数的功能</li>
+<li>通过使用序号，可以达到隐藏的目的</li>
+</ol>
+<h2 id="隐式调用"><a href="#隐式调用" class="headerlink" title="隐式调用"></a>隐式调用</h2><p>这种方法相比显示（动态）调用简单一些，只需要链接到.lib文件并将.dll文件置入你的新项目的路径中去。因此，创建一个新的默认win32控制台项目并添加一个源文件。将你做的dll放入你的新项目相同的目录下  </p>
+<p>步骤</p>
+<ol>
+<li>将 *.dll  *.lib 放到工程目录下面	</li>
+<li>将 #pragma comment(lib,”DLL名.lib”) 添加到调用文件中	</li>
+<li>加入函数的声明	（可有可无）</li>
+</ol>
+<p>注意：</p>
+<p>extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); </p>
+<p>extern “C” _declspec(dllimport) 调用约定 返回类型 函数名 (参数列表); </p>
+<h1 id="静态链接库"><a href="#静态链接库" class="headerlink" title="静态链接库"></a>静态链接库</h1><p>静态库是将函数和数据编译进一个二进制文件，通常可以命名为*.lib，编译器在链接过程中，将这些二进制数据复制出来，并与调用库的其他模块数据组合在一起，形成最终的可执行文件，等以后使用这个可执行文件时，就不需要这个静态库的支持了。 </p>
+<p>比起静态库的调用，静态库只有一种方法，即对应的隐试链接。</p>
+<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><ol>
+<li><p><strong>编写静态链接库文件</strong></p>
+<ul>
+<li><strong>在vs2015中创建新项目，项目类型：Win32 控制台程序-&gt;静态库.</strong></li>
+<li><strong>在项目中创建xxxx.h和xxxx.cpp  编写代码 然后构建即可.</strong></li>
+</ul>
+</li>
+<li><p><strong>静态链接库的使用</strong></p>
+<ol>
+<li><p><strong>将生成的.h与.lib文件复制到项目根目录，然后在代码中引用：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &quot;xxxx.h&quot;</span><br><span class="line">#pragma comment(lib, &quot;xxxx.lib&quot;) </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>将xxxx.H与xxxx.LIB文件复制到VS2015安装目录，与库文件放在一起</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Include(xxxx.h)</span><br><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Lib(xxxx.lib)</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后在工程-&gt;设置-&gt;连接-&gt;对象&#x2F;库模块中添加xxxx.lib</strong></p>
+</li>
+<li><p><strong>静态链接库的缺点</strong></p>
+<ul>
+<li><strong>使用静态链接生成的可执行文件体积较大</strong></li>
+<li><strong>包含相同的公共代码，造成浪费</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>名称粉碎</strong></p>
+<p>假如想使用C++下导出的函数更具有通用性，需要在函数声明前加上extern  “C”,从而防止C++的名称粉碎机制造成dll文件不能供其他语言调用。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">                       DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">                       LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">					 )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:   使用LoadLibrary调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_ATTACH:    有线程创建的时候调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_DETACH:     线程结束调用</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:   模块销毁调用</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>回忆录</category>
+      </categories>
+      <tags>
+        <tag>语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常见加密算法原理--Base64</title>
+    <url>/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/</url>
+    <content><![CDATA[<p>常见加密算法原理–Base64</p>
+<span id="more"></span>
+
+<h1 id="Base64介绍"><a href="#Base64介绍" class="headerlink" title="Base64介绍"></a>Base64介绍</h1><p><strong>Base64</strong>（基底64）是一种基于64个可打印字符来表示二进制数据的表示方法。由于log264 &#x3D; 6，所以每6个比特为一个单元，对应某个可打印字符。3个字节相当于24个比特，对应于4个Base64单元，即3个字节可由4个可打印字符来表示。在Base64中的可打印字符包括字母<code>A-Z</code>、<code>a-z</code>、数字<code>0-9</code>，这样共有62个字符，此外两个可打印符号在不同的系统中而不同</p>
+<h1 id="Base64编码原理"><a href="#Base64编码原理" class="headerlink" title="Base64编码原理"></a>Base64编码原理</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115909772.png" alt="image-20220514115909772"></p>
+<p>编码时，每 3 个字节一组，共 8bit*3&#x3D;24bit，划分成 4 组，即每 6bit 代表一个编码后的索引值，划分如下图所示：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115938457.png" alt="image-20220514115938457"></p>
+<p>这样可能不太直观，举个例子就容易理解了。比如我们对 <code>cat</code> 进行编码：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120006175.png" alt="image-20220514120006175"></p>
+<p>可以看到 <code>cat</code> 编码后变成了 <code>Y2F0</code>。</p>
+<p>如果待编码内容的字节数不是 3 的整数倍，那需要进行一些额外的处理。</p>
+<p>如果最后剩下 1 个字节，那么将补 4 个 0 位，编码成 2 个 Base64 字符，然后补两个 <code>=</code>：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120052354.png" alt="image-20220514120052354"></p>
+<p>如果最后剩下 2 个字节，那么将补 2 个 0 位，编码成 3 个 Base64 字符，然后补一个 <code>=</code>：</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120118423.png" alt="image-20220514120118423"></p>
+<p>NDK代码</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> base64en[] = &#123;</span><br><span class="line">        <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;D&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;F&#x27;</span>, <span class="string">&#x27;G&#x27;</span>, <span class="string">&#x27;H&#x27;</span>,  <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;J&#x27;</span>, <span class="string">&#x27;K&#x27;</span>, <span class="string">&#x27;L&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;N&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;P&#x27;</span>,  <span class="string">&#x27;Q&#x27;</span>, <span class="string">&#x27;R&#x27;</span>, <span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;U&#x27;</span>, <span class="string">&#x27;V&#x27;</span>, <span class="string">&#x27;W&#x27;</span>, <span class="string">&#x27;X&#x27;</span>,   <span class="string">&#x27;Y&#x27;</span>, <span class="string">&#x27;Z&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;j&#x27;</span>, <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;q&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;v&#x27;</span>,  <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;z&#x27;</span>, <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;8&#x27;</span>, <span class="string">&#x27;9&#x27;</span>, <span class="string">&#x27;+&#x27;</span>, <span class="string">&#x27;/&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">base64_enc</span><span class="params">(<span class="type">char</span> *data, <span class="type">int</span> len, <span class="type">char</span> *out)</span>&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> last_c = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123;</span><br><span class="line">        c = data[i];</span><br><span class="line">        <span class="comment">//刚好三个字符运算</span></span><br><span class="line">        <span class="keyword">switch</span> (i % <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                (c &gt;&gt; 2) &amp; 0x3f</span></span><br><span class="line"><span class="comment">                1）“&gt;&gt;” 取第一个字节的高六位</span></span><br><span class="line"><span class="comment">                2）“&amp;”  避免其他字符影响 把取得的高六位与0x3f(0011111)按位与</span></span><br><span class="line"><span class="comment">                &amp;按位与运算：只有对应的两个二进位都为1时，结果位才为1</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[(c &gt;&gt; <span class="number">2</span>) &amp; <span class="number">0x3f</span> ];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                last_c保存上一个字符</span></span><br><span class="line"><span class="comment">                last_c &amp; 3 取最后两位，清除其他位</span></span><br><span class="line"><span class="comment">                &lt;&lt;4把上一个数的低两位放到第二个数的高两位</span></span><br><span class="line"><span class="comment">                | 或上第二个数的高四位，得到索引值</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[((last_c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>) | ((c &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xf</span> )];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                out[index++] = base64en[( ( last_c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span> ) | ((c &gt;&gt; <span class="number">6</span> ) &amp; <span class="number">0x3</span>)];</span><br><span class="line">                out[index++] = base64en[c &amp; <span class="number">0x3f</span>];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        last_c = c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//补两个等号</span></span><br><span class="line">    <span class="keyword">if</span>(len % <span class="number">3</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        out[index++] = base64en[(c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="comment">//补一个等号</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (len % <span class="number">3</span> == <span class="number">2</span>)&#123;</span><br><span class="line">        out[index++] = base64en[( c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_base64_1enc</span><span class="params">(JNIEnv *env, jobject thiz, jstring data)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement base64_enc()</span></span><br><span class="line">    <span class="type">char</span> *c_data = const_cast&lt;<span class="type">char</span> *&gt;(env-&gt;GetStringUTFChars(data, <span class="number">0</span>));</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(c_data);</span><br><span class="line">    <span class="type">char</span> out[<span class="number">100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    base64_enc(c_data, len, out);</span><br><span class="line">    env-&gt;ReleaseStringUTFChars(data,c_data);</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(out);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_stringFromJNI</span><span class="params">(JNIEnv *env, jobject thiz)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement stringFromJNI()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fridaHook</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">base_enc</span>(<span class="params">data</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libbase64.so&quot;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(base)</span><br><span class="line">    <span class="keyword">var</span> func_addr = base.<span class="title function_">add</span>(<span class="number">0x89C</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(func_addr)</span><br><span class="line">    <span class="keyword">var</span> func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(func_addr,<span class="string">&#x27;void&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;int&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">    <span class="keyword">var</span> arg1 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">ptr</span>(arg1).<span class="title function_">writeUtf8String</span>(data)</span><br><span class="line">    <span class="keyword">var</span> arg3 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">func</span>(arg1,data.<span class="property">length</span>,arg3)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(arg3))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142835427.png" alt="image-20220514142835427"></p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142906978.png" alt="image-20220514142906978"></p>
+<p>地址计算细节</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135359242.png" alt="image-20220514135359242"></p>
+<p>如果opcode有两个字节的如下，说明是shum指令集地址要加1</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135442796.png" alt="image-20220514135442796"></p>
+<p>如果指令集不对应会报以下错误</p>
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142309697.png" alt="image-20220514142309697"></p>
+<h1 id="左移和右移运算"><a href="#左移和右移运算" class="headerlink" title="左移和右移运算"></a>左移和右移运算</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512225743174.png" alt="image-20220512225743174"></p>
+<p>在dbg中进行实践，给寄存器eax赋值0x8，然后左移两位，给eax重新赋值再右移两位</p>
+<table>
+<thead>
+<tr>
+<th>数值</th>
+<th>二级制</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8</td>
+<td>1000</td>
+<td>原数</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>右移两位</td>
+</tr>
+<tr>
+<td>32</td>
+<td>100000</td>
+<td>左移两位</td>
+</tr>
+</tbody></table>
+<p>代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0x8</span>;</span><br><span class="line">    <span class="type">int</span> b =a &gt;&gt; <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> c = a &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; b&lt;&lt;<span class="string">&quot;\n&quot;</span> &lt;&lt;c ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512230124704.png" alt="image-20220512230124704"></p>
+<p>左移n位，指 按2进制的 位 左移n位， （等于 乘 2的n次方），超出最高位的数则丢掉。</p>
+<p>右移n位，指 按2进制的 位 右移n位， （等于 除以 2的n次方），低于最低位的数则丢掉。</p>
+]]></content>
+      <categories>
+        <category>常见加密</category>
+      </categories>
+      <tags>
+        <tag>加密算法</tag>
       </tags>
   </entry>
   <entry>
@@ -3439,578 +4011,6 @@
       <tags>
         <tag>爬虫</tag>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Objection</title>
-    <url>/2022/05/01/Objection/</url>
-    <content><![CDATA[<p>Objection是基于frida的命令行hook工具</p>
-<span id="more"></span>
-
-<p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install objection</span><br></pre></td></tr></table></figure>
-
-<p>使用</p>
-<ol>
-<li>启动对应版本的frida-server</li>
-<li>转发端口</li>
-<li>附加需要调试的app，进入交互界面</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">objection -g [packageName] explore</span><br></pre></td></tr></table></figure>
-
-<h1 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h1><h2 id="空格键"><a href="#空格键" class="headerlink" title="空格键"></a>空格键</h2><p>直接输入空格，会有提示与补全</p>
-<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help + command</span><br><span class="line">提示详细介绍指定命令的作用与例子</span><br></pre></td></tr></table></figure>
-
-<h2 id="sqlite"><a href="#sqlite" class="headerlink" title="sqlite"></a>sqlite</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sqlite connect [sqlite数据库]</span><br></pre></td></tr></table></figure>
-
-<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><p><img src="/2022/05/01/Objection/2433b72143c160f0ffc0a6dfeb44f22ac95f38e41169f0601776cd2f695c3efb.png" alt="图 1">  </p>
-<h2 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h2><p>退出</p>
-<h2 id="reconnect"><a href="#reconnect" class="headerlink" title="reconnect"></a>reconnect</h2><p>从新连接</p>
-<h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>删除命令</p>
-<h2 id="frida"><a href="#frida" class="headerlink" title="frida"></a>frida</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Command: frida</span><br><span class="line"></span><br><span class="line">Usage: frida</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   frida</span><br></pre></td></tr></table></figure>
-
-<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: import &lt;path to local fridascript&gt; (optional: &lt;job name&gt;) (optional: --no-exception-handler)</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">   import ~/home/myscript.js</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name</span><br><span class="line">   import ~/home/hooks/custom.js custom-hook-name --no-exception-handler</span><br><span class="line">   import ~/home/script.js --no-exception-handler</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">memory list modules</span><br><span class="line">列出当前进程加载的所有so模块</span><br><span class="line"></span><br><span class="line">memory list exports XX.so</span><br><span class="line">列出XX.so的导出函数</span><br></pre></td></tr></table></figure>
-
-<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory search &quot;&lt;pattern eg: 41 41 41 ?? 41&gt;&quot; (--string) (--offsets-only)</span><br><span class="line">在当前内存中查找某一模块</span><br></pre></td></tr></table></figure>
-
-<h3 id="write"><a href="#write" class="headerlink" title="write"></a>write</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: memory write &quot;&lt;address&gt;&quot; &quot;&lt;pattern eg: 41 41 41 41&gt;&quot; (--string)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">memory dump all &lt;local destination&gt;</span><br><span class="line">memory dump from_base &lt;base_address&gt; &lt;size_to_dump&gt; &lt;local_destination&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ui alert </span><br><span class="line">#show an alert message</span><br></pre></td></tr></table></figure>
-
-<h2 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: plugin load &lt;plugin path&gt; (&lt;plugin namespace&gt;)</span><br><span class="line"># 加载插件</span><br></pre></td></tr></table></figure>
-
-<h2 id="evaluate"><a href="#evaluate" class="headerlink" title="evaluate"></a>evaluate</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入js脚本编写界面</span><br></pre></td></tr></table></figure>
-
-<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file cat filename</span><br><span class="line">#查看文件</span><br><span class="line"></span><br><span class="line">file download &lt;remote location&gt; (optional: &lt;local destination&gt;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file http start [端口号]</span><br></pre></td></tr></table></figure>
-
-<h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">commands clear </span><br><span class="line"># 清除命令</span><br><span class="line">commands history</span><br><span class="line">commands save [path]</span><br></pre></td></tr></table></figure>
-
-<h2 id="jobs"><a href="#jobs" class="headerlink" title="jobs"></a>jobs</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jobs list</span><br><span class="line">jobs kill</span><br></pre></td></tr></table></figure>
-
-<h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><h2 id="android"><a href="#android" class="headerlink" title="android"></a>android</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android clipboard monitor </span><br><span class="line">#监听剪切板</span><br><span class="line">android deoptimize</span><br><span class="line">#暴力执行</span><br></pre></td></tr></table></figure>
-
-<h3 id="heap"><a href="#heap" class="headerlink" title="heap"></a>heap</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Usage: </span><br><span class="line">android heap execute js &lt;hashcode&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap execute method &lt;hashcode&gt; &lt;method&gt; (eg: 24688232)</span><br><span class="line"></span><br><span class="line">android heap search instances &lt;class&gt; (eg: com.example.test)</span><br></pre></td></tr></table></figure>
-
-<h3 id="hooking"><a href="#hooking" class="headerlink" title="hooking"></a>hooking</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking generate class</span><br><span class="line"></span><br><span class="line">android hooking generate simple [classname]</span><br><span class="line"></span><br><span class="line">android hooking get current_activity</span><br><span class="line"></span><br><span class="line">android hooking list activities</span><br><span class="line"></span><br><span class="line">android hooking list class_loaders</span><br><span class="line"></span><br><span class="line">android hooking list class_methods [class_name]</span><br><span class="line"></span><br><span class="line">android hooking list classes</span><br><span class="line"></span><br><span class="line">android hooking list receivers</span><br><span class="line"></span><br><span class="line">android hooking list services</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="search-1"><a href="#search-1" class="headerlink" title="search"></a>search</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking search classes &lt;name&gt;</span><br><span class="line"></span><br><span class="line">android hooking search methods &lt;name&gt; (optional: &lt;package-filter&gt;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking set return_value &quot;&lt;fully qualified class method&gt;&quot; &quot;&lt;optional overload&gt;&quot; (eg: &quot;com.example.test.doLogin&quot;) &lt;true/false&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android hooking watch class &lt;class&gt; (eg: com.example.test)</span><br><span class="line"></span><br><span class="line">android hooking watch class_method &lt;fully qualified class method&gt; &lt;optional overload&gt; (optional: --dump-args) (optional: --dump-backtrace) (optional: --dump-return)</span><br></pre></td></tr></table></figure>
-
-<h3 id="intent"><a href="#intent" class="headerlink" title="intent"></a>intent</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android intent launch_activity &lt;activity_class&gt;</span><br><span class="line"></span><br><span class="line">android intent launch_service &lt;service_class&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="keystore"><a href="#keystore" class="headerlink" title="keystore"></a>keystore</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android keystore list</span><br><span class="line">android keystore watch</span><br><span class="line">android keystore clear</span><br></pre></td></tr></table></figure>
-
-<h3 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android proxy set [ip] [port]</span><br></pre></td></tr></table></figure>
-
-<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android root disable</span><br><span class="line">android root simulate</span><br></pre></td></tr></table></figure>
-
-<h3 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec"></a>shell_exec</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android shell_exec</span><br></pre></td></tr></table></figure>
-
-<h3 id="sslpinning"><a href="#sslpinning" class="headerlink" title="sslpinning"></a>sslpinning</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android sslpinning disable</span><br></pre></td></tr></table></figure>
-
-<h3 id="ui-1"><a href="#ui-1" class="headerlink" title="ui"></a>ui</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android ui FLAG_SECURE [true/false]</span><br><span class="line"></span><br><span class="line">android ui screenshot [1.png]</span><br></pre></td></tr></table></figure>
-
-<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2>]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>tool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Fastboot</title>
-    <url>/2022/05/01/Fastboot/</url>
-    <content><![CDATA[<p>一些常用命令</p>
-<span id="more"></span>
-
-<h1 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h1><ul>
-<li>system:系统分区</li>
-<li>userdata:数据分区</li>
-<li>cache:缓存分区</li>
-<li>recovery:Recovery分区</li>
-<li>boot:存放内核和ramdisk的分区</li>
-<li>hboot:这个是SPL所在的分区，也是fastboot所在的分区.刷错就真的变砖了</li>
-<li>splash1:这个就是开机第一屏幕了</li>
-<li>radio:这个是radio所在的分区</li>
-</ul>
-<h1 id="刷分区"><a href="#刷分区" class="headerlink" title="刷分区"></a>刷分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot flash &#x27;对应分区&#x27; &#x27;镜像&#x27;</span><br><span class="line">ep: fastboot flash system system.img</span><br></pre></td></tr></table></figure>
-
-<h1 id="清空分区"><a href="#清空分区" class="headerlink" title="清空分区"></a>清空分区</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot erase &#x27;分区名&#x27;</span><br><span class="line">ep: fastboot erase cache</span><br></pre></td></tr></table></figure>
-
-<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><p>解锁</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot oem unlock</span><br></pre></td></tr></table></figure>
-
-<p>获取手机全部信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot getvar all</span><br></pre></td></tr></table></figure>
-
-<p>引导启动外部镜像</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot boot xxx.img</span><br></pre></td></tr></table></figure>
-
-<p>查看手机是否连接</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot devices</span><br></pre></td></tr></table></figure>
-
-<p>重启</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fastboot reboot</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Tools</category>
-      </categories>
-      <tags>
-        <tag>tool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>decpry</title>
-    <url>/2022/05/14/decpry/</url>
-    <content><![CDATA[<p>CTF-ELF</p>
-<span id="more"></span>
-
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><strong>1</strong></p>
-<p>拖入IDA直接F5看源码<br><img src="/2022/05/14/decpry/6d03c172cfc091a9972a022b0321875e483bff8f1fb8b8d6572e97d50197037d.png" alt="图 1">  </p>
-<p><strong>2</strong><br>查看代码<br><img src="/2022/05/14/decpry/bd5cbd0d80a0ca2d4ddc5df9ff51c3dc88bdabcf5ff5b9bc6adb87ed3d6df182.png" alt="图 2"><br>可以看到decrypt函数，顾名思义就是解密函数，然后使用gdb动态调试（不知道为啥linux版本的gdb不行，要使用debian版的，这玩意卡了我一个小时）</p>
-<p>使用调试命令如下<br><img src="/2022/05/14/decpry/2c068f3f4fe7956b4a9eabbbb2787430ecf0b93979fc87606cb9d657ef060a75.png" alt="图 3">  </p>
-<p><img src="/2022/05/14/decpry/df741cd028b226a0b6850850338c0873484dd248fd81c393a583f0411724d7f3.png" alt="图 4">  </p>
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>win逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>x86_x64汇编</title>
-    <url>/2022/05/14/x86-x64%E6%B1%87%E7%BC%96/</url>
-    <content><![CDATA[<p>x86汇编</p>
-<span id="more"></span>
-
-<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p>通用寄存器8个</p>
-<table>
-<thead>
-<tr>
-<th>16位</th>
-<th>32位</th>
-<th>64位</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>AX</td>
-<td>EAX</td>
-<td>RAX</td>
-</tr>
-<tr>
-<td>BX</td>
-<td>EBX</td>
-<td>RBX</td>
-</tr>
-<tr>
-<td>CX</td>
-<td>ECX</td>
-<td>RCX</td>
-</tr>
-<tr>
-<td>DX</td>
-<td>EDX</td>
-<td>RDX</td>
-</tr>
-<tr>
-<td>SP</td>
-<td>ESP</td>
-<td>RSP</td>
-</tr>
-<tr>
-<td>BP</td>
-<td>EBP</td>
-<td>RBP</td>
-</tr>
-<tr>
-<td>DI</td>
-<td>EDI</td>
-<td>RDI</td>
-</tr>
-<tr>
-<td>SI</td>
-<td>ESI</td>
-<td>RSI</td>
-</tr>
-</tbody></table>
-<p>AX&#x2F;EAX&#x2F;RAX、BX&#x2F;EBX&#x2F;RBX、CX&#x2F;ECX&#x2F;RCX、DX&#x2F;EDX&#x2F;RDX在一般情况下作为通用的数据寄存器，用来暂时存放计算过程中所用到的操作数、结果或其他信息。它们还可分为两个独立的8位寄存器使用，命名为AL、AH、BL、BH、CL、CH、DL和DH。</p>
-<ul>
-<li>AX&#x2F;EAX&#x2F;RAX作为累加器，算术运算的主要寄存器，在乘法指令中指定用来存放操作数，另外，所有的I&#x2F;O指令都使用AX或AL与外部设备传送信息。</li>
-<li>BX&#x2F;EBX&#x2F;RBX在计算存储器地址时，可作为基址寄存器使用。</li>
-<li>CX&#x2F;ECX&#x2F;RCX常用来保存计数值，如在移位指令、循环指令和串处理指令中用作隐含的计数器。DX在作双字长运算时，可把DX和AX组合在一起存放一个双字长数，DX用来存放高16位数据。此外，对某些I&#x2F;O操作，DX可用来存放I&#x2F;O的端口地址。</li>
-<li>SP&#x2F;ESP&#x2F;RSP、BP&#x2F;EBP&#x2F;RBP、SI&#x2F;ESI&#x2F;RSI、DI&#x2F;EDI&#x2F;RDI四个16&#x2F;32位寄存器可以象数据寄存器一样在运算过程中存放操作数，但它们只能以字（16&#x2F;32位&#x2F;64位）为单位使用。此外，它们更经常的用途是在存储器寻址时，提供偏移地址。因此，它们可称为指针或变址寄存器。</li>
-<li>SP&#x2F;ESP称为堆栈指针寄存器，用来指出栈顶的偏移地址。</li>
-<li>BP&#x2F;EBP称为基址指针寄存器，在寻址时作为基地址寄存器使用，但它必须与堆栈段寄存器SS联用来确定堆栈段中的存储单元地址。</li>
-</ul>
-<h2 id="标志寄存器FLAG"><a href="#标志寄存器FLAG" class="headerlink" title="标志寄存器FLAG"></a>标志寄存器FLAG</h2><p>条件码标志用来记录程序中运行结果的状态信息，它们是根据有关指令的运行结果由(CPU)自动设置的。由于这些状态信息往往作为后续条件转移指令的转移控制条件，所以称为条件码。</p>
-<ul>
-<li>进位标志CF，记录运算时最高有效位产生的进位值</li>
-<li>符号标志SF，记录运算结果的符号，结果为负时置1，否则置0</li>
-<li>零标志ZF，运算结果为0时ZF位置1，否则0</li>
-<li>溢出标志OF，在运算过程中，如操作数超出了机器可表示数的范围称为溢出，溢出时OF值为1否则为0</li>
-<li>辅助进位标志AF，记录运算时第3位（半个字节）产生的进位值。</li>
-<li>奇偶标志PF，用来为机器中传送信息时可能产生的代码出错情况提供检验条件。当结果操作数中1的个数为偶数时值为1，否则为0</li>
-</ul>
-<h1 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h1><h2 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h2><h3 id="传送指令mov"><a href="#传送指令mov" class="headerlink" title="传送指令mov"></a>传送指令mov</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mov reg/mem,reg/mem/imm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>其中：Reg—Register(寄存器)，Mem—Memory(存储器)，Imm—Immediate(立即数)，它们可以是8位、16位或32位(特别指出其位数的除外)。</p>
-<h3 id="传送-填充指令"><a href="#传送-填充指令" class="headerlink" title="传送-填充指令"></a>传送-填充指令</h3><p>传送—填充指令是把位数短的源操作数传送给位数长的目的操作数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MOVSX/MOVZX  Reg/Mem, Reg/Mem/Imm　</span><br></pre></td></tr></table></figure>
-
-<p>指令的主要功能和限制与MOV指令类似，不同之处是：在传送时，对目的操作数的高位进行填充。根据其填充方式，又分为：符号填充和零填充。</p>
-<p><strong>符号填充指令movsx</strong><br>movsx的填充方式是：用源操作的符号来填充目的操作数的高位数据位</p>
-<p><strong>零填充指令movzx</strong><br>movzx的填充方式是：横用0来填充目的操作数的高位数据位</p>
-<h3 id="交换指令XCHG"><a href="#交换指令XCHG" class="headerlink" title="交换指令XCHG"></a>交换指令XCHG</h3><p>交换指令XCHG是两个寄存器，寄存器和内存变量之间内容的交换指令，两个操作数的数据类型要相同</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XCHG  Reg/Mem, Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AX=5678H，BX=1234H，指令XCHG  AX, BX执行后,(AX)=1234H，(BX)=5678H</span><br></pre></td></tr></table></figure>
-
-<h3 id="取有效地址指令"><a href="#取有效地址指令" class="headerlink" title="取有效地址指令"></a>取有效地址指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lea reg,mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="取段寄存器指令"><a href="#取段寄存器指令" class="headerlink" title="取段寄存器指令"></a>取段寄存器指令</h3><p>该组指令的功能是把内存单元的一个“低字”传送给指令中指定的16位寄存器，把随后的一个“高字”传给相应的段寄存器(DS、ES、FS、GS和SS)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDS/LES/LFS/LGS/LSS　Reg, Mem</span><br></pre></td></tr></table></figure>
-
-<h2 id="堆栈操作指令"><a href="#堆栈操作指令" class="headerlink" title="堆栈操作指令"></a>堆栈操作指令</h2><p>堆栈是一个重要的数据结构，它具有“先进后出”的特点，通常用来保存程序的返回地址。它主要有两大类操作：进&#x2F;压栈操作和出&#x2F;弹栈操作。</p>
-<h3 id="PUSH"><a href="#PUSH" class="headerlink" title="PUSH"></a>PUSH</h3><p>指令格式：PUSH　Reg&#x2F;Mem  PUSH　Imm　　　<br>　　　<br>一个字进栈，系统自动完成两步操作：SP←SP-2，(SP)←操作数； </p>
-<p>一个双字进栈，系统自动完成两步操作：ESP←ESP-4，(ESP)←操作数。 </p>
-<h3 id="PUSHA"><a href="#PUSHA" class="headerlink" title="PUSHA"></a>PUSHA</h3><p>指令格式：PUSHA</p>
-<p>其功能是依次把寄存器AX、CX、DX、BX、SP、BP、SI和DI等压栈。</p>
-<h3 id="PUSHAD"><a href="#PUSHAD" class="headerlink" title="PUSHAD"></a>PUSHAD</h3><p>指令格式：PUSHAD</p>
-<p>其功能是把寄存器EAX、ECX、EDX、EBX、ESP、EBP、ESI和EDI等压栈。</p>
-<h2 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h2><h3 id="POP"><a href="#POP" class="headerlink" title="POP"></a>POP</h3><p>指令格式：POP　Reg&#x2F;Mem</p>
-<p>弹出一个字，系统自动完成两步操作：操作数←(SP)，SP←SP-2；</p>
-<p>弹出一个双字，系统自动完成两步操作：操作数←(ESP)，ESP←ESP-4。</p>
-<h3 id="POPA"><a href="#POPA" class="headerlink" title="POPA"></a>POPA</h3><p>指令格式：POPA</p>
-<p>其功能是依次把寄存器DI、SI、BP、SP、BX、DX、CX和AX等弹出栈。其实，程序员不用记住它们的具体顺序，只要与指令PUSHA对称使用就可以了。</p>
-<h3 id="POPAD"><a href="#POPAD" class="headerlink" title="POPAD"></a>POPAD</h3><p>指令格式：POPAD　　</p>
-<p>其功能是依次把寄存器EDI、ESI、EBP、ESP、EBX、EDX、ECX和EAX等弹出栈，它与PUSHAD对称使用即可。</p>
-<h2 id="算术运算指令"><a href="#算术运算指令" class="headerlink" title="算术运算指令"></a>算术运算指令</h2><h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ADD  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数的值加到目的操作数中。</p>
-<h3 id="带进位加指令ADC-见得较少"><a href="#带进位加指令ADC-见得较少" class="headerlink" title="带进位加指令ADC(见得较少)"></a>带进位加指令ADC(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ADC  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数和进位标志位CF的值(0&#x2F;1)一起加到目的操作数中。</p>
-<h3 id="加1指令INC"><a href="#加1指令INC" class="headerlink" title="加1指令INC"></a>加1指令INC</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INC  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
-<p>指令的功能是把操作数的值加1。</p>
-<h3 id="交换加指令XADD-见得较少"><a href="#交换加指令XADD-见得较少" class="headerlink" title="交换加指令XADD(见得较少)"></a>交换加指令XADD(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XADD  Reg/Mem, Reg　</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是先交换两个操作数的值，再进行算术“加”法操作</p>
-<h3 id="减法指令"><a href="#减法指令" class="headerlink" title="减法指令"></a>减法指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SUB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是从目的操作数中减去源操作数。</p>
-<h3 id="带借位减SBB-见得较少"><a href="#带借位减SBB-见得较少" class="headerlink" title="带借位减SBB(见得较少)"></a>带借位减SBB(见得较少)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SBB  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能是把源操作数和标志位CF的值从目的操作数中一起减去。</p>
-<h3 id="减1指令DEC"><a href="#减1指令DEC" class="headerlink" title="减1指令DEC"></a>减1指令DEC</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DEC  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、OF、PF、SF和ZF，不影响CF</p>
-<p>指令的功能是把操作数的值减去1。</p>
-<h3 id="求补指令NEG"><a href="#求补指令NEG" class="headerlink" title="求补指令NEG"></a>求补指令NEG</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NEG  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<p>指令的功能：操作数＝0－操作数，即改变操作数的正负号</p>
-<h3 id="乘法指令"><a href="#乘法指令" class="headerlink" title="乘法指令"></a>乘法指令</h3><p>计算机的乘法指令分为无符号乘法指令和有符号乘法指令，它们的唯一区别就在于：数据的最高位是作为“数值”参与运算，还是作为“符号位”参与运算。<br>乘法指令的被乘数都是隐含操作数，乘数在指令中显式地写出来。CPU会根据乘数是8位、16位，还是32位操作数，来自动选用被乘数：AL、AX或EAX。<br>指令的功能是把显式操作数和隐含操作数相乘，并把乘积存入相应的寄存器中。</p>
-<h3 id="无符号乘法指令mul-x2F-fmul"><a href="#无符号乘法指令mul-x2F-fmul" class="headerlink" title="无符号乘法指令mul&#x2F;fmul"></a>无符号乘法指令mul&#x2F;fmul</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MUL  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF和OF(AF、PF、SF和ZF无定义)</p>
-<p>指令的功能是把显式操作数和隐含操作数(都作为无符号数)相乘</p>
-<h3 id="有符号乘法指令IMUL-x2F-FIMUL"><a href="#有符号乘法指令IMUL-x2F-FIMUL" class="headerlink" title="有符号乘法指令IMUL&#x2F;FIMUL"></a>有符号乘法指令IMUL&#x2F;FIMUL</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IMUL Reg/Mem </span><br><span class="line"></span><br><span class="line">IMUL Reg, Imm</span><br><span class="line">IMUL Reg, Reg, Imm </span><br><span class="line">IMUL Reg, Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="除法指令"><a href="#除法指令" class="headerlink" title="除法指令"></a>除法指令</h3><p>除法指令的被除数是隐含操作数，除数在指令中显式地写出来。CPU会根据除数是8位、16位，还是32位，来自动选用被除数AX、DX-AX，还是EDX-EAX。</p>
-<p>除法指令功能是用显式操作数去除隐含操作数，可得到商和余数。当除数为0，或商超出数据类型所能表示的范围时，系统会自动产生0号中断。</p>
-<h3 id="无符号除法指令DIV-x2F-FDIV"><a href="#无符号除法指令DIV-x2F-FDIV" class="headerlink" title="无符号除法指令DIV&#x2F;FDIV"></a>无符号除法指令DIV&#x2F;FDIV</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DIV  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>指令的功能是用显式操作数去除隐含操作数(都作为无符号数)。指令对标志位的影响无定义。</p>
-<h3 id="有符号除法指令IDIV-x2F-FIDIV"><a href="#有符号除法指令IDIV-x2F-FIDIV" class="headerlink" title="有符号除法指令IDIV&#x2F;FIDIV"></a>有符号除法指令IDIV&#x2F;FIDIV</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">IDIV  Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：AF、CF、OF、PF、SF和ZF</p>
-<h2 id="逻辑运算指令"><a href="#逻辑运算指令" class="headerlink" title="逻辑运算指令"></a>逻辑运算指令</h2><p>逻辑运算指令是另一组重要的指令，它包括：逻辑与(AND)、逻辑或(OR)、逻辑非(NOT)和异或指令(XOR)，逻辑运算指令也是经常使用的指令。</p>
-<h3 id="逻辑与操作指令"><a href="#逻辑与操作指令" class="headerlink" title="逻辑与操作指令"></a>逻辑与操作指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑“与操作”，操作结果存入目标操作数中。</p>
-<h3 id="逻辑或操作指令OR"><a href="#逻辑或操作指令OR" class="headerlink" title="逻辑或操作指令OR"></a>逻辑或操作指令OR</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)<br>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”或操作”，操作结果存入目标操作数中。</p>
-<h3 id="逻辑非操作指令NOT"><a href="#逻辑非操作指令NOT" class="headerlink" title="逻辑非操作指令NOT"></a>逻辑非操作指令NOT</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOT　Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>其功能是把操作数中的每位变反，即：1←0，0←1。指令的执行不影响任何标志位。</p>
-<h3 id="逻辑异或指令XOR"><a href="#逻辑异或指令XOR" class="headerlink" title="逻辑异或指令XOR"></a>逻辑异或指令XOR</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">XOR　Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<p>指令的功能是把源操作数中的每位二进制与目的操作数中的相应二进制进行逻辑”异或操作”，操作结果存入目标操作数中。</p>
-<h2 id="检测位指令TEST"><a href="#检测位指令TEST" class="headerlink" title="检测位指令TEST"></a>检测位指令TEST</h2><p>检测位指令是把二个操作数进行逻辑“与”操作，并根据运算结果设置相应的标志位，但并不保存该运算结果，所以，不会改变指令中的操作数。在该指令后，通常用JE、JNE、JZ和JNZ等条件转移指令。</p>
-<p>指令格式</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TEST  Reg/Mem, Reg/Mem/Imm</span><br></pre></td></tr></table></figure>
-
-<p>受影响的标志位：CF(0)、OF(0)、PF、SF和ZF(AF无定义)</p>
-<h2 id="循环指令"><a href="#循环指令" class="headerlink" title="循环指令"></a>循环指令</h2><p>LOOP　  标号<br>LOOPW　 标号　　　　　 ;CX作为循环计数器<br>LOOPD　 标号　　　　　 ;ECX作为循环计数器</p>
-<h2 id="转移指令"><a href="#转移指令" class="headerlink" title="转移指令"></a>转移指令</h2><h3 id="无条件转移指令"><a href="#无条件转移指令" class="headerlink" title="无条件转移指令"></a>无条件转移指令</h3><p>无条件转移指令包括：JMP、子程序的调用和返回指令、中断的调用和返回指令等。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JMP  标号/Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<h3 id="条件转移指令"><a href="#条件转移指令" class="headerlink" title="条件转移指令"></a>条件转移指令</h3><p>条件转移指令是一组极其重要的转移指令，它根据标志寄存器中的一个(或多个)标志位来决定是否需要转移，这就为实现多功能程序提供了必要的手段。微机的指令系统提供了丰富的条件转移指令来满足各种不同的转移需要，在编程序时，要对它们灵活运用。</p>
-<p>条件转移指令又分三大类：基于无符号数的条件转移指令、基于有符号数的条件转移指令和基于特殊算术标志位的条件转移指令。</p>
-<h3 id="无符号的条件转移指令"><a href="#无符号的条件转移指令" class="headerlink" title="无符号的条件转移指令"></a>无符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JA/JNBE</span><br><span class="line">CF=0 and ZF=0 Jump Above or Jump Not Below or Equal</span><br><span class="line"></span><br><span class="line">JAE/JNB</span><br><span class="line">CF=0 Jump Above or Equal or Jump Not Below </span><br><span class="line"></span><br><span class="line">JB/JNAE</span><br><span class="line">CF=1 Jump Below or Jump Not Above or Equal</span><br><span class="line"></span><br><span class="line">JBE/JNA</span><br><span class="line">CF=1 or AF=1 Jump Below or Equal or Jump Not Above </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="有符号的条件转移指令"><a href="#有符号的条件转移指令" class="headerlink" title="有符号的条件转移指令"></a>有符号的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JE/JZ</span><br><span class="line">ZF=1 Jump Equal or Jump Zero </span><br><span class="line"></span><br><span class="line">JNE/JNZ</span><br><span class="line">ZF=0 Jump Not Equal or Jump Not Zero </span><br><span class="line"></span><br><span class="line">JG/JNLE</span><br><span class="line">ZF=0 and SF=OF Jump Greater or Jump Not Less or Equal </span><br><span class="line"></span><br><span class="line">JGE/JNL</span><br><span class="line">SF=OF Jump Greater or Equal or Jump Not Less </span><br><span class="line"></span><br><span class="line">JL/JNGE</span><br><span class="line">SF≠OF Jump Less or Jump Not Greater or Equal </span><br><span class="line"></span><br><span class="line">JLE/JNG</span><br><span class="line">ZF=1 or SF≠OF Jump Less or Equal or Jump Not Greater </span><br></pre></td></tr></table></figure>
-
-<h3 id="特殊算术标志位的条件转移指令"><a href="#特殊算术标志位的条件转移指令" class="headerlink" title="特殊算术标志位的条件转移指令"></a>特殊算术标志位的条件转移指令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JC</span><br><span class="line">CF=1 Jump Carry </span><br><span class="line"></span><br><span class="line">JNC</span><br><span class="line">CF=0 Jump Not Carry</span><br><span class="line"></span><br><span class="line">JO</span><br><span class="line">OF=1 Jump Overflow</span><br><span class="line"></span><br><span class="line">JNO</span><br><span class="line">OF=0 Jump Not Overflow</span><br><span class="line"></span><br><span class="line">JP/JPE</span><br><span class="line">PF=1 Jump Parity or Jump Parity Even</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">JNP/JPO</span><br><span class="line">PF=0 Jump Not Parity or Jump Parity Odd </span><br><span class="line"></span><br><span class="line">JS</span><br><span class="line">SF=1 Jump Sign (negative)</span><br><span class="line"></span><br><span class="line">JNS</span><br><span class="line">SF=0 Jump No Sign (positive) </span><br></pre></td></tr></table></figure>
-
-<h2 id="子程序的调用和返回指令"><a href="#子程序的调用和返回指令" class="headerlink" title="子程序的调用和返回指令"></a>子程序的调用和返回指令</h2><p>子程序的调用和返回是一对互逆操作，也是一种特殊的转移操作。</p>
-<p>一方面，之所以说是转移，是因为当调用一个子程序时，程序的执行顺序被改变，CPU将转而执行子程序中的指令序列，在这方面，调用子程序的操作含有转移指令的功能，子程序的返回指令的转移特性与此类似；</p>
-<p>另一方面，转移指令是一种“一去不复返”的操作，而当子程序完后，还要求CPU能转而执行调用指令之下的指令，它是一种“有去有回”的操作。</p>
-<p>为了满足子程序调用和返回操作的特殊性，在指令系统中设置了相应的特定指令。</p>
-<h3 id="调用指令（CALL）"><a href="#调用指令（CALL）" class="headerlink" title="调用指令（CALL）"></a>调用指令（CALL）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CALL　子程序名/Reg/Mem</span><br></pre></td></tr></table></figure>
-
-<p>子程序的调用指令分为近(near)调用和远(far)调用。如果被调用子程序的属性是近的，那么，CALL指令将产生一个近调用，它把该指令之后地址的偏移量(用一个字来表示的)压栈，把被调用子程序入口地址的偏移量送给指令指针寄存器IP即可实现执行程序的转移</p>
-<p>如果被调用子程序的属性是远的，那么，CALL指令将产生一个远调用。这时，调用指令不仅要把该指令之后地址的偏移量压进栈，而且也要把段寄存器CS的值压进栈。在此之后，再把被调用子程序入口地址的偏移量和段值分别送给IP和CS，这样完成了子程序的远调用操作</p>
-<p>子程序调用指令本身的执行不影响任何标志位，但子程序体中指令的执行会改变标志位，所以，如果希望子程序的执行不能改变调用指令前后的标志位，那么，就要在子程序的开始处保护标志位，在子程序的返回前恢复标志位。</p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CALL  DISPLAY</span><br><span class="line"> DISPLAY是子程序名 </span><br><span class="line">CALL  BX</span><br><span class="line"> BX的内容是子程序的偏移量 </span><br><span class="line">CALL  WORD1</span><br><span class="line"> WORD1是内存字变量，其值是子程序的偏移量 </span><br><span class="line">CALL  DWORD1</span><br><span class="line"> DWORD1是双字变量，其值是子程序的偏移量和段值 </span><br><span class="line">CALL  word ptr [BX]</span><br><span class="line"> BX所指内存字单元的值是子程序的偏移量 </span><br><span class="line">CALL  dword ptr [BX]</span><br><span class="line"> BX所指内存双字单元的值是子程序的偏移量和段值 </span><br></pre></td></tr></table></figure>
-
-<h3 id="返回指令（RET）"><a href="#返回指令（RET）" class="headerlink" title="返回指令（RET）"></a>返回指令（RET）</h3><p>当子程序执行完时，需要返回到调用它的程序之中。为实现此功能，指令系统提供了一条专用的返回指令。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RET/RETN/RETF [Imm]</span><br></pre></td></tr></table></figure>
-
-<p>子程序的返回在功能上是子程序调用的逆操作。为了与子程序的远、近调用相对应，子程序的返回也分：远返回和近返回。返回指令在堆栈操作方面是调用指令的逆过程</p>
-]]></content>
-      <categories>
-        <category>汇编</category>
-      </categories>
-      <tags>
-        <tag>x86汇编</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常见加密算法原理--Base64</title>
-    <url>/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/</url>
-    <content><![CDATA[<p>常见加密算法原理–Base64</p>
-<span id="more"></span>
-
-<h1 id="Base64介绍"><a href="#Base64介绍" class="headerlink" title="Base64介绍"></a>Base64介绍</h1><p><strong>Base64</strong>（基底64）是一种基于64个可打印字符来表示二进制数据的表示方法。由于log264 &#x3D; 6，所以每6个比特为一个单元，对应某个可打印字符。3个字节相当于24个比特，对应于4个Base64单元，即3个字节可由4个可打印字符来表示。在Base64中的可打印字符包括字母<code>A-Z</code>、<code>a-z</code>、数字<code>0-9</code>，这样共有62个字符，此外两个可打印符号在不同的系统中而不同</p>
-<h1 id="Base64编码原理"><a href="#Base64编码原理" class="headerlink" title="Base64编码原理"></a>Base64编码原理</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115909772.png" alt="image-20220514115909772"></p>
-<p>编码时，每 3 个字节一组，共 8bit*3&#x3D;24bit，划分成 4 组，即每 6bit 代表一个编码后的索引值，划分如下图所示：</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514115938457.png" alt="image-20220514115938457"></p>
-<p>这样可能不太直观，举个例子就容易理解了。比如我们对 <code>cat</code> 进行编码：</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120006175.png" alt="image-20220514120006175"></p>
-<p>可以看到 <code>cat</code> 编码后变成了 <code>Y2F0</code>。</p>
-<p>如果待编码内容的字节数不是 3 的整数倍，那需要进行一些额外的处理。</p>
-<p>如果最后剩下 1 个字节，那么将补 4 个 0 位，编码成 2 个 Base64 字符，然后补两个 <code>=</code>：</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120052354.png" alt="image-20220514120052354"></p>
-<p>如果最后剩下 2 个字节，那么将补 2 个 0 位，编码成 3 个 Base64 字符，然后补一个 <code>=</code>：</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514120118423.png" alt="image-20220514120118423"></p>
-<p>NDK代码</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> base64en[] = &#123;</span><br><span class="line">        <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;D&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;F&#x27;</span>, <span class="string">&#x27;G&#x27;</span>, <span class="string">&#x27;H&#x27;</span>,  <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;J&#x27;</span>, <span class="string">&#x27;K&#x27;</span>, <span class="string">&#x27;L&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;N&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;P&#x27;</span>,  <span class="string">&#x27;Q&#x27;</span>, <span class="string">&#x27;R&#x27;</span>, <span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;U&#x27;</span>, <span class="string">&#x27;V&#x27;</span>, <span class="string">&#x27;W&#x27;</span>, <span class="string">&#x27;X&#x27;</span>,   <span class="string">&#x27;Y&#x27;</span>, <span class="string">&#x27;Z&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;j&#x27;</span>, <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;q&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;v&#x27;</span>,  <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;z&#x27;</span>, <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;8&#x27;</span>, <span class="string">&#x27;9&#x27;</span>, <span class="string">&#x27;+&#x27;</span>, <span class="string">&#x27;/&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">base64_enc</span><span class="params">(<span class="type">char</span> *data, <span class="type">int</span> len, <span class="type">char</span> *out)</span>&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> last_c = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123;</span><br><span class="line">        c = data[i];</span><br><span class="line">        <span class="comment">//刚好三个字符运算</span></span><br><span class="line">        <span class="keyword">switch</span> (i % <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                (c &gt;&gt; 2) &amp; 0x3f</span></span><br><span class="line"><span class="comment">                1）“&gt;&gt;” 取第一个字节的高六位</span></span><br><span class="line"><span class="comment">                2）“&amp;”  避免其他字符影响 把取得的高六位与0x3f(0011111)按位与</span></span><br><span class="line"><span class="comment">                &amp;按位与运算：只有对应的两个二进位都为1时，结果位才为1</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[(c &gt;&gt; <span class="number">2</span>) &amp; <span class="number">0x3f</span> ];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                last_c保存上一个字符</span></span><br><span class="line"><span class="comment">                last_c &amp; 3 取最后两位，清除其他位</span></span><br><span class="line"><span class="comment">                &lt;&lt;4把上一个数的低两位放到第二个数的高两位</span></span><br><span class="line"><span class="comment">                | 或上第二个数的高四位，得到索引值</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">                out[index++] = base64en[((last_c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>) | ((c &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xf</span> )];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                out[index++] = base64en[( ( last_c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span> ) | ((c &gt;&gt; <span class="number">6</span> ) &amp; <span class="number">0x3</span>)];</span><br><span class="line">                out[index++] = base64en[c &amp; <span class="number">0x3f</span>];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        last_c = c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//补两个等号</span></span><br><span class="line">    <span class="keyword">if</span>(len % <span class="number">3</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        out[index++] = base64en[(c &amp; <span class="number">0x3</span>) &lt;&lt; <span class="number">4</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="comment">//补一个等号</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (len % <span class="number">3</span> == <span class="number">2</span>)&#123;</span><br><span class="line">        out[index++] = base64en[( c &amp; <span class="number">0xf</span> ) &lt;&lt; <span class="number">2</span>];</span><br><span class="line">        out[index++] = <span class="string">&#x27;=&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_base64_1enc</span><span class="params">(JNIEnv *env, jobject thiz, jstring data)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement base64_enc()</span></span><br><span class="line">    <span class="type">char</span> *c_data = const_cast&lt;<span class="type">char</span> *&gt;(env-&gt;GetStringUTFChars(data, <span class="number">0</span>));</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(c_data);</span><br><span class="line">    <span class="type">char</span> out[<span class="number">100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    base64_enc(c_data, len, out);</span><br><span class="line">    env-&gt;ReleaseStringUTFChars(data,c_data);</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(out);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_example_base64_MainActivity_stringFromJNI</span><span class="params">(JNIEnv *env, jobject thiz)</span> &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> implement stringFromJNI()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>fridaHook</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">base_enc</span>(<span class="params">data</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libbase64.so&quot;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(base)</span><br><span class="line">    <span class="keyword">var</span> func_addr = base.<span class="title function_">add</span>(<span class="number">0x89C</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(func_addr)</span><br><span class="line">    <span class="keyword">var</span> func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(func_addr,<span class="string">&#x27;void&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;int&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">    <span class="keyword">var</span> arg1 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">ptr</span>(arg1).<span class="title function_">writeUtf8String</span>(data)</span><br><span class="line">    <span class="keyword">var</span> arg3 = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">100</span>)</span><br><span class="line">    <span class="title function_">func</span>(arg1,data.<span class="property">length</span>,arg3)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(arg3))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142835427.png" alt="image-20220514142835427"></p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142906978.png" alt="image-20220514142906978"></p>
-<p>地址计算细节</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135359242.png" alt="image-20220514135359242"></p>
-<p>如果opcode有两个字节的如下，说明是shum指令集地址要加1</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514135442796.png" alt="image-20220514135442796"></p>
-<p>如果指令集不对应会报以下错误</p>
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220514142309697.png" alt="image-20220514142309697"></p>
-<h1 id="左移和右移运算"><a href="#左移和右移运算" class="headerlink" title="左移和右移运算"></a>左移和右移运算</h1><p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512225743174.png" alt="image-20220512225743174"></p>
-<p>在dbg中进行实践，给寄存器eax赋值0x8，然后左移两位，给eax重新赋值再右移两位</p>
-<table>
-<thead>
-<tr>
-<th>数值</th>
-<th>二级制</th>
-<th>操作</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>8</td>
-<td>1000</td>
-<td>原数</td>
-</tr>
-<tr>
-<td>2</td>
-<td>10</td>
-<td>右移两位</td>
-</tr>
-<tr>
-<td>32</td>
-<td>100000</td>
-<td>左移两位</td>
-</tr>
-</tbody></table>
-<p>代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0x8</span>;</span><br><span class="line">    <span class="type">int</span> b =a &gt;&gt; <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> c = a &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; b&lt;&lt;<span class="string">&quot;\n&quot;</span> &lt;&lt;c ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/05/14/%E5%B8%B8%E8%A7%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-Base64/image-20220512230124704.png" alt="image-20220512230124704"></p>
-<p>左移n位，指 按2进制的 位 左移n位， （等于 乘 2的n次方），超出最高位的数则丢掉。</p>
-<p>右移n位，指 按2进制的 位 右移n位， （等于 除以 2的n次方），低于最低位的数则丢掉。</p>
-]]></content>
-      <categories>
-        <category>常见加密</category>
-      </categories>
-      <tags>
-        <tag>加密算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cmp</title>
-    <url>/2022/05/14/cmp/</url>
-    <content><![CDATA[<p>CTF-win</p>
-<span id="more"></span>
-
-<p><strong>1</strong><br>查看文件为PE文件，直接脱OD调试，全局搜索字符串<br><img src="/2022/05/14/cmp/81f7720930deac20025cd036e3ad00aa4c40055c0a62bd10bd023b8d3ec49086.png" alt="图 1">  </p>
-<p>搜到的结果<br><img src="/2022/05/14/cmp/21a63837f8ed2dca4ffcefe4fac120c9564ae45245ca8b92215811a7fefce0bb.png" alt="图 2">  </p>
-<p><strong>2</strong><br>双击<code>%s</code>处，进入相应汇编代码位置，并下段<br><img src="/2022/05/14/cmp/5620e0fcc39596c3c96029be37339b153d25b1b28dcc949e6c1f38f16589bb08.png" alt="图 3">  </p>
-<p><strong>3</strong><br>运行，随便输入一个字符串<br><img src="/2022/05/14/cmp/1fa395b7de6ee9684d17417a4235b922d390e21514b8e621ff6148374193cd00.png" alt="图 4">  </p>
-<p><strong>4</strong><br>F8单步调试到比较代码处，观察寄存器<br><img src="/2022/05/14/cmp/4708b2db6c83b933cea9c50c7e5f45286220087785e3b428948a0142c865b81b.png" alt="图 5">  </p>
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>win逆向</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>动、静态链接库</title>
-    <url>/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/</url>
-    <content><![CDATA[<p>库</p>
-<span id="more"></span>
-
-<h1 id="动态链接库"><a href="#动态链接库" class="headerlink" title="动态链接库"></a>动态链接库</h1><p>它是Microsoft在windows操作中实现共享函数库概念的一种实现方式。其中windows中 一些作为DLL实现的文件有：</p>
-<ul>
-<li>系统API模块（.dll）文件：如user32.dll，kernel32.dll</li>
-<li>ActiveX控件（.ocx）文件：如widows上的日历控件</li>
-<li>控制面板(.cpl)文件：控制面板中的每一项都是一个专用的DLL</li>
-<li>设备驱动程序(.drv)文件：如控制打印到打印机的打印机驱动程序</li>
-</ul>
-<p>动态链接库不用重复编译或链接，一旦装入内存，DLL函数可以被系统中的任何正在运行的应用应用程序软件所使用</p>
-<h2 id="库"><a href="#库" class="headerlink" title="库"></a>库</h2><p>对象库：（object  library）</p>
-<p>对象库是一个扩展名为.LIB的文件，这个文件中的代码在运行连接器进行静态链接时被添加到程序的.EXE文件中例如，在Microsoft  Visual C++中，程序通常链接的C运行时对象库是LIBC.LIB。</p>
-<p>导入库：（import  library）</p>
-<p>导入库是一种特殊形式的对象库文件。如同对象库一样，导入库不包含任何代码。相反，他们只给连接器提供信息，以建立.EXE文件中用于动态链接的重定位表格。微软的编译器中的KFRNEL32.LIB，USER32.LIB及GDI32.LIB文件是Windows函数的导入库如果在程序中调用Rectangle函数，GDI32.LIB会告诉连接器这个函数是在GDI32.DLL动态链接库中。这一信息被存放在.EXE文件中。所以Windows可以在你的程序运行时与GDI32.DLL动态链接库进行动态链接。</p>
-<p>对象库和导入库仅在程序开发时被使用，而动态链接库则是在运行时使用。当一个用到动态库的程序运行时，该库必须存在磁盘上。当Windows在运行程序前加载DLL模块的时候，该库文件必须存放在.EXE程序所在的目录下，或在当前目录，windows目录，Windows目录，MS-DOS环境下的PATH字符串中的某一目录下。（系统将按上述顺序来检索目录）</p>
-<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>VS2019创建项目</p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093744162.png" alt="image-20220515093744162"></p>
-<p>使用默认生成的文件直接使用</p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515093842095.png" alt="image-20220515093842095"></p>
-<p>编译后把生成的dll放到要调用项目的文件夹中，和exe在同一个目录</p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094018496.png" alt="image-20220515094018496"></p>
-<p>调用</p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094040008.png" alt="image-20220515094040008"></p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220515094103407.png" alt="image-20220515094103407"></p>
-<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><p>a，声明导出函数</p>
-<ol>
-<li>通过使用_declspec(dllexport)，添加到需要导出的函数前，进行声明</li>
-</ol>
-<p>（ extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); ）</p>
-<p>b，使用动态链接库</p>
-<ol>
-<li><p>​	定义函数指针(可有可无),如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef int (__stdcall *lpPlus)(int,int);					</span><br><span class="line"></span><br><span class="line">typedef int (__stdcall *lpSub)(int,int);	</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>声明函数指针变量,如：	</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lpPlus myPlus;					</span><br><span class="line">lpSub mySub;	</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>动态加载dll到内存中,如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HINSTANCE   hModule = LoadLibrary(&quot;DllDemo.dll&quot;); </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取函数地址,如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">myPlus = (lpPlus)GetProcAddress(hModule,   &quot;Plus&quot;);</span><br><span class="line">mySub = (lpSub)GetProcAddress(hModule,   (char*)0x10);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>调用函数,如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int a = myPlus(10,2);					</span><br><span class="line">int b = mySub(10,2);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>释放动态链接库,如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FreeLibrary(hModule);</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>代码示例</p>
-<p>dll.cpp</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//_declspec(dllexport) DWORD g_nNum;</span></span><br><span class="line"><span class="comment">// 导出一个函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//str.Format(L&quot;fun : g_nNum=%d&quot;, g_nNum);</span></span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> _declspec(dllexport) <span class="type">void</span> <span class="title function_">fun2</span><span class="params">()</span> &#123;</span><br><span class="line">	MessageBox(<span class="number">0</span>, <span class="string">L&quot;fun2&quot;</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>动态（显示）调用</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="title function_">int</span><span class="params">(*pfnfun)</span><span class="params">()</span>;</span><br><span class="line">	pfnfun fun = nullptr;</span><br><span class="line">	HINSTANCE hModule = LoadLibrary(<span class="string">L&quot;DllInstance.dll&quot;</span>);</span><br><span class="line">	<span class="comment">// 通过dll的句柄,获取保存在dll中的指定函数的地址</span></span><br><span class="line">	fun = (pfnfun)GetProcAddress(hModule, <span class="string">&quot;fun&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (fun != nullptr) &#123;</span><br><span class="line">		fun();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="另一种方式导出函数"><a href="#另一种方式导出函数" class="headerlink" title="另一种方式导出函数"></a>另一种方式导出函数</h3><p> 通过模块定义文件<code>.DEF</code>来进行声明，在头文件中添加一个文件后缀名为<code>.def</code>，在其中添加如下格式代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">EXPORTS	</span><br><span class="line">函数名	@编号</span><br><span class="line">函数名	@编号 	NONAME</span><br></pre></td></tr></table></figure>
-
-<p>vs2019添加方法</p>
-<p><strong>1</strong></p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516214933865.png" alt="image-20220516214933865"></p>
-<p><strong>2</strong></p>
-<p><img src="/2022/05/22/%E5%8A%A8%E3%80%81%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/image-20220516215003809.png" alt="image-20220516215003809"></p>
-<p>注：LIBRARY 后面的名称与项目名一致</p>
-<p>使用序号导出的好处:</p>
-<ol>
-<li>名字是一段程序的精华注释，通过名字可以直接猜测到函数的功能</li>
-<li>通过使用序号，可以达到隐藏的目的</li>
-</ol>
-<h2 id="隐式调用"><a href="#隐式调用" class="headerlink" title="隐式调用"></a>隐式调用</h2><p>这种方法相比显示（动态）调用简单一些，只需要链接到.lib文件并将.dll文件置入你的新项目的路径中去。因此，创建一个新的默认win32控制台项目并添加一个源文件。将你做的dll放入你的新项目相同的目录下  </p>
-<p>步骤</p>
-<ol>
-<li>将 *.dll  *.lib 放到工程目录下面	</li>
-<li>将 #pragma comment(lib,”DLL名.lib”) 添加到调用文件中	</li>
-<li>加入函数的声明	（可有可无）</li>
-</ol>
-<p>注意：</p>
-<p>extern “C” _declspec(dllexport) 调用约定 返回类型 函数名 (参数列表); </p>
-<p>extern “C” _declspec(dllimport) 调用约定 返回类型 函数名 (参数列表); </p>
-<h1 id="静态链接库"><a href="#静态链接库" class="headerlink" title="静态链接库"></a>静态链接库</h1><p>静态库是将函数和数据编译进一个二进制文件，通常可以命名为*.lib，编译器在链接过程中，将这些二进制数据复制出来，并与调用库的其他模块数据组合在一起，形成最终的可执行文件，等以后使用这个可执行文件时，就不需要这个静态库的支持了。 </p>
-<p>比起静态库的调用，静态库只有一种方法，即对应的隐试链接。</p>
-<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><ol>
-<li><p><strong>编写静态链接库文件</strong></p>
-<ul>
-<li><strong>在vs2015中创建新项目，项目类型：Win32 控制台程序-&gt;静态库.</strong></li>
-<li><strong>在项目中创建xxxx.h和xxxx.cpp  编写代码 然后构建即可.</strong></li>
-</ul>
-</li>
-<li><p><strong>静态链接库的使用</strong></p>
-<ol>
-<li><p><strong>将生成的.h与.lib文件复制到项目根目录，然后在代码中引用：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &quot;xxxx.h&quot;</span><br><span class="line">#pragma comment(lib, &quot;xxxx.lib&quot;) </span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>将xxxx.H与xxxx.LIB文件复制到VS2015安装目录，与库文件放在一起</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Include(xxxx.h)</span><br><span class="line">C:\Program Files\Microsoft Visual Studio\VC98\Lib(xxxx.lib)</span><br></pre></td></tr></table></figure>
-
-<p><strong>然后在工程-&gt;设置-&gt;连接-&gt;对象&#x2F;库模块中添加xxxx.lib</strong></p>
-</li>
-<li><p><strong>静态链接库的缺点</strong></p>
-<ul>
-<li><strong>使用静态链接生成的可执行文件体积较大</strong></li>
-<li><strong>包含相同的公共代码，造成浪费</strong></li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<p><strong>名称粉碎</strong></p>
-<p>假如想使用C++下导出的函数更具有通用性，需要在函数声明前加上extern  “C”,从而防止C++的名称粉碎机制造成dll文件不能供其他语言调用。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">                       DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">                       LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">					 )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:   使用LoadLibrary调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_ATTACH:    有线程创建的时候调用一次</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_DETACH:     线程结束调用</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:   模块销毁调用</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>回忆录</category>
-      </categories>
-      <tags>
-        <tag>语言</tag>
       </tags>
   </entry>
 </search>
